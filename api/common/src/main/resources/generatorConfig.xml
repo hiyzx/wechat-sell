@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+    <context id="mysql" targetRuntime="MyBatis3">
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+        <plugin type="org.mybatis.plugin.SpringBootGeneratorPlugin">
+            <property name="mappers" value="com.zero.common.conf.MyMapper"/>
+        </plugin>
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+        <!--数据库链接URL，用户名、密码 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/wechat-sell"
+                        userId="root" password="root">
+        </jdbcConnection>
+        <!-- 生成模型的包名和位置 -->
+        <javaModelGenerator targetPackage="com.zero.common.po" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+        <!-- 生成映射文件的包名和位置 -->
+        <sqlMapGenerator targetPackage="com.zero.common.dao" targetProject="src/main/resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+        <!-- 生成DAO的包名和位置 -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.zero.common.dao" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+        <!-- 要生成的表 tableName是数据库中的表名或视图名 domainObjectName是实体类名 -->
+         <table tableName="order_detail" domainObjectName="OrderDetail">
+             <generatedKey column="detail_id" sqlStatement="MySql" identity="true" />
+         </table>
+         <table tableName="order_master" domainObjectName="OrderMaster">
+             <generatedKey column="order_id" sqlStatement="MySql" identity="true" />
+         </table>
+         <table tableName="product_category" domainObjectName="ProductCategory">
+             <generatedKey column="category_id" sqlStatement="MySql" identity="true" />
+         </table>
+         <table tableName="product_info" domainObjectName="ProductInfo">
+             <generatedKey column="product_id" sqlStatement="MySql" identity="true" />
+         </table>
+    </context>
+</generatorConfiguration>  
