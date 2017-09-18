@@ -1,14 +1,15 @@
 package com.zero.common.po;
 
 import io.swagger.annotations.ApiModelProperty;
-import java.io.Serializable;
-import java.util.Date;
+import lombok.Data;
+import lombok.ToString;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import lombok.Data;
-import lombok.ToString;
+import java.io.Serializable;
+import java.util.Date;
 
 @Data
 @ToString
@@ -21,8 +22,8 @@ public class ProductCategory implements Serializable {
     @ApiModelProperty(value = "类目名称")
     private String categoryName;
 
-    @ApiModelProperty(value = "类目编号")
-    private Integer categoryType;
+    @ApiModelProperty(value = "展示顺序")
+    private Integer showIndex;
 
     @ApiModelProperty(value = "创建时间")
     private Date createTime;

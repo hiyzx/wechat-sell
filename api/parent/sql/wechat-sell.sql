@@ -1,7 +1,7 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : MySQL
+Source Server         : local
 Source Server Version : 50525
 Source Host           : localhost:3306
 Source Database       : wechat-sell
@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50525
 File Encoding         : 65001
 
-Date: 2017-09-13 23:48:16
+Date: 2017-09-18 10:14:54
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -31,7 +31,11 @@ CREATE TABLE `order_detail` (
   `update_time` datetime NOT NULL,
   PRIMARY KEY (`detail_id`),
   UNIQUE KEY `idx_order_id` (`order_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT '订单详情';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单详情';
+
+-- ----------------------------
+-- Records of order_detail
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for order_master
@@ -50,7 +54,11 @@ CREATE TABLE `order_master` (
   `update_time` datetime NOT NULL,
   PRIMARY KEY (`order_id`),
   UNIQUE KEY `idx_buyer_openid` (`buyer_openid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT '订单主表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单主表';
+
+-- ----------------------------
+-- Records of order_master
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for product_category
@@ -59,12 +67,18 @@ DROP TABLE IF EXISTS `product_category`;
 CREATE TABLE `product_category` (
   `category_id` int(11) NOT NULL AUTO_INCREMENT,
   `category_name` varchar(64) NOT NULL COMMENT '类目名称',
-  `category_type` int(11) NOT NULL COMMENT '类目编号',
+  `show_index` int(11) NOT NULL COMMENT '展示顺序',
   `create_time` datetime NOT NULL COMMENT '创建时间',
   `update_time` datetime NOT NULL COMMENT '更新时间',
   PRIMARY KEY (`category_id`),
-  UNIQUE KEY `uqe_category_type` (`category_type`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT '商品类目表';
+  UNIQUE KEY `uqe_category_type` (`show_index`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='商品类目表';
+
+-- ----------------------------
+-- Records of product_category
+-- ----------------------------
+INSERT INTO `product_category` VALUES ('1', '豆制品', '1', '2017-09-18 10:05:07', '2017-09-18 10:05:10');
+INSERT INTO `product_category` VALUES ('2', '快餐', '2', '2017-09-18 10:05:20', '2017-09-18 10:05:23');
 
 -- ----------------------------
 -- Table structure for product_info
@@ -77,8 +91,12 @@ CREATE TABLE `product_info` (
   `product_stock` int(11) NOT NULL COMMENT '库存',
   `product_description` varchar(64) DEFAULT NULL COMMENT '描述',
   `product_icon` varchar(512) DEFAULT NULL COMMENT '小图',
-  `category_type` int(11) NOT NULL COMMENT '类目编号',
+  `category_id` int(11) NOT NULL COMMENT '类目编号',
   `create_time` datetime NOT NULL COMMENT '创建时间',
   `update_time` datetime NOT NULL COMMENT '修改时间',
   PRIMARY KEY (`product_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT '商品信息表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商品信息表';
+
+-- ----------------------------
+-- Records of product_info
+-- ----------------------------
