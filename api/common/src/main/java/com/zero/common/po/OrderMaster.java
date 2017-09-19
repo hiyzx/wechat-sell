@@ -9,13 +9,20 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 
 @Data
 @ToString
 @Table(name = "order_master")
 public class OrderMaster implements Serializable {
+
+    public static final int ORDER_STATUS_NEW = 0;
+    public static final int ORDER_STATUS_FINISHED = 1;
+    public static final int ORDER_STATUS_CANCEL = 2;
+
+    public static final int PAY_STATUS_NOT = 0;
+    public static final int PAY_STATUS_SUCCESS = 1;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String orderId;
@@ -33,13 +40,13 @@ public class OrderMaster implements Serializable {
     private String buyerOpenid;
 
     @ApiModelProperty(value = "订单总金额")
-    private BigDecimal orderAmount;
+    private Double orderAmount;
 
     @ApiModelProperty(value = "订单状态 0新下单")
-    private Byte orderStatus;
+    private Integer orderStatus;
 
     @ApiModelProperty(value = "支付状态,0未支付")
-    private Byte payStatus;
+    private Integer payStatus;
 
     private Date createTime;
 

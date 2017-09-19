@@ -3,6 +3,7 @@ package com.zero.common.util;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * 字符串处理类
@@ -11,6 +12,20 @@ import java.util.List;
  * @date 2017/7/20
  */
 public class StringHelper {
+
+    private static UUID uuid = UUID.randomUUID();
+
+    public static String generateMasterKey() {
+        return String.format("%s%s", "master", generateKey());
+    }
+
+    public static String generateDetailKey() {
+        return String.format("%s%s", "detail", generateKey());
+    }
+
+    public static String generateProductKey() {
+        return String.format("%s%s", "product", generateKey());
+    }
 
     public static List<String> convertStringToList(String source) {
         String[] sourceArr = source.split(",");
@@ -29,5 +44,9 @@ public class StringHelper {
             }
         }
         return sb.toString();
+    }
+
+    private static String generateKey() {
+        return uuid.toString().replaceAll("-", "").substring(0, 20);
     }
 }

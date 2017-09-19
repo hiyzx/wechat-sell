@@ -20,9 +20,6 @@ public class ProductInfoVo implements Serializable {
     @ApiModelProperty(value = "单价")
     private BigDecimal productPrice;
 
-    @ApiModelProperty(value = "库存")
-    private Integer productStock;
-
     @ApiModelProperty(value = "描述")
     private String productDescription;
 

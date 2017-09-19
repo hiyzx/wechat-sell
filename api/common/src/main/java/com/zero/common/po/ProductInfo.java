@@ -1,16 +1,14 @@
 package com.zero.common.po;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.ToString;
-
+import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.Date;
+import lombok.Data;
+import lombok.ToString;
 
 @Data
 @ToString
@@ -25,7 +23,7 @@ public class ProductInfo implements Serializable {
     private String productName;
 
     @ApiModelProperty(value = "单价")
-    private BigDecimal productPrice;
+    private Double productPrice;
 
     @ApiModelProperty(value = "库存")
     private Integer productStock;

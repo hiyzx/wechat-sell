@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50525
 File Encoding         : 65001
 
-Date: 2017-09-18 10:14:54
+Date: 2017-09-19 17:41:20
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -24,7 +24,7 @@ CREATE TABLE `order_detail` (
   `order_id` varchar(32) NOT NULL,
   `product_id` varchar(32) NOT NULL,
   `product_name` varchar(64) NOT NULL COMMENT '商品名称',
-  `product_price` decimal(8,2) NOT NULL COMMENT '商品价格',
+  `product_price` double(8,2) NOT NULL COMMENT '商品价格',
   `product_quantity` int(11) NOT NULL COMMENT '商品数量',
   `product_icon` varchar(512) DEFAULT NULL COMMENT '商品图片',
   `create_time` datetime NOT NULL,
@@ -47,9 +47,9 @@ CREATE TABLE `order_master` (
   `buyer_phone` varchar(32) NOT NULL COMMENT '买家电话',
   `buyer_address` varchar(128) NOT NULL COMMENT '买家地址',
   `buyer_openid` varchar(64) NOT NULL COMMENT '买家唯一id',
-  `order_amount` decimal(8,2) NOT NULL COMMENT '订单总金额',
-  `order_status` tinyint(3) NOT NULL DEFAULT '0' COMMENT '订单状态 0新下单',
-  `pay_status` tinyint(3) NOT NULL DEFAULT '0' COMMENT '支付状态,0未支付',
+  `order_amount` double(8,2) NOT NULL COMMENT '订单总金额',
+  `order_status` int(3) NOT NULL DEFAULT '0' COMMENT '订单状态 0新下单',
+  `pay_status` int(3) NOT NULL DEFAULT '0' COMMENT '支付状态,0未支付',
   `create_time` datetime NOT NULL,
   `update_time` datetime NOT NULL,
   PRIMARY KEY (`order_id`),
@@ -87,7 +87,7 @@ DROP TABLE IF EXISTS `product_info`;
 CREATE TABLE `product_info` (
   `product_id` varchar(32) NOT NULL COMMENT '商品id',
   `product_name` varchar(64) NOT NULL COMMENT '商品名称',
-  `product_price` decimal(8,2) DEFAULT NULL COMMENT '单价',
+  `product_price` double(8,2) DEFAULT NULL COMMENT '单价',
   `product_stock` int(11) NOT NULL COMMENT '库存',
   `product_description` varchar(64) DEFAULT NULL COMMENT '描述',
   `product_icon` varchar(512) DEFAULT NULL COMMENT '小图',
