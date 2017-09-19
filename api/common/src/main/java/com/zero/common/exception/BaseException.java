@@ -1,7 +1,7 @@
 package com.zero.common.exception;
 
 
-import com.zero.common.enums.CodeEnum;
+import com.zero.common.enums.StringEnum;
 
 /**
  * @description 自定义异常
@@ -10,21 +10,21 @@ import com.zero.common.enums.CodeEnum;
  */
 public class BaseException extends Exception {
 
-    private CodeEnum codeEnum;
+    private StringEnum codeEnum;
 
     private String msg;
 
-    public BaseException(CodeEnum codeEnum, String msg) {
+    public BaseException(StringEnum codeEnum, String msg) {
         super(msg);
         this.codeEnum = codeEnum;
         this.msg = msg;
     }
 
-    public CodeEnum getCodeEnum() {
+    public StringEnum getCodeEnum() {
         return codeEnum;
     }
 
-    public void setCodeEnum(CodeEnum codeEnum) {
+    public void setCodeEnum(StringEnum codeEnum) {
         this.codeEnum = codeEnum;
     }
 

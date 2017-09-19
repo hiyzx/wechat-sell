@@ -25,4 +25,14 @@ public class OrderDto {
     private String buyerAddress;
 
     private List<OrderDetailDto> orderDetailDtos;
+
+    @Override
+    public String toString() {
+        return "OrderDto{" +
+                "buyerOpenid='" + buyerOpenid + '\'' +
+                ", buyerName='" + buyerName + '\'' +
+                ", buyerPhone='" + buyerPhone + '\'' +
+                ", buyerAddress='" + buyerAddress + '\'' +
+                '}';
+    }
 }

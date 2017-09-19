@@ -3,6 +3,7 @@ package com.zero.customer.controller;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zero.common.enums.CodeEnum;
+import com.zero.common.enums.StringEnum;
 import com.zero.common.exception.BaseException;
 import com.zero.common.vo.BaseReturnVo;
 import org.slf4j.Logger;
@@ -54,7 +55,7 @@ public class ExceptionController {
         return commonResolve(e, CodeEnum.INTERNAL_SERVER_ERROR, "Internal Server Error");
     }
 
-    private ModelAndView commonResolve(Exception e, CodeEnum codeEnum, String msg) {
+    private ModelAndView commonResolve(Exception e, StringEnum codeEnum, String msg) {
         ModelAndView mav = new ModelAndView();
         MappingJackson2JsonView view = new MappingJackson2JsonView();
         view.setExtractValueFromSingleKeyModel(true);

@@ -6,7 +6,7 @@ package com.zero.common.enums;
  * @author yezhaoxing
  * @date 2017/4/29
  */
-public enum CodeEnum {
+public enum CodeEnum implements StringEnum {
 
     /**
      * 用户未登录

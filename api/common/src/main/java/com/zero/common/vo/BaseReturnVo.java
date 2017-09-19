@@ -2,6 +2,7 @@ package com.zero.common.vo;
 
 
 import com.zero.common.enums.CodeEnum;
+import com.zero.common.enums.StringEnum;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
@@ -21,7 +22,7 @@ public class BaseReturnVo {
     public BaseReturnVo() {
     }
 
-    public BaseReturnVo(CodeEnum codeEnum, String msg) {
+    public BaseReturnVo(StringEnum codeEnum, String msg) {
         this.resCode = codeEnum.getCodeEnum();
         this.resDes = msg;
     }

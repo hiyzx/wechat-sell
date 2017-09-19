@@ -26,7 +26,7 @@ public class ProductInfo implements Serializable {
     private Double productPrice;
 
     @ApiModelProperty(value = "库存")
-    private Integer productStock;
+    private Integer sellCount;
 
     @ApiModelProperty(value = "描述")
     private String productDescription;
