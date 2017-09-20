@@ -27,7 +27,9 @@ public class ProductInfoService {
     private ProductInfoMapper productInfoMapper;
 
     public List<ProductCategoryVo> listCategory() {
-        List<ProductCategory> productCategories = productCategoryMapper.selectAll();
+        Condition condition = new Condition(ProductCategory.class);
+        condition.orderBy("show_index");
+        List<ProductCategory> productCategories = productCategoryMapper.selectByExample(condition);
         List<ProductCategoryVo> rtn = new ArrayList<>(productCategories.size());
         productCategories.forEach(productCategory -> {
             ProductCategoryVo tmp = new ProductCategoryVo();
