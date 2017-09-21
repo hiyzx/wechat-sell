@@ -79,10 +79,10 @@ public class OrderService {
         orderMasterMapper.insertSelective(orderMaster);
         log.info("{} order", orderDto.toString());
         // 将销量暂时放在缓存中,付款成功后再增加到数据库中
-        redisHelper.set(String.format("%s%s", RedisPrefix.ORDER_SELL_COUNT, orderId), orderDetailDtos);
+        redisHelper.set(wrapperRedisKey(orderId), orderDetailDtos);
     }
 
-    public OrderVo getByOrderId(Integer orderId) {
+    public OrderVo getByOrderId(String orderId) {
         OrderMaster orderMaster = orderMasterMapper.selectByPrimaryKey(orderId);
         List<OrderDetailVo> orderDetails = this.getOrderDetailByMasterId(orderId);
         OrderVo rtn = new OrderVo();
@@ -91,7 +91,7 @@ public class OrderService {
         return rtn;
     }
 
-    private List<OrderDetailVo> getOrderDetailByMasterId(Integer orderId) {
+    private List<OrderDetailVo> getOrderDetailByMasterId(String orderId) {
         Condition condition = new Condition(OrderDetail.class);
         condition.createCriteria().andEqualTo("orderId", orderId);
         List<OrderDetail> orderDetails = orderDetailMapper.selectByExample(condition);
@@ -102,5 +102,26 @@ public class OrderService {
             rtn.add(tmp);
         });
         return rtn;
+    }
+
+    public void cancel(String openid, String orderId) throws BaseException {
+        OrderMaster orderMaster = orderMasterMapper.selectByPrimaryKey(orderId);
+        if (orderMaster.getPayStatus() == OrderMaster.PAY_STATUS_SUCCESS) {
+            throw new BaseException(CustomerCodeEnum.HAS_PAY, "已经付款,不能取消");
+        }
+        if (orderMaster.getOrderStatus() != OrderMaster.ORDER_STATUS_NEW) {
+            throw new BaseException(CustomerCodeEnum.NOT_NEW_ORDER, "非新订单,不能取消");
+        }
+        OrderMaster tmp = new OrderMaster();
+        tmp.setOrderId(orderId);
+        tmp.setOrderStatus(OrderMaster.ORDER_STATUS_CANCEL);
+        orderMasterMapper.updateByPrimaryKeySelective(tmp);
+        log.info("openid={} cancel orderId={}", openid, orderId);
+        // 取消订单,将缓存移除
+        redisHelper.delete(wrapperRedisKey(orderId));
+    }
+
+    private String wrapperRedisKey(String orderId) {
+        return String.format("%s%s", RedisPrefix.ORDER_SELL_COUNT, orderId);
     }
 }

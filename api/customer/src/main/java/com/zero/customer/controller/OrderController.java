@@ -34,7 +34,15 @@ public class OrderController {
 
     @GetMapping("/get")
     @ApiOperation("查询单个订单")
-    public ReturnVo<OrderVo> get(@ApiParam("订单id") @RequestParam Integer orderId) throws BaseException {
+    public ReturnVo<OrderVo> get(@ApiParam("订单id") @RequestParam String orderId) throws BaseException {
         return ReturnVo.success(orderService.getByOrderId(orderId));
+    }
+
+    @GetMapping("/cancel")
+    @ApiOperation("取消某个订单")
+    public BaseReturnVo cancel(@ApiParam("订单人") @RequestParam String openid,
+            @ApiParam("订单id") @RequestParam String orderId) throws BaseException {
+        orderService.cancel(openid, orderId);
+        return BaseReturnVo.success();
     }
 }
