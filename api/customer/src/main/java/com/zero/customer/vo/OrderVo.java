@@ -24,5 +24,8 @@ public class OrderVo {
     @ApiModelProperty("地址")
     private String buyerAddress;
 
+    @ApiModelProperty("订单总金额")
+    private Double orderAmount;
+
     private List<OrderDetailVo> orderDetailDtos;
 }

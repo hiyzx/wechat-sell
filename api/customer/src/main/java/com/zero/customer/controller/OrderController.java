@@ -45,4 +45,12 @@ public class OrderController {
         orderService.cancel(openid, orderId);
         return BaseReturnVo.success();
     }
+
+    @PostMapping("/pay")
+    @ApiOperation("支付")
+    public BaseReturnVo pay(@ApiParam("订单人") @RequestParam String openid,
+            @ApiParam("订单id") @RequestParam String orderId) throws BaseException {
+        orderService.pay(openid, orderId);
+        return BaseReturnVo.success();
+    }
 }

@@ -121,6 +121,34 @@ public class OrderService {
         redisHelper.delete(wrapperRedisKey(orderId));
     }
 
+    public void pay(String openid, String orderId) throws BaseException {
+        OrderMaster orderMaster = orderMasterMapper.selectByPrimaryKey(orderId);
+        if (orderMaster.getPayStatus() == OrderMaster.PAY_STATUS_SUCCESS) {
+            throw new BaseException(CustomerCodeEnum.HAS_PAY, "已经付款");
+        }
+        if (orderMaster.getOrderStatus() != OrderMaster.ORDER_STATUS_NEW) {
+            throw new BaseException(CustomerCodeEnum.NOT_NEW_ORDER, "非新订单,不能付款");
+        }
+        OrderMaster tmp = new OrderMaster();
+        tmp.setOrderId(orderId);
+        tmp.setPayStatus(OrderMaster.PAY_STATUS_SUCCESS);
+        orderMasterMapper.updateByPrimaryKeySelective(tmp);
+        log.info("openid={} pay order={}", openid, orderId);
+        // 支付成功,修改商品销量
+        List<OrderDetailDto> orderDetailDtos = redisHelper.get(wrapperRedisKey(orderId));
+        orderDetailDtos.forEach(orderDetailDto -> {
+            ProductInfo productInfo = new ProductInfo();
+            String productInfoId = orderDetailDto.getProductInfoId();
+            productInfo.setProductId(productInfoId);
+            int count = orderDetailDto.getCount();
+            productInfo.setSellCount(count);
+            productInfoMapper.updateByPrimaryKeySelective(productInfo);
+            log.info("openid={} pay success and modify the sellCount={} of productId={}", openid, count, productInfoId);
+        });
+        // 支付成功,将缓存移除
+        redisHelper.delete(wrapperRedisKey(orderId));
+    }
+
     private String wrapperRedisKey(String orderId) {
         return String.format("%s%s", RedisPrefix.ORDER_SELL_COUNT, orderId);
     }
