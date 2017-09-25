@@ -1,4 +1,4 @@
-package com.zero.customer.controller;
+package com.zero.customer.web.exception;
 
 import com.zero.common.enums.CodeEnum;
 import com.zero.common.vo.BaseReturnVo;

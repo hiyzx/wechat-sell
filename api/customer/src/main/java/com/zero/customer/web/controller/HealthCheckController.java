@@ -1,4 +1,4 @@
-package com.zero.customer.controller;
+package com.zero.customer.web.controller;
 
 import com.zero.common.vo.HealthCheckVo;
 import com.zero.customer.service.HealthCheckService;
