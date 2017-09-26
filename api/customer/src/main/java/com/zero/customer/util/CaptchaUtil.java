@@ -26,49 +26,7 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class CaptchaUtil {
 
-    @Resource
-    private RedisHelper<String, String> redisHelper;
-
     private static final int EXPIRED_SECONDS = ((Long) TimeUnit.MINUTES.toSeconds(30)).intValue();
-
-    /**
-     * 生成验证码
-     */
-    public void generate(HttpServletRequest request, HttpServletResponse response) {
-        // 先检查cookie的uuid是否存在
-        String sessionId = request.getSession().getId();
-        String captchaCode = this.generateCode().toUpperCase();// 转成大写重要
-        // 生成验证码
-        generate(response, captchaCode);
-        redisHelper.set(wrapperRedisKey(sessionId), captchaCode, EXPIRED_SECONDS);
-    }
-
-    /**
-     * 仅能验证一次，验证后立即删除
-     */
-    public boolean validate(HttpServletRequest request, HttpServletResponse response, String userInputCaptcha) {
-        String sessionId = request.getSession().getId();
-        if (StringUtils.isEmpty(sessionId)) {
-            return false;
-        }
-        String redisKey = wrapperRedisKey(sessionId);
-        String captchaCode = redisHelper.get(redisKey);
-        if (StringUtils.isEmpty(captchaCode)) {
-            return false;
-        }
-        // 转成大写重要
-        userInputCaptcha = userInputCaptcha.toUpperCase();
-        boolean result = userInputCaptcha.equals(captchaCode);
-        if (result) {
-            redisHelper.delete(redisKey);
-        }
-        return result;
-    }
-
-    private String wrapperRedisKey(String sessionId) {
-        return String.format("%s-%s", "captcha", sessionId);
-    }
-
     // 默认的验证码大小
     private static final int WIDTH = 108, HEIGHT = 40, CODE_SIZE = 4;
     // 验证码随机字符数组
@@ -78,52 +36,10 @@ public class CaptchaUtil {
             new Font("Arial", Font.BOLD, 32), new Font("Bell MT", Font.BOLD, 32),
             new Font("Credit valley", Font.BOLD, 34), new Font("Impact", Font.BOLD, 32),
             new Font(Font.MONOSPACED, Font.BOLD, 40) };
-
-    /**
-     * 生成验证码
-     */
-    private void generate(HttpServletResponse response, String vCode) {
-        BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
-        response.setHeader("Pragma", "no-cache");
-        response.setHeader("Cache-Control", "no-cache");
-        response.setDateHeader("Expires", 0);
-        response.setContentType("image/jpeg");
-
-        ServletOutputStream sos = null;
-        try {
-            drawGraphic(image, vCode);
-            sos = response.getOutputStream();
-            ImageIO.write(image, "JPEG", sos);
-            sos.flush();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            try {
-                if (sos != null) {
-                    sos.close();
-                }
-            } catch (IOException ioe) {
-                // ignore
-            }
-        }
-    }
-
     // 生成随机类
     private static final Random RANDOM = new Random();
-
-    /**
-     * 生成验证码字符串
-     * 
-     * @return 验证码字符串
-     */
-    private String generateCode() {
-        int count = CODE_SIZE;
-        char[] buffer = new char[count];
-        for (int i = 0; i < count; i++) {
-            buffer[i] = charArray[RANDOM.nextInt(charArray.length)];
-        }
-        return new String(buffer);
-    }
+    @Resource
+    private RedisHelper<String, String> redisHelper;
 
     private static void drawGraphic(BufferedImage image, String code) {
         // 获取图形上下文
@@ -195,5 +111,86 @@ public class CaptchaUtil {
         int g = fc + RANDOM.nextInt(bc - fc);
         int b = fc + RANDOM.nextInt(bc - fc);
         return new Color(r, g, b);
+    }
+
+    /**
+     * 生成验证码
+     */
+    public void generate(HttpServletRequest request, HttpServletResponse response) {
+        // 先检查cookie的uuid是否存在
+        String sessionId = request.getSession().getId();
+        String captchaCode = this.generateCode().toUpperCase();// 转成大写重要
+        // 生成验证码
+        generate(response, captchaCode);
+        redisHelper.set(wrapperRedisKey(sessionId), captchaCode, EXPIRED_SECONDS);
+    }
+
+    /**
+     * 仅能验证一次，验证后立即删除
+     */
+    public boolean validate(HttpServletRequest request, String userInputCaptcha) {
+        String sessionId = request.getSession().getId();
+        if (StringUtils.isEmpty(sessionId)) {
+            return false;
+        }
+        String redisKey = wrapperRedisKey(sessionId);
+        String captchaCode = redisHelper.get(redisKey);
+        if (StringUtils.isEmpty(captchaCode)) {
+            return false;
+        }
+        // 转成大写重要
+        userInputCaptcha = userInputCaptcha.toUpperCase();
+        boolean result = userInputCaptcha.equals(captchaCode);
+        if (result) {
+            redisHelper.delete(redisKey);
+        }
+        return result;
+    }
+
+    private String wrapperRedisKey(String sessionId) {
+        return String.format("%s-%s", "captcha", sessionId);
+    }
+
+    /**
+     * 生成验证码
+     */
+    private void generate(HttpServletResponse response, String vCode) {
+        BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+        response.setHeader("Pragma", "no-cache");
+        response.setHeader("Cache-Control", "no-cache");
+        response.setDateHeader("Expires", 0);
+        response.setContentType("image/jpeg");
+
+        ServletOutputStream sos = null;
+        try {
+            drawGraphic(image, vCode);
+            sos = response.getOutputStream();
+            ImageIO.write(image, "JPEG", sos);
+            sos.flush();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                if (sos != null) {
+                    sos.close();
+                }
+            } catch (IOException ioe) {
+                // ignore
+            }
+        }
+    }
+
+    /**
+     * 生成验证码字符串
+     *
+     * @return 验证码字符串
+     */
+    private String generateCode() {
+        int count = 4;
+        char[] buffer = new char[count];
+        for (int i = 0; i < count; i++) {
+            buffer[i] = charArray[RANDOM.nextInt(charArray.length)];
+        }
+        return new String(buffer);
     }
 }

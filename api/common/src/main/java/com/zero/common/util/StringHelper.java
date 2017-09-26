@@ -1,9 +1,6 @@
 package com.zero.common.util;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * 字符串处理类
@@ -48,5 +45,9 @@ public class StringHelper {
 
     private static String generateKey() {
         return uuid.toString().replaceAll("-", "").substring(0, 20);
+    }
+
+    public static String generateCode() {
+        return String.valueOf(new Random().nextInt(9000) + 1000);
     }
 }

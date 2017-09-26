@@ -12,7 +12,9 @@ public enum CustomerCodeEnum implements StringEnum {
 
     HAS_PAY("100002"),
 
-    NOT_NEW_ORDER("100003");
+    NOT_NEW_ORDER("100003"),
+
+    CAPTCHA_WRONG("100004");
 
     private String CodeEnum;
 

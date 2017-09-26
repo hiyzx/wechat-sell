@@ -19,6 +19,8 @@ public enum CodeEnum implements StringEnum {
 
     INTERNAL_SERVER_ERROR("500"),
 
+    OFTEN_SEND_MSG("100001"),
+
     SUCCESS("000000");
     private String CodeEnum;
 
