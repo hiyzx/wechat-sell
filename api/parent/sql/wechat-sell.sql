@@ -95,7 +95,7 @@ CREATE TABLE `user` (
   `password` varchar(50) DEFAULT NULL COMMENT '密码',
   `last_login_time` datetime DEFAULT NULL COMMENT '最后登陆时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for user_check_count

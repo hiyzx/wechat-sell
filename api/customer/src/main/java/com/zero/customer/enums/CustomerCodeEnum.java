@@ -8,14 +8,15 @@ import com.zero.common.enums.StringEnum;
  */
 public enum CustomerCodeEnum implements StringEnum {
 
-    PRODUCT_NOT_EXIST("100001"),
+    PRODUCT_NOT_EXIST("200001"),
 
-    HAS_PAY("100002"),
+    HAS_PAY("200002"),
 
-    NOT_NEW_ORDER("100003"),
+    NOT_NEW_ORDER("200003"),
 
-    CAPTCHA_WRONG("100004");
+    CAPTCHA_WRONG("200004"),
 
+    CHECK_REPEAT("200005");
     private String CodeEnum;
 
     private CustomerCodeEnum(String value) {

@@ -27,7 +27,6 @@ public enum CodeEnum implements StringEnum {
 
     LOGIN_FALL("100004"),
 
-
     PHONE_HAS_EXIST("100005"),
 
     /**
@@ -36,6 +35,7 @@ public enum CodeEnum implements StringEnum {
     VALID_FAIL("100006"),
 
     SUCCESS("000000");
+
     private String CodeEnum;
 
     private CodeEnum(String value) {
