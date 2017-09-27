@@ -48,9 +48,9 @@ project:
 
 logging:
   level:
-    com.zero: debug
-    org.springframework.web: debug
-    springframework.transaction: debug
+    com.zero: info
+    org.springframework.web: info
+    springframework.transaction: info
     org.mybatis: debug
 
 jasypt:

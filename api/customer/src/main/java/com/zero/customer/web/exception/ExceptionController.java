@@ -1,7 +1,11 @@
 package com.zero.customer.web.exception;
 
-import java.util.List;
-
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zero.common.enums.CodeEnum;
+import com.zero.common.enums.StringEnum;
+import com.zero.common.exception.BaseException;
+import com.zero.common.vo.BaseReturnVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -12,14 +16,10 @@ import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zero.common.enums.CodeEnum;
-import com.zero.common.enums.StringEnum;
-import com.zero.common.exception.BaseException;
-import com.zero.common.vo.BaseReturnVo;
+import java.util.List;
 
 /**
  * 全局异常类配置
@@ -42,7 +42,16 @@ public class ExceptionController {
      */
     @ExceptionHandler(BaseException.class)
     public ModelAndView resolveException(BaseException e) {
+
         return commonResolve(e, e.getCodeEnum(), e.getMsg());
+    }
+
+    /**
+     * 捕获404异常
+     */
+    @ExceptionHandler(NoHandlerFoundException.class)
+    public ModelAndView resolveException(NoHandlerFoundException e) {
+        return commonResolve(e, CodeEnum.PAGE_NOT_FOUND, "page not found");
     }
 
     /**
