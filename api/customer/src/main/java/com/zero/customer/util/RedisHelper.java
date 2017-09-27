@@ -1,7 +1,7 @@
 package com.zero.customer.util;
 
-import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.concurrent.TimeUnit;
@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
  * @author yezhaoxing
  * @date 2017/7/17
  */
-@Configuration
+@Component
 public class RedisHelper<K, V> {
 
     @Resource
@@ -23,11 +23,12 @@ public class RedisHelper<K, V> {
     }
 
     public void set(K key, V value, long expireTime) {
-        redisTemplate.opsForValue().set(key, value, expireTime);
+        this.set(key, value);
+        this.expire(key, expireTime);
     }
 
     public void expire(K key, long expireTime) {
-        redisTemplate.expire(key, expireTime, TimeUnit.MILLISECONDS);
+        redisTemplate.expire(key, expireTime, TimeUnit.SECONDS);
     }
 
     public V get(K key) {
