@@ -21,6 +21,20 @@ public enum CodeEnum implements StringEnum {
 
     OFTEN_SEND_MSG("100001"),
 
+    CODE_HAS_EXPIRE("100002"),
+
+    CODE_IS_WRONG("100003"),
+
+    LOGIN_FALL("100004"),
+
+
+    PHONE_HAS_EXIST("100005"),
+
+    /**
+     * 参数校验失败
+     */
+    VALID_FAIL("100006"),
+
     SUCCESS("000000");
     private String CodeEnum;
 

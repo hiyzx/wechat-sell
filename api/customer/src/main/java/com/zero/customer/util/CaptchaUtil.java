@@ -26,7 +26,7 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class CaptchaUtil {
 
-    private static final int EXPIRED_SECONDS = ((Long) TimeUnit.MINUTES.toSeconds(30)).intValue();
+    private static final long CAPTCHA_EXPIRED_SECONDS = ((Long) TimeUnit.MINUTES.toSeconds(5)).intValue();
     // 默认的验证码大小
     private static final int WIDTH = 108, HEIGHT = 40, CODE_SIZE = 4;
     // 验证码随机字符数组
@@ -122,7 +122,7 @@ public class CaptchaUtil {
         String captchaCode = this.generateCode().toUpperCase();// 转成大写重要
         // 生成验证码
         generate(response, captchaCode);
-        redisHelper.set(wrapperRedisKey(sessionId), captchaCode, EXPIRED_SECONDS);
+        redisHelper.set(wrapperRedisKey(sessionId), captchaCode, CAPTCHA_EXPIRED_SECONDS);
     }
 
     /**

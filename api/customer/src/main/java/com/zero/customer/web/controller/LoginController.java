@@ -1,20 +1,27 @@
 package com.zero.customer.web.controller;
 
 import com.zero.common.exception.BaseException;
+import com.zero.common.po.User;
 import com.zero.common.vo.BaseReturnVo;
+import com.zero.common.vo.ReturnVo;
 import com.zero.customer.enums.CustomerCodeEnum;
 import com.zero.customer.service.LoginService;
 import com.zero.customer.service.MessageService;
 import com.zero.customer.util.CaptchaUtil;
 import com.zero.customer.util.SessionHelper;
+import com.zero.customer.vo.UserLoginResponseVo;
+import com.zero.customer.vo.UserResponseVo;
+import com.zero.customer.vo.dto.UserDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.IOException;
 
 /**
@@ -41,7 +48,7 @@ public class LoginController {
         captchaUtil.generate(request, response);
     }
 
-    @GetMapping(value = "/sendMsg")
+    @PostMapping(value = "/sendMsg")
     @ApiOperation("发送短信")
     public BaseReturnVo sendMsg(HttpServletRequest request,
             @ApiParam(value = "手机号", required = true) @RequestParam String phone,
@@ -57,15 +64,29 @@ public class LoginController {
 
     @PostMapping(value = "/register.json")
     @ApiOperation("注册")
-    public BaseReturnVo register(@RequestParam String username) throws Exception {
-        return BaseReturnVo.success();
+    public ReturnVo<UserLoginResponseVo> register(HttpServletRequest request, @RequestBody @Valid UserDto userDto) throws Exception {
+        User user = loginService.register(userDto);
+        // session放入redis中
+        String sessionId = request.getSession().getId();
+        UserResponseVo userResponseVo = new UserResponseVo();
+        BeanUtils.copyProperties(user, userResponseVo);
+        UserLoginResponseVo loginResponseVo = new UserLoginResponseVo(sessionId, userResponseVo);
+        sessionHelper.pushUser(loginResponseVo);
+        return ReturnVo.success(loginResponseVo);
     }
 
     @PostMapping(value = "/login.json")
     @ApiOperation("登陆")
-    public BaseReturnVo login(@RequestParam String username, @RequestParam String password,
-            @RequestParam Boolean rememberMe) throws Exception {
-        return BaseReturnVo.success();
+    public ReturnVo<UserLoginResponseVo> login(HttpServletRequest request, @RequestParam String phone,
+            @RequestParam String password) throws Exception {
+        User user = loginService.login(phone, password);
+        // session放入redis中
+        String sessionId = request.getSession().getId();
+        UserResponseVo userResponseVo = new UserResponseVo();
+        BeanUtils.copyProperties(user, userResponseVo);
+        UserLoginResponseVo loginResponseVo = new UserLoginResponseVo(sessionId, userResponseVo);
+        sessionHelper.pushUser(loginResponseVo);
+        return ReturnVo.success(loginResponseVo);
     }
 
     @PostMapping(value = "/logout.json")

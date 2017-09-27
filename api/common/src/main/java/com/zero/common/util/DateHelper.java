@@ -225,4 +225,32 @@ public final class DateHelper {
 
         return dateList;
     }
+
+    public static boolean isSameDate(Date date1, Date date2) {
+        Calendar cal1 = Calendar.getInstance();
+        cal1.setTime(date1);
+        Calendar cal2 = Calendar.getInstance();
+        cal2.setTime(date2);
+        boolean isSameYear = cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR);
+        boolean isSameMonth = isSameYear && cal1.get(Calendar.MONTH) == cal2.get(Calendar.MONTH);
+        return isSameMonth && cal1.get(Calendar.DAY_OF_MONTH) == cal2.get(Calendar.DAY_OF_MONTH);
+    }
+
+    public static int daysBetween(Date smdate, Date bdate) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            smdate = sdf.parse(sdf.format(smdate));
+            bdate = sdf.parse(sdf.format(bdate));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(smdate);
+        long time1 = cal.getTimeInMillis();
+        cal.setTime(bdate);
+        long time2 = cal.getTimeInMillis();
+        long between_days = (time2 - time1) / (1000 * 3600 * 24);
+
+        return Integer.parseInt(String.valueOf(between_days));
+    }
 }

@@ -1,16 +1,19 @@
 package com.zero.customer.vo;
 
-import com.zero.common.po.User;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author yezhaoxing
  * @date 2017/09/25
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserLoginResponseVo {
 
     private String sessionId;
 
-    private User user;
+    private UserResponseVo user;
 }

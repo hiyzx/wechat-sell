@@ -1,7 +1,7 @@
 package com.zero.customer.util;
 
-import com.zero.common.po.User;
 import com.zero.customer.vo.UserLoginResponseVo;
+import com.zero.customer.vo.UserResponseVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
@@ -15,15 +15,15 @@ public class SessionHelper {
     private static final int SESSION_EXPIRED_SECONDS = ((Long) TimeUnit.MINUTES.toSeconds(30)).intValue();
 
     @Resource
-    private RedisHelper<String, User> redisHelper;
+    private RedisHelper<String, UserResponseVo> redisHelper;
 
     public int getUserId(String sessionId) {
-        User user = this.getUser(sessionId);
+        UserResponseVo user = this.getUser(sessionId);
         return user == null ? 0 : user.getId();
     }
 
-    public User getUser(String sessionId) {
-        User user = null;
+    public UserResponseVo getUser(String sessionId) {
+        UserResponseVo user = null;
         try {
             String key = sessionIdWrapper(sessionId);
             user = redisHelper.get(key);
@@ -47,7 +47,7 @@ public class SessionHelper {
     }
 
     public void heartBeat(String sessionId) throws Exception {
-        User user = getUser(sessionId);
+        UserResponseVo user = getUser(sessionId);
         if (user != null) {
             String key = sessionIdWrapper(sessionId);
             LOG.debug("sessionId={} teacherId={} heartbeat", sessionId, user.getId());
