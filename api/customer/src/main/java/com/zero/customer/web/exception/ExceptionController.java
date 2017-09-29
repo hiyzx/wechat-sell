@@ -42,7 +42,6 @@ public class ExceptionController {
      */
     @ExceptionHandler(BaseException.class)
     public ModelAndView resolveException(BaseException e) {
-
         return commonResolve(e, e.getCodeEnum(), e.getMsg());
     }
 
