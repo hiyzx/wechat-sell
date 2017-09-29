@@ -2,7 +2,6 @@ package com.zero.customer.service;
 
 import com.zero.common.constants.PointConstant;
 import com.zero.common.dao.UserCheckCountMapper;
-import com.zero.common.dao.UserMapper;
 import com.zero.common.enums.PointTypeEnum;
 import com.zero.common.exception.BaseException;
 import com.zero.common.po.UserCheckCount;
@@ -25,8 +24,6 @@ import java.util.Date;
 @Slf4j
 public class UserService {
 
-    @Resource
-    private UserMapper userMapper;
     @Resource
     private UserCheckCountService userCheckCountService;
     @Resource
