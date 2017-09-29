@@ -2,6 +2,7 @@ package com.zero.customer.web.controller;
 
 import com.zero.common.vo.BaseReturnVo;
 import com.zero.common.vo.ReturnVo;
+import com.zero.customer.annotation.Authorize;
 import com.zero.customer.service.UserService;
 import com.zero.customer.util.SessionHelper;
 import com.zero.customer.vo.CheckRecordVo;
@@ -28,6 +29,7 @@ public class UserController {
     @Resource
     private UserService userService;
 
+    @Authorize
     @PostMapping(value = "/check.json")
     @ApiOperation("签到")
     public BaseReturnVo check(@RequestParam String sessionId) throws Exception {
@@ -35,6 +37,7 @@ public class UserController {
         return BaseReturnVo.success();
     }
 
+    @Authorize
     @PostMapping(value = "/queryCheckRecord.json")
     @ApiOperation("查看签到记录")
     public ReturnVo<CheckRecordVo> queryCheckRecord(@RequestParam String sessionId) throws Exception {

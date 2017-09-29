@@ -4,6 +4,7 @@ import com.zero.common.exception.BaseException;
 import com.zero.common.po.User;
 import com.zero.common.vo.BaseReturnVo;
 import com.zero.common.vo.ReturnVo;
+import com.zero.customer.annotation.Authorize;
 import com.zero.customer.enums.CustomerCodeEnum;
 import com.zero.customer.service.LoginService;
 import com.zero.customer.service.MessageService;
@@ -89,6 +90,7 @@ public class LoginController {
         return ReturnVo.success(loginResponseVo);
     }
 
+    @Authorize
     @PostMapping(value = "/logout.json")
     @ApiOperation("注销")
     public BaseReturnVo logout(@RequestParam String sessionId) throws Exception {

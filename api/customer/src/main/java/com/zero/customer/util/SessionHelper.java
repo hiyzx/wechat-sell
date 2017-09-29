@@ -17,9 +17,9 @@ public class SessionHelper {
     @Resource
     private RedisHelper<String, UserResponseVo> redisHelper;
 
-    public int getUserId(String sessionId) {
+    public Integer getUserId(String sessionId) {
         UserResponseVo user = this.getUser(sessionId);
-        return user == null ? 0 : user.getId();
+        return user == null ? null : user.getId();
     }
 
     public UserResponseVo getUser(String sessionId) {

@@ -4,13 +4,12 @@ import com.zero.common.exception.BaseException;
 import com.zero.common.util.JsonHelper;
 import com.zero.customer.util.IpUtil;
 import com.zero.customer.util.SessionHelper;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -20,8 +19,8 @@ import java.util.Map;
 
 @Aspect
 @Component
+@Slf4j
 public class LoggerInterceptor {
-    private static final Logger LOG = LoggerFactory.getLogger(LoggerInterceptor.class);
     @Resource
     private HttpServletRequest request;
     @Resource
@@ -37,9 +36,9 @@ public class LoggerInterceptor {
     @AfterReturning(value = "logController()", returning = "returnValue")
     public void afterReturning(JoinPoint joinPoint, Object returnValue) {
         try {
-            LOG.info("request={} || response={}", parseRequest(), JsonHelper.toJSon(returnValue));
+            log.info("request={} || response={}", parseRequest(), JsonHelper.toJSon(returnValue));
         } catch (Exception e) {
-            LOG.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
         }
     }
 
@@ -48,13 +47,13 @@ public class LoggerInterceptor {
         try {
             if (e instanceof BaseException) {
                 BaseException baseException = (BaseException) e;
-                LOG.info("request={} || exceptionCode={}, exceptionMessage={}", parseRequest(),
+                log.info("request={} || exceptionCode={}, exceptionMessage={}", parseRequest(),
                         baseException.getCodeEnum().getCodeEnum(), baseException.getMessage());
             } else {
-                LOG.info("request={} || exceptionMessage={}", parseRequest(), e.getMessage());
+                log.info("request={} || exceptionMessage={}", parseRequest(), e.getMessage());
             }
         } catch (Exception e1) {
-            LOG.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
         }
     }
 
