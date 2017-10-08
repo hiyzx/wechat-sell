@@ -3,7 +3,7 @@ write a complete system for learning
 
 ### Environment
 
-| evn   | version |    
+| env   | version |    
 | :---:  | :---:  | 
 | jdk   | 1.8    | 
 | MySQL | 5.7.19 | 
