@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+</head>
+<body>
+    <div id="login">
+        <input type="text" placeholder="手机号" v-model="phone"><br/>
+        <input type="password" placeholder="密码" v-model="password"><br/>
+        <input type="button" @click="login" value="登录">
+    </div>
+</body>
+<script src="js/vue.js"></script>
+<script>
+    var data = {
+        phone:"",
+        password:""
+    }
+    var vm = new Vue({
+        el:"#login",
+        data:data,
+        methods:{
+            login:function () {
+                alert(data.phone + "" + data.password)
+            }
+        }
+    })
+</script>
+</html>

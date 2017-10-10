@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>test</title>
+        <link rel="stylesheet" href="css/demo.css">
+    </head>
+    <body>
+    <div id="app1">
+        <!-- view -->
+        <h1>{{message}}</h1>
+        <h1 v-if="yes">Yes!</h1>
+        <h1 v-if="no">no!</h1>
+        <!-- v-if和v-show的区别:v-show会被渲染到html中,只是被设置成 style="display: none;" -->
+        <h1 v-if="age >= 25">Age:{{age}}</h1>
+        <h1 v-else>Age={{age}} < 25</h1>
+
+        <h1 v-show="name.indexOf('zero') >= 0">Name: {{ name }}</h1>
+        <input type="text" v-model="message">
+    </div>
+    <div id="app2">
+        <table>
+            <thead>
+                <tr>
+                    <th>name</th>
+                    <th>age</th>
+                    <th>sex</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="person in people">
+                    <td>{{person.name}}</td>
+                    <td>{{person.age}}</td>
+                    <td>{{person.sex}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="app3">
+        <ul class="pagination">
+            <li v-for="n in pageCount">
+                <!-- v-bind:class可以缩写为 :class -->
+                <a href="javascript:void(0)" v-bind:class="activeNumber == n ? 'active' : ''">{{n}}</a>
+            </li>
+        </ul>
+    </div>
+    <div id="app4">
+        <p>
+            <!-- v-on:click可以缩写为 @click-->
+            <button v-on:click="great">Greet</button>
+        </p>
+        <p>
+            <button @click="say('Hi')">Hi</button>
+        </p>
+    </div>
+
+    <div id="app5">
+        <fieldset>
+            <legend>
+                create new person
+            </legend>
+        </fieldset>
+    </div>
+    </body>
+    <script src="js/vue.js"></script>
+    <script>
+        // model
+        var exampleData = {
+            message: 'Hello World!',
+            yes: true,
+            no: false,
+            age: 26,
+            name: 'zero'
+        }
+        // 创建vue实例 连接vue和model
+        new Vue({
+            el: "#app1",
+            data: exampleData
+        })
+
+        new Vue({
+            el:"#app2",
+            data:{
+                people:[{
+                    name: 'zero',
+                    age: 25,
+                    sex: 'Male'
+                },{
+                    name: 'yzx',
+                    age: 25,
+                    sex: 'Male'
+                },{
+                    name: 'jany',
+                    age: 23,
+                    sex: 'Female'
+                }]
+            }
+        })
+
+        new Vue({
+            el: "#app3",
+            data: {
+                activeNumber: 1,
+                pageCount: 10
+            }
+        })
+
+        new Vue({
+            el: "#app4",
+            methods:{
+                great:function () {
+                    alert("hi vue.js");
+                },
+                say:function (msg) {
+                    alert(msg);
+                }
+            }
+        })
+    </script>
+</html>
