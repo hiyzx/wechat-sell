@@ -8,7 +8,8 @@
     <div id="login">
         <input type="text" placeholder="手机号" v-model="phone"><br/>
         <input type="password" placeholder="密码" v-model="password"><br/>
-        <input type="button" @click="login" value="登录">
+        <input type="button" @click="login" value="登录"><br/>
+        <input type="button" @click="logout" value="退出">
     </div>
 </body>
 <script src="js/vue.js"></script>
@@ -27,13 +28,26 @@
                     {phone:data.phone,password:data.password},
                     {emulateJSON:true}).then(
                     function (res) {
-                        console.log(res.body)
+                        var resp = res.body;
+                        localStorage.setItem("sessionId",resp.data.sessionId)
                         alert("登录成功");
                     },function (res) {
                         alert(res.body.resDes)
                     }
                 );
-
+            },
+            logout:function () {
+                this.$http.post("http://localhost:8083/customer/auth/logout.json",
+                    {sessionId:localStorage.getItem("sessionId")},
+                    {emulateJSON:true}).then(
+                    function (res) {
+                        var resp = res.body;
+                        localStorage.clear();
+                        alert("退出成功");
+                    },function (res) {
+                        alert(res.body.resDes)
+                    }
+                );
             }
         }
     })
