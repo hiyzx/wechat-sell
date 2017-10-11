@@ -58,7 +58,7 @@ public class LoginService {
         condition.createCriteria().andEqualTo("phone", phone).andEqualTo("password", password);
         List<User> users = userMapper.selectByExample(condition);
         if (users.isEmpty()) {
-            throw new BaseException(CodeEnum.LOGIN_FALL, "登录失败");
+            throw new BaseException(CodeEnum.LOGIN_FALL, "帐号或者密码错误!");
         } else {
             User user = users.get(0);
             Date lastLoginTime = user.getLastLoginTime();

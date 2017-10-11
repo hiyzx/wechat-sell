@@ -12,6 +12,7 @@
     </div>
 </body>
 <script src="js/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue-resource@1.3.4"></script>
 <script>
     var data = {
         phone:"",
@@ -22,7 +23,17 @@
         data:data,
         methods:{
             login:function () {
-                alert(data.phone + "" + data.password)
+                this.$http.post("http://localhost:8083/customer/auth/login.json",
+                    {phone:data.phone,password:data.password},
+                    {emulateJSON:true}).then(
+                    function (res) {
+                        console.log(res.body)
+                        alert("登录成功");
+                    },function (res) {
+                        alert(res.body.resDes)
+                    }
+                );
+
             }
         }
     })

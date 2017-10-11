@@ -9,10 +9,6 @@ write a complete system for learning
 | MySQL | 5.7.19 | 
 | redis | 2.8    | 
 
-
-
-
- 
 ### Q&A
 Q1 How to start?
 1. This is a front-ent separation project.
