@@ -10,7 +10,7 @@
     <packaging>pom</packaging>
 
     <name>parent</name>
-    <description>wechat sell system</description>
+    <description>takeaway system</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>

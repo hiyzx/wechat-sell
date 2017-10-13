@@ -34,7 +34,7 @@ public class Swagger2 {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder().title("微信点餐系统").description("客户端").license("仅供内部参考")
-                .contact(new Contact("zero", "https://github.com/hiyzx/wechat-sell", "452002276@qq.com"))
+                .contact(new Contact("zero", "https://github.com/hiyzx/takeaway", "452002276@qq.com"))
                 .version(version).termsOfServiceUrl(null).build();
     }
 }

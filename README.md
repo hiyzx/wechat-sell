@@ -1,4 +1,4 @@
-# wechat-sell
+# takeaway
 write a complete system for learning   
 
 ### Environment
@@ -24,7 +24,7 @@ Q2 What technologies are use in the project?
 1. spring-boot + mybatis + maven
 
 Q3 How to run the project?   
-1. init the sql that under the dir parent/sql/wechat-sell.sql
+1. init the sql that under the dir parent/sql/takeaway.sql
 2. install the parent pom
 3. run the main method of com.zero.customer.CustomerApplication
 4. Open the chrome,and enter localhost:8081/customer/swagger-ui.html

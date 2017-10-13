@@ -2,15 +2,15 @@
 Navicat MySQL Data Transfer
 
 Source Server         : local
-Source Server Version : 50719
+Source Server Version : 50525
 Source Host           : localhost:3306
-Source Database       : wechat-sell
+Source Database       : takeaway
 
 Target Server Type    : MYSQL
-Target Server Version : 50719
+Target Server Version : 50525
 File Encoding         : 65001
 
-Date: 2017-09-25 23:36:59
+Date: 2017-10-13 09:30:24
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `product_category` (
   `update_time` datetime NOT NULL COMMENT '更新时间',
   PRIMARY KEY (`category_id`),
   UNIQUE KEY `uqe_category_type` (`show_index`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='商品类目表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商品类目表';
 
 -- ----------------------------
 -- Table structure for product_info
@@ -95,7 +95,7 @@ CREATE TABLE `user` (
   `password` varchar(50) DEFAULT NULL COMMENT '密码',
   `last_login_time` datetime DEFAULT NULL COMMENT '最后登陆时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for user_check_count
@@ -121,7 +121,7 @@ CREATE TABLE `user_point` (
   `user_id` int(11) DEFAULT NULL COMMENT '用户id',
   `point` int(11) DEFAULT NULL COMMENT '积分',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for user_point_record
@@ -134,4 +134,4 @@ CREATE TABLE `user_point_record` (
   `gain_point` int(11) DEFAULT NULL COMMENT '获得的积分',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
