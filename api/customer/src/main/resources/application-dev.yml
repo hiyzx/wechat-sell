@@ -3,9 +3,9 @@ server:
   context-path: /customer
 spring:
   datasource:
-    url: jdbc:mysql://www.hiyzx.cn:3306/takeaway?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=true
+    url: jdbc:mysql://www.hiyzx.cn:3306/takeaway?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false
     username: root
-    password: ENC(dlExVS2dhFSRA9n8wkW8DDGg4Z7Xq2N4)
+    password: ENC(0niKkkFR6hmj6/Hkx5uQoTGryKyCPKQS)
     driver-class-name: com.mysql.jdbc.Driver
     type: com.zaxxer.hikari.HikariDataSource
     hikari:

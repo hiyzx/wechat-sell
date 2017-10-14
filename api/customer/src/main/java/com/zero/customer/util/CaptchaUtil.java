@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  *
- * @description 验证码处理类
+ * @description 验证码处理类--需要注意linux下是否存在字体,否则会报错
  * @author yezhaoxing
  * @date 2017/8/18
  */
