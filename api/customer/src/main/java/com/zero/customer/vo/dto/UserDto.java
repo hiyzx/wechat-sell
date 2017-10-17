@@ -1,5 +1,6 @@
 package com.zero.customer.vo.dto;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -13,6 +14,7 @@ import javax.validation.constraints.Size;
  * @date : 2017/4/17
  */
 @Data
+@ApiModel("用户注册dto")
 public class UserDto {
 
     @ApiModelProperty(value = "年龄")
