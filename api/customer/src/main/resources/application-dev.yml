@@ -53,6 +53,16 @@ logging:
     springframework.transaction: info
     org.mybatis: debug
 
+feige:
+  secret:
+    key: 7d55aa74dbae1c1c0bc68453e3e7742a
+
+http:
+  feige:
+    scheme: http
+    hostname: u.ifeige.cn
+    port: 80
+
 jasypt:
   encryptor:
     password: 123456
