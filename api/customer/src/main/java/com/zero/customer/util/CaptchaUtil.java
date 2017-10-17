@@ -1,5 +1,6 @@
 package com.zero.customer.util;
 
+import com.zero.common.util.StringHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.StringUtils;
@@ -15,6 +16,9 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
+
+import static com.zero.common.constants.SystemConstants.COOKIE_NAME;
+import static com.zero.common.constants.SystemConstants.DEFAULT_MAX_AGE;
 
 /**
  *
@@ -118,22 +122,26 @@ public class CaptchaUtil {
      */
     public void generate(HttpServletRequest request, HttpServletResponse response) {
         // 先检查cookie的uuid是否存在
-        String sessionId = request.getSession().getId();
+        String cookieValue = WebHelper.getCookieValue(request, COOKIE_NAME);
+        if (StringUtils.isEmpty(cookieValue)) {
+            cookieValue = StringHelper.generateUUId();
+            WebHelper.setCookie(response, COOKIE_NAME, cookieValue, DEFAULT_MAX_AGE);
+        }
         String captchaCode = this.generateCode().toUpperCase();// 转成大写重要
         // 生成验证码
         generate(response, captchaCode);
-        redisHelper.set(wrapperRedisKey(sessionId), captchaCode, CAPTCHA_EXPIRED_SECONDS);
+        redisHelper.set(wrapperRedisKey(cookieValue), captchaCode, CAPTCHA_EXPIRED_SECONDS);
     }
 
     /**
      * 仅能验证一次，验证后立即删除
      */
     public boolean validate(HttpServletRequest request, String userInputCaptcha) {
-        String sessionId = request.getSession().getId();
-        if (StringUtils.isEmpty(sessionId)) {
+        String cookieValue = WebHelper.getCookieValue(request, COOKIE_NAME);
+        if (StringUtils.isEmpty(cookieValue)) {
             return false;
         }
-        String redisKey = wrapperRedisKey(sessionId);
+        String redisKey = wrapperRedisKey(cookieValue);
         String captchaCode = redisHelper.get(redisKey);
         if (StringUtils.isEmpty(captchaCode)) {
             return false;

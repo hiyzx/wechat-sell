@@ -50,4 +50,8 @@ public class StringHelper {
     public static String generateCode() {
         return String.valueOf(new Random().nextInt(9000) + 1000);
     }
+
+    public static String generateUUId() {
+        return UUID.randomUUID().toString();
+    }
 }

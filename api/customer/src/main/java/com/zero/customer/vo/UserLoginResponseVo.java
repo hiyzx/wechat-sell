@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UserLoginResponseVo {
 
-    private String sessionId;
+    private String cookieValue;
 
     private UserResponseVo user;
 }

@@ -34,7 +34,7 @@ public class SessionHelper {
     }
 
     public void pushUser(UserLoginResponseVo loginResponseVo) throws Exception {
-        String sessionId = loginResponseVo.getSessionId();
+        String sessionId = loginResponseVo.getCookieValue();
         LOG.debug("push {}", sessionId);
         String key = sessionIdWrapper(sessionId);
         redisHelper.set(key, loginResponseVo.getUser(), SESSION_EXPIRED_SECONDS);
