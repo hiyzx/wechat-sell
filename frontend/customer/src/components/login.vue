@@ -20,7 +20,7 @@
       login:function () {
         this.$http.post("http://localhost:8083/customer/auth/login.json",
           {phone:this.phone,password:this.password},
-          {emulateJSON:true}).then(
+          {emulateJSON:true,  credentials: true }).then(
           function (res) {
             var resp = res.body;
             if(resp.resCode === '000000'){
