@@ -17,6 +17,10 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
+/**
+ * @author yezhaoxing
+ * @date : 2017/4/17
+ */
 @Aspect
 @Component
 @Slf4j
@@ -28,8 +32,7 @@ public class LoggerInterceptor {
 
     // http://stackoverflow.com/questions/29653664/how-to-correctly-use-spring-aop-to-select-the-execution-of-a-method-annotated-wi
     @Pointcut("execution(public * com.zero.customer.web.controller.*.*(..))")
-    // @Pointcut("within(@org.springframework.stereotype.Controller *) &&
-    // @annotation(org.springframework.web.bind.annotation.RequestMapping)")
+    // @Pointcut("within(@org.springframework.stereotype.Controller *) && @annotation(org.springframework.web.bind.annotation.RequestMapping)")
     private void logController() {
     };
 

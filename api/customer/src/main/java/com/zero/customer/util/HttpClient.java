@@ -85,38 +85,36 @@ public class HttpClient {
         cm.setMaxPerRoute(new HttpRoute(httpHost), maxRoute);
 
         // 请求重试处理
-        HttpRequestRetryHandler httpRequestRetryHandler = new HttpRequestRetryHandler() {
-            public boolean retryRequest(IOException exception, int executionCount, HttpContext context) {
-                if (executionCount >= 2) {// 如果已经重试了2次，就放弃
-                    return false;
-                }
-                if (exception instanceof NoHttpResponseException) {// 如果服务器丢掉了连接，那么就重试
-                    return true;
-                }
-                if (exception instanceof SSLHandshakeException) {// 不要重试SSL握手异常
-                    return false;
-                }
-                if (exception instanceof InterruptedIOException) {// 超时
-                    return false;
-                }
-                if (exception instanceof UnknownHostException) {// 目标服务器不可达
-                    return false;
-                }
-                if (exception instanceof ConnectTimeoutException) {// 连接被拒绝
-                    return false;
-                }
-                if (exception instanceof SSLException) {// SSL握手异常
-                    return false;
-                }
-
-                HttpClientContext clientContext = HttpClientContext.adapt(context);
-                HttpRequest request = clientContext.getRequest();
-                // 如果请求是幂等的，就再次尝试
-                if (!(request instanceof HttpEntityEnclosingRequest)) {
-                    return true;
-                }
+        HttpRequestRetryHandler httpRequestRetryHandler = (exception, executionCount, context) -> {
+            if (executionCount >= 2) {// 如果已经重试了2次，就放弃
                 return false;
             }
+            if (exception instanceof NoHttpResponseException) {// 如果服务器丢掉了连接，那么就重试
+                return true;
+            }
+            if (exception instanceof SSLHandshakeException) {// 不要重试SSL握手异常
+                return false;
+            }
+            if (exception instanceof InterruptedIOException) {// 超时
+                return false;
+            }
+            if (exception instanceof UnknownHostException) {// 目标服务器不可达
+                return false;
+            }
+            if (exception instanceof ConnectTimeoutException) {// 连接被拒绝
+                return false;
+            }
+            if (exception instanceof SSLException) {// SSL握手异常
+                return false;
+            }
+
+            HttpClientContext clientContext = HttpClientContext.adapt(context);
+            HttpRequest request = clientContext.getRequest();
+            // 如果请求是幂等的，就再次尝试
+            if (!(request instanceof HttpEntityEnclosingRequest)) {
+                return true;
+            }
+            return false;
         };
         CloseableHttpClient httpClient = HttpClients.custom().setConnectionManager(cm)
                 .setRetryHandler(httpRequestRetryHandler).build();

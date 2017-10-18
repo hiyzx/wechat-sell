@@ -8,6 +8,9 @@ import com.zero.common.enums.StringEnum;
  */
 public enum CustomerCodeEnum implements StringEnum {
 
+    /**
+     * 商品不存在
+     */
     PRODUCT_NOT_EXIST("200001"),
 
     HAS_PAY("200002"),
@@ -23,6 +26,7 @@ public enum CustomerCodeEnum implements StringEnum {
         this.CodeEnum = value;
     }
 
+    @Override
     public String getCodeEnum() {
         return CodeEnum;
     }

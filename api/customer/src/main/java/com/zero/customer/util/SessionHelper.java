@@ -9,6 +9,10 @@ import org.springframework.context.annotation.Configuration;
 import javax.annotation.Resource;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * @author yezhaoxing
+ * @date : 2017/4/17
+ */
 @Configuration
 public class SessionHelper {
     private static final Logger LOG = LoggerFactory.getLogger(SessionHelper.class);

@@ -34,7 +34,7 @@ public class CaptchaUtil {
     // 默认的验证码大小
     private static final int WIDTH = 108, HEIGHT = 40, CODE_SIZE = 4;
     // 验证码随机字符数组
-    private static final char[] charArray = "3456789ABCDEFGHJKMNPQRSTUVWXY".toCharArray();
+    private static final char[] CHAR_ARRAY = "3456789ABCDEFGHJKMNPQRSTUVWXY".toCharArray();
     // 验证码字体
     private static final Font[] RANDOM_FONT = new Font[] { new Font("nyala", Font.BOLD, 38),
             new Font("Arial", Font.BOLD, 32), new Font("Bell MT", Font.BOLD, 32),
@@ -63,14 +63,14 @@ public class CaptchaUtil {
         for (int i = 0; i < 20; i++) {
             color = getRandColor(120, 200);
             g.setColor(color);
-            String rand = String.valueOf(charArray[RANDOM.nextInt(charArray.length)]);
+            String rand = String.valueOf(CHAR_ARRAY[RANDOM.nextInt(CHAR_ARRAY.length)]);
             g.drawString(rand, RANDOM.nextInt(WIDTH), RANDOM.nextInt(HEIGHT));
             color = null;
         }
         // 取随机产生的认证码(4位数字)
         char[] buffer = code.toCharArray();
         for (int i = 0; i < buffer.length; i++) {
-            char _code = buffer[i];
+            char charCode = buffer[i];
             // 旋转度数 最好小于45度
             int degree = RANDOM.nextInt(28);
             if (i % 2 == 0) {
@@ -86,7 +86,7 @@ public class CaptchaUtil {
             // 设定字体，每次随机
             g.setFont(RANDOM_FONT[RANDOM.nextInt(RANDOM_FONT.length)]);
             // 将认证码显示到图象中
-            g.drawString("" + _code, x + 8, y + 10);
+            g.drawString("" + charCode, x + 8, y + 10);
             // 旋转之后，必须旋转回来
             g.rotate(-Math.toRadians(degree), x, y);
         }
@@ -107,10 +107,12 @@ public class CaptchaUtil {
      * 给定范围获得随机颜色
      */
     private static Color getRandColor(int fc, int bc) {
-        if (fc > 255)
+        if (fc > 255) {
             fc = 255;
-        if (bc > 255)
+        }
+        if (bc > 255) {
             bc = 255;
+        }
         int r = fc + RANDOM.nextInt(bc - fc);
         int g = fc + RANDOM.nextInt(bc - fc);
         int b = fc + RANDOM.nextInt(bc - fc);
@@ -197,7 +199,7 @@ public class CaptchaUtil {
         int count = 4;
         char[] buffer = new char[count];
         for (int i = 0; i < count; i++) {
-            buffer[i] = charArray[RANDOM.nextInt(charArray.length)];
+            buffer[i] = CHAR_ARRAY[RANDOM.nextInt(CHAR_ARRAY.length)];
         }
         return new String(buffer);
     }
