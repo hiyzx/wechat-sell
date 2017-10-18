@@ -1,7 +1,6 @@
 package com.zero.customer.service;
 
 import com.zero.common.constants.PointConstant;
-import com.zero.common.constants.SystemConstants;
 import com.zero.common.dao.UserMapper;
 import com.zero.common.enums.CodeEnum;
 import com.zero.common.enums.PointTypeEnum;
@@ -34,23 +33,18 @@ public class LoginService {
 
     public User register(UserDto userDto) throws BaseException {
         String phone = userDto.getPhone();
-        messageService.validMsg(phone, SystemConstants.MESSAGE_TYPE_REGISTER, userDto.getCode());
-        if (!existPhone(phone)) {
-            User tmp = new User();
-            tmp.setAge(userDto.getAge());
-            String name = userDto.getName();
-            tmp.setName(name);
-            tmp.setPhone(phone);
-            tmp.setPassword(userDto.getPassword());
-            tmp.setLastLoginTime(DateHelper.getCurrentDateTime());
-            userMapper.insertSelective(tmp);
-            int userId = tmp.getId();// 只能用这种方式获取id
-            log.info("userId={} name={} phone={} register success", userId, name, phone);
-            userPointService.add(userId);
-            return tmp;
-        } else {
-            throw new BaseException(CodeEnum.PHONE_HAS_EXIST, "手机号已经存在!");
-        }
+        User tmp = new User();
+        tmp.setAge(userDto.getAge());
+        String name = userDto.getName();
+        tmp.setName(name);
+        tmp.setPhone(phone);
+        tmp.setPassword(userDto.getPassword());
+        tmp.setLastLoginTime(DateHelper.getCurrentDateTime());
+        userMapper.insertSelective(tmp);
+        int userId = tmp.getId();// 只能用这种方式获取id
+        log.info("userId={} name={} phone={} register success", userId, name, phone);
+        userPointService.add(userId);
+        return tmp;
     }
 
     public User login(String phone, String password) throws BaseException {
@@ -76,9 +70,4 @@ public class LoginService {
         }
     }
 
-    private boolean existPhone(String phone) {
-        Condition condition = new Condition(User.class);
-        condition.createCriteria().andEqualTo("phone", phone);
-        return userMapper.selectCountByExample(condition) > 0;
-    }
 }

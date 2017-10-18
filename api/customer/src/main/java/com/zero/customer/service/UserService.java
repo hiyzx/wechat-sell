@@ -2,8 +2,10 @@ package com.zero.customer.service;
 
 import com.zero.common.constants.PointConstant;
 import com.zero.common.dao.UserCheckCountMapper;
+import com.zero.common.dao.UserMapper;
 import com.zero.common.enums.PointTypeEnum;
 import com.zero.common.exception.BaseException;
+import com.zero.common.po.User;
 import com.zero.common.po.UserCheckCount;
 import com.zero.common.util.DateHelper;
 import com.zero.common.util.NumberUtil;
@@ -12,6 +14,7 @@ import com.zero.customer.vo.CheckRecordVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tk.mybatis.mapper.entity.Condition;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -30,6 +33,14 @@ public class UserService {
     private UserCheckCountMapper userCheckCountMapper;
     @Resource
     private UserPointService userPointService;
+    @Resource
+    private UserMapper userMapper;
+
+    public boolean existPhone(String phone) {
+        Condition condition = new Condition(User.class);
+        condition.createCriteria().andEqualTo("phone", phone);
+        return userMapper.selectCountByExample(condition) > 0;
+    }
 
     @Transactional
     public void check(Integer userId) throws BaseException {

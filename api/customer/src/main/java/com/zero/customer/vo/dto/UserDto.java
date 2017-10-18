@@ -31,10 +31,6 @@ public class UserDto {
     //@Pattern(regexp = "^((13[0-9])|(15[^4])|(18[0,2,3,5-9])|(17[0-8])|(147))\\\\d{8}$", message = "手机号格式错误")
     private String phone;
 
-    @ApiModelProperty(value = "验证码")
-    @NotEmpty(message = "验证码不能为空")
-    private String code;
-
     @ApiModelProperty(value = "密码")
     @NotEmpty(message = "密码不能为空")
     @Size(min = 6, max = 12, message = "密码长度必须大于6且小于12")

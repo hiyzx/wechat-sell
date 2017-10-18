@@ -59,13 +59,22 @@ public class LoginController {
     @ApiOperation("发送短信")
     public BaseReturnVo sendMsg(HttpServletRequest request,
             @ApiParam(value = "手机号", required = true) @RequestParam String phone,
-            @ApiParam(value = "短信类型", required = true) @RequestParam Integer type,
+            @ApiParam(value = "短信类型-1:注册,2:忘记密码", required = true) @RequestParam Integer type,
             @ApiParam(value = "图形验证码", required = true) @RequestParam String userInputCaptcha)
             throws IOException, BaseException {
         if (!captchaUtil.validate(request, userInputCaptcha)) {
             throw new BaseException(CustomerCodeEnum.CAPTCHA_WRONG, "验证码错误");
         }
         messageService.sendMsg(phone, type);
+        return BaseReturnVo.success();
+    }
+
+    @PostMapping(value = "/verify.json")
+    @ApiOperation("校验短信验证码")
+    public BaseReturnVo verify(@ApiParam(value = "手机号", required = true) @RequestParam String phone,
+            @ApiParam(value = "短信类型-1:注册,2:忘记密码", required = true) @RequestParam Integer type,
+            @ApiParam(value = "图形验证码", required = true) @RequestParam String code) throws IOException, BaseException {
+        messageService.validMsg(phone, type, code);
         return BaseReturnVo.success();
     }
 

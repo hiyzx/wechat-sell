@@ -22,10 +22,15 @@ public class MessageService {
     private static final int MSG_OFTEN_EXPIRED_SECONDS = ((Long) TimeUnit.MINUTES.toSeconds(1)).intValue();
     @Resource
     private RedisHelper<String, String> redisHelper;
+    @Resource
+    private UserService userService;
 
     public void sendMsg(String phone, Integer type) throws BaseException {
         String wrapperOftenKey = wrapperOftenKey(phone, type);
         if (redisHelper.get(wrapperOftenKey) == null) {
+            if (type == 1 && userService.existPhone(phone)) {
+                throw new BaseException(CodeEnum.PHONE_HAS_EXIST, "手机号已经存在!");
+            }
             String code = StringHelper.generateCode();
             // 调用短信接口发送短信
             log.info("send message to phone={} type={} code={}", phone, type, code);
@@ -43,7 +48,7 @@ public class MessageService {
             throw new BaseException(CodeEnum.CODE_HAS_EXPIRE, "验证码已过期!");
         } else {
             if (!redisCode.equals(inputCode)) {
-                throw new BaseException(CodeEnum.CODE_IS_WRONG, "验证码错误");
+                throw new BaseException(CodeEnum.CODE_IS_WRONG, "验证码错误!");
             } else {
                 redisHelper.delete(key);
             }

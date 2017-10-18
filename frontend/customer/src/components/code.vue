@@ -1,10 +1,12 @@
 <template>
     <div id="code">
         <h2>验证码</h2>
-        <mt-field label="手机号" placeholder="请输入手机号" v-model="phone"></mt-field>
-        <mt-field label="验证码" placeholder="请输入右图验证码" v-model="captcha">
-         <img src="http://localhost:8083/customer/auth/captcha" height="40px" width="70px"></mt-field><br/>
-        <mt-button @click.native="login">获取短信验证码</mt-button>
+        <mt-field label="图形验证码" placeholder="请输入右图验证码" v-model="captcha">
+            <img :src="imgCode" height="40px" width="70px" @click="reloadImg"></mt-field><br/>
+        <mt-field label="手机号" placeholder="请输入手机号" v-model="phone">
+        <mt-button @click.native="sendMsg">获取短信</mt-button></mt-field>
+        <mt-field label="手机验证码" placeholder="请输入手机验证码" v-model="code"></mt-field>
+        <mt-button @click.native="verify">校验短信验证码</mt-button>
     </div>
 </template>
 
@@ -17,13 +19,20 @@
         data() {
             return {
                 phone: '',
-                captcha: ''
+                captcha: '',
+                code: '',
+                imgCode:'http://localhost:8083/customer/auth/captcha'
             }
         },
         methods: {
-            login: function () {
+            reloadImg(){
+                this.imgCode = 'http://localhost:8083/customer/auth/captcha?t'+new Date()*1
+            },
+            sendMsg: function () {
                 this.$http.post("http://localhost:8083/customer/auth/sendMsg.json",
-                    {phone: this.phone,type:1, userInputCaptcha: this.captcha},
+                    {userInputCaptcha: this.captcha,
+                     phone: this.phone,
+                     type:1},
                     {emulateJSON: true, credentials: true}).then(
                     function (res) {
                         var resp = res.body;
@@ -33,6 +42,28 @@
                                 position: 'middle',
                                 duration: 2000
                             });
+                        } else {
+                            Toast({
+                                message: resp.resDes,
+                                position: 'middle',
+                                duration: 2000
+                            });
+                            this.reloadImg();
+                        }
+                    }
+                );
+            },
+            verify: function () {
+                const self = this;
+                this.$http.post("http://localhost:8083/customer/auth/verify.json",
+                    {phone: this.phone,
+                     code: this.code,
+                     type:1},
+                    {emulateJSON: true, credentials: true}).then(
+                    function (res) {
+                        var resp = res.body;
+                        if (resp.resCode === '000000') {
+                            self.$router.push({path:'/register',query: {phone: self.phone}})
                         } else {
                             Toast({
                                 message: resp.resDes,
