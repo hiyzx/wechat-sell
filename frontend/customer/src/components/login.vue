@@ -1,9 +1,9 @@
 <template>
   <div id="login">
-    <input placeholder="手机号" v-model="phone"><br/>
-    <input type="password" placeholder="密码" v-model="password"><br/>
+      <h2>用户登录</h2>
+    <input placeholder="手机号" v-model="phone"><br/><br/>
+    <input type="password" placeholder="密码" v-model="password"><br/><br/>
     <input type="button" @click="login" value="登录"><br/>
-    <input type="button" @click="logout" value="退出">
   </div>
 </template>
 
@@ -46,24 +46,3 @@
     }
   }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-  h1, h2 {
-    font-weight: normal;
-  }
-
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
-
-  li {
-    display: inline-block;
-    margin: 0 10px;
-  }
-
-  a {
-    color: #42b983;
-  }
-</style>
