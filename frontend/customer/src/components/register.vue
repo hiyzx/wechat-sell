@@ -1,11 +1,15 @@
 <template>
   <div id="register">
-    <h2>注册</h2>
+    <mt-header fixed title="用户注册" style="font-size: 24px;">
+      <router-link to="/" slot="left">
+        <mt-button icon="back"></mt-button>
+      </router-link>
+    </mt-header>
     <mt-field label="年龄" placeholder="请输入年龄" v-model="age" type="number" min="18"></mt-field>
     <br/>
-    <mt-field label="姓名" placeholder="请输入姓名" v-model="username"></mt-field>
+    <mt-field label="姓名" placeholder="请输入姓名" v-model="username"></mt-field><br/>
     <mt-field label="密码" placeholder="请输入密码" v-model="password"></mt-field>
-    <mt-button @click.native="register">注册</mt-button>
+    <mt-button @click.native="register" size="large" type="primary" style="margin-top: 200px;">注册</mt-button>
   </div>
 </template>
 

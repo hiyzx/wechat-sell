@@ -1,13 +1,14 @@
 <template>
   <div id="code">
-    <h2>重置密码</h2>
+    <mt-header fixed title="重置密码" style="font-size: 24px;">
+      <router-link to="/" slot="left">
+        <mt-button icon="back"></mt-button>
+      </router-link>
+    </mt-header>
     <mt-field label="手机号" placeholder="请输入手机号" v-model="phone" readonly="readonly"></mt-field>
-    <br/>
     <mt-field label="密码" placeholder="请输入密码" type="password" v-model="password1"></mt-field>
-    <br/>
     <mt-field label="密码" placeholder="请确认密码" type="password" v-model="password2"></mt-field>
-    <br/>
-    <mt-button @click.native="restPassword">重置密码</mt-button>
+    <mt-button @click.native="restPassword" size="large" type="primary" style="margin-top: 200px;">重置密码</mt-button>
   </div>
 </template>
 
