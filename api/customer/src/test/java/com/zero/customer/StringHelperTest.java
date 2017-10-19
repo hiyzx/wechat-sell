@@ -21,7 +21,7 @@ public class StringHelperTest {
 
     @Test
     public void encryptPwd() {
-        String result = stringEncryptor.encrypt("yzx362311");
+        String result = stringEncryptor.encrypt("root");
         System.out.println(result);
     }
 }

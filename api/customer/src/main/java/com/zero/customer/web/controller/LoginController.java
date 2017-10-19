@@ -60,8 +60,7 @@ public class LoginController {
     public BaseReturnVo sendMsg(HttpServletRequest request,
             @ApiParam(value = "手机号", required = true) @RequestParam String phone,
             @ApiParam(value = "短信类型-1:注册,2:忘记密码", required = true) @RequestParam Integer type,
-            @ApiParam(value = "图形验证码", required = true) @RequestParam String userInputCaptcha)
-            throws IOException, BaseException {
+            @ApiParam(value = "图形验证码", required = true) @RequestParam String userInputCaptcha) throws BaseException {
         if (!captchaUtil.validate(request, userInputCaptcha)) {
             throw new BaseException(CustomerCodeEnum.CAPTCHA_WRONG, "验证码错误");
         }
@@ -73,8 +72,17 @@ public class LoginController {
     @ApiOperation("校验短信验证码")
     public BaseReturnVo verify(@ApiParam(value = "手机号", required = true) @RequestParam String phone,
             @ApiParam(value = "短信类型-1:注册,2:忘记密码", required = true) @RequestParam Integer type,
-            @ApiParam(value = "图形验证码", required = true) @RequestParam String code) throws IOException, BaseException {
+            @ApiParam(value = "图形验证码", required = true) @RequestParam String code) throws BaseException {
         messageService.validMsg(phone, type, code);
+        return BaseReturnVo.success();
+    }
+
+    @PostMapping(value = "/restPassword.json")
+    @ApiOperation("重置密码")
+    public BaseReturnVo restPassword(@ApiParam(value = "手机号", required = true) @RequestParam String phone,
+            @ApiParam(value = "密码1", required = true) @RequestParam String password1,
+            @ApiParam(value = "密码2", required = true) @RequestParam String password2) throws BaseException {
+        loginService.restPassword(phone, password1, password2);
         return BaseReturnVo.success();
     }
 

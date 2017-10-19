@@ -25,11 +25,11 @@ import java.util.List;
 public class LoginService {
 
     @Resource
-    private MessageService messageService;
-    @Resource
     private UserMapper userMapper;
     @Resource
     private UserPointService userPointService;
+    @Resource
+    private UserService userService;
 
     public User register(UserDto userDto) throws BaseException {
         String phone = userDto.getPhone();
@@ -70,4 +70,16 @@ public class LoginService {
         }
     }
 
+    public void restPassword(String phone, String password1, String password2) throws BaseException {
+        if (password1 == null || !password1.equals(password2)) {
+            throw new BaseException(CodeEnum.PASSWORD_NOT_CONSISTENT, "密码不一致!");
+        }
+        User user = userService.getUserByPhone(phone);
+        User tmp = new User();
+        int userId = user.getId();
+        tmp.setId(userId);
+        tmp.setPassword(password1);
+        userMapper.updateByPrimaryKeySelective(tmp);
+        log.info("userId={} rest password", userId);
+    }
 }

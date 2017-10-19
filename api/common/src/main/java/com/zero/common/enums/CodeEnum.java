@@ -29,6 +29,10 @@ public enum CodeEnum implements StringEnum {
 
     PHONE_HAS_EXIST("100005"),
 
+    PHONE_NOT_EXIST("100006"),
+
+    PASSWORD_NOT_CONSISTENT("100007"),
+
     /**
      * 参数校验失败
      */

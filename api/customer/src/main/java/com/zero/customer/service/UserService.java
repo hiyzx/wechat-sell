@@ -18,6 +18,7 @@ import tk.mybatis.mapper.entity.Condition;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author yezhaoxing
@@ -40,6 +41,16 @@ public class UserService {
         Condition condition = new Condition(User.class);
         condition.createCriteria().andEqualTo("phone", phone);
         return userMapper.selectCountByExample(condition) > 0;
+    }
+
+    public User getUserByPhone(String phone) {
+        Condition condition = new Condition(User.class);
+        condition.createCriteria().andEqualTo("phone", phone);
+        List<User> users = userMapper.selectByExample(condition);
+        if (!users.isEmpty()) {
+            return users.get(0);
+        }
+        return null;
     }
 
     @Transactional

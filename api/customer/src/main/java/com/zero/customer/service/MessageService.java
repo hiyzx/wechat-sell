@@ -28,8 +28,12 @@ public class MessageService {
     public void sendMsg(String phone, Integer type) throws BaseException {
         String wrapperOftenKey = wrapperOftenKey(phone, type);
         if (redisHelper.get(wrapperOftenKey) == null) {
-            if (type == 1 && userService.existPhone(phone)) {
+            boolean existPhone = userService.existPhone(phone);
+            if (type == 1 && existPhone) {
                 throw new BaseException(CodeEnum.PHONE_HAS_EXIST, "手机号已经存在!");
+            }
+            if (type == 2 && !existPhone) {
+                throw new BaseException(CodeEnum.PHONE_NOT_EXIST, "该手机号还未注册!");
             }
             String code = StringHelper.generateCode();
             // 调用短信接口发送短信
