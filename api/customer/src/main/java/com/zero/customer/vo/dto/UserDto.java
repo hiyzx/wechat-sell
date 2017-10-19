@@ -32,7 +32,7 @@ public class UserDto {
     private String phone;
 
     @ApiModelProperty(value = "密码")
-    @NotEmpty(message = "密码不能为空")
+    @NotNull(message = "密码不能为空")
     @Size(min = 6, max = 12, message = "密码长度必须大于6且小于12")
     private String password;
 }

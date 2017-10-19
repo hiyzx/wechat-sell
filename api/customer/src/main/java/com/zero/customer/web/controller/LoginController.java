@@ -106,8 +106,9 @@ public class LoginController {
 
     @PostMapping(value = "/login.json")
     @ApiOperation("登陆")
-    public ReturnVo<UserLoginResponseVo> login(HttpServletRequest request, HttpServletResponse response,
-            @RequestParam String phone, @RequestParam String password) throws Exception {
+    public ReturnVo<UserLoginResponseVo> login(HttpServletRequest request,
+            @ApiParam(value = "手机号", required = true) @RequestParam String phone,
+            @ApiParam(value = "密码", required = true) @RequestParam String password) throws Exception {
         User user = loginService.login(phone, password);
         // session放入redis中
         String cookieValue = WebHelper.getCookieValue(request, COOKIE_NAME);
