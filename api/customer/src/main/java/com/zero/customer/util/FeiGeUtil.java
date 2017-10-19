@@ -29,14 +29,15 @@ public class FeiGeUtil {
         return JsonHelper.readValue(jsonStr, FeiGeListResponseVo.class);
     }
 
-    public void sendMsgAlone(Integer uid, String msgTemplateKey) throws IOException {
+    public void sendMsgAlone(Integer uid, String msgTemplateKey, String title, String content, String remark)
+            throws IOException {
         Map<String, String> params = new HashMap<>();
         params.put("secret", secretKey);
         params.put("uid", String.valueOf(uid));
         params.put("key", msgTemplateKey);
-        params.put("title", "加油!");
-        params.put("content", "hello world!");
-        params.put("remark", "Java is the best language in the world!");
+        params.put("title", title);
+        params.put("content", content);
+        params.put("remark", remark);
         feiGeHttpClient.post("/api/user_sendmsg", params);
     }
 }

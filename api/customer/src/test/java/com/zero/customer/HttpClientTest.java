@@ -27,6 +27,6 @@ public class HttpClientTest {
 
     @Test
     public void testSend() throws IOException {
-        feiGeUtil.sendMsgAlone(284, "notice");
+        //feiGeUtil.sendMsgAlone(284, "notice");
     }
 }

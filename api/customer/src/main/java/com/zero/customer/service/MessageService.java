@@ -3,11 +3,13 @@ package com.zero.customer.service;
 import com.zero.common.enums.CodeEnum;
 import com.zero.common.exception.BaseException;
 import com.zero.common.util.StringHelper;
+import com.zero.customer.util.FeiGeUtil;
 import com.zero.customer.util.RedisHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -24,8 +26,10 @@ public class MessageService {
     private RedisHelper<String, String> redisHelper;
     @Resource
     private UserService userService;
+    @Resource
+    private FeiGeUtil feiGeUtil;
 
-    public void sendMsg(String phone, Integer type) throws BaseException {
+    public void sendMsg(String phone, Integer type) throws BaseException, IOException {
         String wrapperOftenKey = wrapperOftenKey(phone, type);
         if (redisHelper.get(wrapperOftenKey) == null) {
             boolean existPhone = userService.existPhone(phone);
@@ -37,6 +41,8 @@ public class MessageService {
             }
             String code = StringHelper.generateCode();
             // 调用短信接口发送短信
+            feiGeUtil.sendMsgAlone(284, "notice", "验证码", String.format("您的短信验证码为%s", code), "");
+
             log.info("send message to phone={} type={} code={}", phone, type, code);
             redisHelper.set(wrapperMsgKey(phone, type), code, MSG_EXPIRED_SECONDS);
             redisHelper.set(wrapperOftenKey, "1", MSG_OFTEN_EXPIRED_SECONDS);
