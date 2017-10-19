@@ -34,6 +34,22 @@
         this.imgCode = this.$captcha + new Date() * 1
       },
       async sendMsg() {
+        if(this.captcha === '' || this.captcha === undefined){
+          Toast({
+            message: '验证码不能为空',
+            position: 'middle',
+            duration: 1000
+          });
+          return;
+        }
+        if(this.phone === '' || this.phone === undefined){
+          Toast({
+            message: '手机号不能为空',
+            position: 'middle',
+            duration: 1000
+          });
+          return;
+        }
         const res = await this.$httpPost("/auth/sendMsg.json", {
           userInputCaptcha: this.captcha,
           phone: this.phone,
@@ -55,6 +71,14 @@
         }
       },
       async verify() {
+        if(this.code === '' || this.code === undefined){
+          Toast({
+            message: '短信验证码不能为空',
+            position: 'middle',
+            duration: 1000
+          });
+          return;
+        }
         const res = await this.$httpPost("/auth/verify.json",
           {
             phone: this.phone,

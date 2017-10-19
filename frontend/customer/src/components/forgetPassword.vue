@@ -27,6 +27,30 @@
     },
     methods: {
       async restPassword() {
+        if(this.phone === '' || this.phone === undefined){
+          Toast({
+            message: '手机号不能为空',
+            position: 'middle',
+            duration: 1000
+          });
+          return;
+        }
+        if(this.password1 === '' || this.password1 === undefined){
+          Toast({
+            message: '密码不能为空',
+            position: 'middle',
+            duration: 1000
+          });
+          return;
+        }
+        if(this.password2 === '' || this.password2 === undefined){
+          Toast({
+            message: '密码不能为空',
+            position: 'middle',
+            duration: 1000
+          });
+          return;
+        }
         const res = await this.$httpPost('/auth/restPassword.json', {
           phone: this.phone,
           password1: this.password1,

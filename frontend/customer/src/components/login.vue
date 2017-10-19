@@ -1,9 +1,12 @@
 <template>
   <div id="login">
     <h2>用户登录</h2>
-    <mt-field label="手机号" placeholder="请输入手机号" v-model="phone"></mt-field>
-    <mt-field label="密码" placeholder="请输入密码" type="password" v-model="password"></mt-field>
+    <mt-field label="手机号" placeholder="请输入手机号" v-model="phone">
+    </mt-field>
+    <mt-field label="密码" placeholder="请输入密码" type="password" v-model="password">
+    </mt-field>
     <br/>
+
     <mt-button @click.native="forgetPassword" style="right: 60px">忘记密码</mt-button>
     <mt-button @click.native="login">登录</mt-button>
     <mt-button @click.native="toRegister" style="left:60px;">注册</mt-button>
@@ -30,6 +33,22 @@
         this.$router.push({path: '/code', query: {type: 2}});
       },
       async login() {
+        if(this.phone === '' || this.phone === undefined){
+            Toast({
+              message: '手机号不能为空',
+              position: 'middle',
+              duration: 1000
+            });
+            return;
+        }
+        if(this.password === '' || this.password === undefined){
+          Toast({
+            message: '密码不能为空',
+            position: 'middle',
+            duration: 1000
+          });
+          return;
+        }
         const res = await this.$httpPost('/auth/login.json', {
           phone: this.phone,
           password: this.password

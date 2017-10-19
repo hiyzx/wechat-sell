@@ -25,6 +25,30 @@
     },
     methods: {
       async register() {
+        if(this.age < 18){
+          Toast({
+            message: '年龄不能小于18',
+            position: 'middle',
+            duration: 1000
+          });
+          return;
+        }
+        if(this.username === '' || this.username === undefined){
+          Toast({
+            message: '名字不能为空',
+            position: 'middle',
+            duration: 1000
+          });
+          return;
+        }
+        if(this.password === undefined || this.password.length < 6){
+          Toast({
+            message: '密码不能小于6位',
+            position: 'middle',
+            duration: 1000
+          });
+          return;
+        }
         const res = await this.$httpPost('/auth/register.json', {
           age: this.age,
           phone: this.phone,
