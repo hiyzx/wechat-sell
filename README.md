@@ -1,5 +1,5 @@
 # takeaway
-write a complete system for learning   
+write a complete system for learning  spring boot?
 
 ### Environment
 
@@ -28,3 +28,11 @@ Q3 How to run the project?
 2. install the parent pom
 3. run the main method of com.zero.customer.CustomerApplication
 4. Open the chrome,and enter localhost:8081/customer/swagger-ui.html
+
+Q4 How to package the project to war if you use spring-boot?
+1. pom.xml
+    1. set the property packaging war 
+    2. remove tomcat jar whick in the spring-boot-starter-web
+    3. add class SpringBootStartApplication ,implements SpringBootServletInitializer 
+        and override the method configure;(notice:the param builder.sources would quote your application.java)
+    4. use command clean package
