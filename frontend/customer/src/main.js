@@ -3,8 +3,8 @@ import App from './App.vue'
 import router from './router'
 import VueResource from 'vue-resource'
 import MintUI from 'mint-ui'
-import Http from './js/Http'
 import 'mint-ui/lib/style.css'
+import Http from './js/Http'
 
 Vue.config.productionTip = false
 Vue.use(VueResource)

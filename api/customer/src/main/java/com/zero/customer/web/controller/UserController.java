@@ -8,10 +8,7 @@ import com.zero.customer.util.SessionHelper;
 import com.zero.customer.vo.CheckRecordVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -38,7 +35,7 @@ public class UserController {
     }
 
     @Authorize
-    @PostMapping(value = "/queryCheckRecord.json")
+    @GetMapping(value = "/queryCheckRecord.json")
     @ApiOperation("查看签到记录")
     public ReturnVo<CheckRecordVo> queryCheckRecord(@RequestParam String sessionId) throws Exception {
         return ReturnVo.success(userService.queryCheckRecord(sessionHelper.getUserId(sessionId)));

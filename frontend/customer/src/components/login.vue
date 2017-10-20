@@ -18,7 +18,7 @@
 <script>
   import {Toast} from 'mint-ui';
   import {Field} from 'mint-ui';
-  import { Header } from 'mint-ui';
+  import {Header} from 'mint-ui';
 
   export default {
     name: 'login',
@@ -36,6 +36,7 @@
         this.$router.push({path: '/code', query: {type: 2}});
       },
       async login() {
+        const self = this;
         if (this.phone === '' || this.phone === undefined) {
           Toast({
             message: '手机号不能为空',
@@ -57,12 +58,16 @@
           password: this.password
         }, {emulateJSON: true});
         if (res.resCode === '000000') {
-          localStorage.setItem("sessionId", res.data.sessionId);
+          localStorage.setItem("sessionId", res.data.cookieValue);
+          localStorage.setItem("userInfo", JSON.stringify(res.data.user))
           Toast({
             message: '登录成功',
             position: 'middle',
             duration: 1000
           });
+          window.setTimeout(function () {
+            self.$router.push({path: 'personal'})
+          }, 1000)
         } else {
           Toast({
             message: res.resDes,
