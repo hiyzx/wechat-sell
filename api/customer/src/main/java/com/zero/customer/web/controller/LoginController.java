@@ -123,6 +123,13 @@ public class LoginController {
     }
 
     @Authorize
+    @PostMapping(value = "/heartBeat.json")
+    @ApiOperation("心跳")
+    public BaseReturnVo heartBeat(@RequestParam String sessionId) throws Exception {
+        return BaseReturnVo.success();
+    }
+
+    @Authorize
     @PostMapping(value = "/logout.json")
     @ApiOperation("注销")
     public BaseReturnVo logout(@RequestParam String sessionId) throws Exception {
