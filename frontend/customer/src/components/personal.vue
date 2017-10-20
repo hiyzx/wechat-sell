@@ -25,7 +25,7 @@
         name: userInfo.name,
         phone: userInfo.phone,
         age: userInfo.age,
-        sessionId: sessionStorage.getItem('sessionId')
+        sessionId: localStorage.getItem('sessionId')
       }
     },
     created() {
