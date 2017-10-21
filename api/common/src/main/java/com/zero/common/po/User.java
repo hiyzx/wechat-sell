@@ -32,4 +32,7 @@ public class User implements Serializable {
 
     @ApiModelProperty(value = "最后登陆时间")
     private Date lastLoginTime;
+
+    @ApiModelProperty(value = "是否删除")
+    private Byte isDelete;
 }

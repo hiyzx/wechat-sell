@@ -3,7 +3,6 @@ package com.zero.customer.service;
 import com.zero.common.constants.PointConstant;
 import com.zero.common.dao.UserMapper;
 import com.zero.common.enums.CodeEnum;
-import com.zero.common.enums.PointTypeEnum;
 import com.zero.common.exception.BaseException;
 import com.zero.common.po.User;
 import com.zero.common.util.DateHelper;
@@ -59,7 +58,7 @@ public class LoginService {
             Integer userId = user.getId();
             Date now = DateHelper.getCurrentDateTime();
             if (lastLoginTime == null || !DateHelper.isSameDate(now, lastLoginTime)) {
-                userPointService.increasePoint(userId, PointTypeEnum.登录, PointConstant.POINT_LOGIN);
+                userPointService.increasePoint(userId, PointConstant.POINT_TYPE_LOGIN, PointConstant.POINT_LOGIN);
             }
             User tmp = new User();
             tmp.setId(userId);

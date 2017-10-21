@@ -1,6 +1,5 @@
 package com.zero.common.po;
 
-import com.zero.common.enums.PointTypeEnum;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.ToString;
@@ -16,6 +15,7 @@ import java.util.Date;
 @ToString
 @Table(name = "user_point_record")
 public class UserPointRecord implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -24,7 +24,7 @@ public class UserPointRecord implements Serializable {
     private Integer userId;
 
     @ApiModelProperty(value = "积分类型")
-    private PointTypeEnum type;
+    private Integer type;
 
     @ApiModelProperty(value = "获得的积分")
     private Integer gainPoint;

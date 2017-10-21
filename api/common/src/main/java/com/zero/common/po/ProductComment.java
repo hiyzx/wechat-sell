@@ -12,24 +12,27 @@ import lombok.ToString;
 
 @Data
 @ToString
-@Table(name = "product_category")
-public class ProductCategory implements Serializable {
+@Table(name = "product_comment")
+public class ProductComment implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ApiModelProperty(value = "类目名称")
-    private String name;
+    @ApiModelProperty(value = "评论人id")
+    private Integer userId;
 
-    @ApiModelProperty(value = "展示顺序")
-    private Integer showIndex;
+    @ApiModelProperty(value = "分数")
+    private Integer score;
 
-    @ApiModelProperty(value = "创建时间")
+    @ApiModelProperty(value = "内容")
+    private String content;
+
+    @ApiModelProperty(value = "评论类型-1,推荐,2吐槽")
+    private Integer type;
+
     private Date createTime;
 
-    @ApiModelProperty(value = "更新时间")
     private Date updateTime;
 
-    @ApiModelProperty(value = "是否删除")
     private Byte isDelete;
 }

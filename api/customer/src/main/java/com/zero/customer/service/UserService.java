@@ -3,7 +3,6 @@ package com.zero.customer.service;
 import com.zero.common.constants.PointConstant;
 import com.zero.common.dao.UserCheckCountMapper;
 import com.zero.common.dao.UserMapper;
-import com.zero.common.enums.PointTypeEnum;
 import com.zero.common.exception.BaseException;
 import com.zero.common.po.User;
 import com.zero.common.po.UserCheckCount;
@@ -69,7 +68,7 @@ public class UserService {
             userCheckCountMapper.insertSelective(tmp);
             log.info("userId={} first time check", userId);
             // 签到增加积分
-            userPointService.increasePoint(userId, PointTypeEnum.签到, PointConstant.POINT_CHECK);
+            userPointService.increasePoint(userId, PointConstant.POINT_TYPE_CHECK, PointConstant.POINT_CHECK);
         } else {// 非第一次签到
             Date checkTime = userCheckCount.getCheckTime();
             boolean sameDate = DateHelper.isSameDate(checkTime, now);
@@ -91,13 +90,13 @@ public class UserService {
                     }
                     Integer point = continueCheckScore(continueCount);
                     if (point != null) {
-                        userPointService.increasePoint(userId, PointTypeEnum.连续签到, point);
+                        userPointService.increasePoint(userId, PointConstant.POINT_TYPE_CONTINUE_CHECK, point);
                     }
                 }
                 userCheckCountMapper.updateByPrimaryKeySelective(tmp);
                 log.info("userId={} continue check day={}", userId, tmp.getContinueCount());
                 // 签到增加积分
-                userPointService.increasePoint(userId, PointTypeEnum.签到, PointConstant.POINT_CHECK);
+                userPointService.increasePoint(userId, PointConstant.POINT_TYPE_CHECK, PointConstant.POINT_CHECK);
             } else {
                 throw new BaseException(CustomerCodeEnum.CHECK_REPEAT, "今天已经签到过了!");
             }

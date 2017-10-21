@@ -3,7 +3,6 @@ package com.zero.customer.service;
 import com.zero.common.dao.UserPointMapper;
 import com.zero.common.dao.UserPointRecordMapper;
 import com.zero.common.dao.ext.UserPointExtMapper;
-import com.zero.common.enums.PointTypeEnum;
 import com.zero.common.po.UserPoint;
 import com.zero.common.po.UserPointRecord;
 import com.zero.common.util.DateHelper;
@@ -27,7 +26,7 @@ public class UserPointService {
     @Resource
     private UserPointMapper userPointMapper;
 
-    public void increasePoint(Integer userId, PointTypeEnum type, Integer score) {
+    public void increasePoint(Integer userId, Integer type, Integer score) {
         // 减少并发问题
         userPointExtMapper.increasePoint(userId, score);
         UserPointRecord userPointRecord = new UserPointRecord();

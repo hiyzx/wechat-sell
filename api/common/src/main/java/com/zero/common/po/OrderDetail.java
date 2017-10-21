@@ -17,7 +17,7 @@ import java.util.Date;
 public class OrderDetail implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String detailId;
+    private String id;
 
     private String orderId;
 
@@ -38,4 +38,7 @@ public class OrderDetail implements Serializable {
     private Date createTime;
 
     private Date updateTime;
+
+    @ApiModelProperty(value = "是否删除")
+    private Byte isDelete;
 }

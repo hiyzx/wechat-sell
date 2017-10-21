@@ -25,7 +25,7 @@ public class OrderMaster implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String orderId;
+    private String id;
 
     @ApiModelProperty(value = "买家名字")
     private String buyerName;
@@ -51,4 +51,7 @@ public class OrderMaster implements Serializable {
     private Date createTime;
 
     private Date updateTime;
+
+    @ApiModelProperty(value = "是否删除")
+    private Byte isDelete;
 }

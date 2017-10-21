@@ -14,8 +14,8 @@
             <property name="suppressAllComments" value="true"/>
         </commentGenerator>
         <!--数据库链接URL，用户名、密码 -->
-        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/takeaway"
-                        userId="root" password="root">
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://www.hiyzx.cn:3306/takeaway"
+                        userId="root" password="yzx362311">
         </jdbcConnection>
         <!-- 生成模型的包名和位置 -->
         <javaModelGenerator targetPackage="com.zero.common.po" targetProject="src/main/java">
@@ -32,20 +32,36 @@
         </javaClientGenerator>
         <!-- 要生成的表 tableName是数据库中的表名或视图名 domainObjectName是实体类名 -->
         <table tableName="order_detail" domainObjectName="OrderDetail">
-            <generatedKey column="detail_id" sqlStatement="MySql" identity="true"/>
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride property="is_delete" column="isDelete" javaType="java.lang.Boolean"/>
         </table>
         <table tableName="order_master" domainObjectName="OrderMaster">
-            <generatedKey column="order_id" sqlStatement="MySql" identity="true"/>
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride property="is_delete" column="isDelete" javaType="java.lang.Boolean"/>
         </table>
         <table tableName="product_category" domainObjectName="ProductCategory">
-            <generatedKey column="category_id" sqlStatement="MySql" identity="true"/>
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride property="is_delete" column="isDelete" javaType="java.lang.Boolean"/>
         </table>
         <table tableName="product_info" domainObjectName="ProductInfo">
-            <generatedKey column="product_id" sqlStatement="MySql" identity="true"/>
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride property="is_delete" column="isDelete" javaType="java.lang.Boolean"/>
         </table>
-
+        <table tableName="product_comment" domainObjectName="ProductComment">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride property="is_delete" column="isDelete" javaType="java.lang.Boolean"/>
+        </table>
+        <table tableName="store" domainObjectName="Store">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride property="is_delete" column="isDelete" javaType="java.lang.Boolean"/>
+        </table>
+        <table tableName="store_notice" domainObjectName="StoreNotice">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride property="is_delete" column="isDelete" javaType="java.lang.Boolean"/>
+        </table>
         <table tableName="user" domainObjectName="User">
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride property="is_delete" column="isDelete" javaType="java.lang.Boolean"/>
         </table>
         <table tableName="user_check_count" domainObjectName="UserCheckCount">
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
@@ -55,7 +71,8 @@
         </table>
         <table tableName="user_point_record" domainObjectName="UserPointRecord">
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-            <columnOverride property="type" column="type" javaType="com.zero.enums.PointTypeEnum"/>
+            <!--<columnOverride property="type" column="type" javaType="com.zero.enums.PointTypeEnum"/>-->
         </table>
+
     </context>
 </generatorConfiguration>  

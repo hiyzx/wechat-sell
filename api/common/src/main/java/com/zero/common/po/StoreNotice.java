@@ -12,24 +12,19 @@ import lombok.ToString;
 
 @Data
 @ToString
-@Table(name = "product_category")
-public class ProductCategory implements Serializable {
+@Table(name = "store_notice")
+public class StoreNotice implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ApiModelProperty(value = "类目名称")
-    private String name;
+    @ApiModelProperty(value = "店铺id")
+    private Integer storeId;
 
-    @ApiModelProperty(value = "展示顺序")
-    private Integer showIndex;
+    @ApiModelProperty(value = "内容")
+    private String content;
 
-    @ApiModelProperty(value = "创建时间")
     private Date createTime;
 
-    @ApiModelProperty(value = "更新时间")
-    private Date updateTime;
-
-    @ApiModelProperty(value = "是否删除")
     private Byte isDelete;
 }

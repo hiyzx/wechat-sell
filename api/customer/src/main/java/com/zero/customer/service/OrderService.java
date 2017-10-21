@@ -56,22 +56,22 @@ public class OrderService {
                 throw new BaseException(CustomerCodeEnum.PRODUCT_NOT_EXIST, "product is not exist");
             }
             OrderDetail orderDetail = new OrderDetail();
-            orderDetail.setDetailId(StringHelper.generateDetailKey());
+            orderDetail.setId(StringHelper.generateDetailKey());
             orderDetail.setOrderId(orderId);
             orderDetail.setProductId(productInfoId);
-            orderDetail.setProductName(productInfo.getProductName());
+            orderDetail.setProductName(productInfo.getName());
             Integer count = orderDetailDto.getCount();
             orderDetail.setProductQuantity(count);
-            orderDetail.setProductIcon(productInfo.getProductIcon());
+            orderDetail.setProductIcon(productInfo.getIcon());
             orderDetail.setCreateTime(DateHelper.getCurrentDateTime());
-            orderDetail.setProductPrice(NumberUtil.mul(productInfo.getProductPrice(), count));
+            orderDetail.setProductPrice(NumberUtil.mul(productInfo.getPrice(), count));
             orderDetailList.add(orderDetail);
             amount = NumberUtil.add(amount, orderDetail.getProductPrice());
         }
         orderDetailMapper.insertList(orderDetailList);
         OrderMaster orderMaster = new OrderMaster();
         BeanUtils.copyProperties(orderDto, orderMaster);
-        orderMaster.setOrderId(orderId);
+        orderMaster.setId(orderId);
         orderMaster.setCreateTime(DateHelper.getCurrentDateTime());
         orderMaster.setOrderAmount(amount);
         orderMaster.setPayStatus(OrderMaster.PAY_STATUS_NOT);
@@ -113,7 +113,7 @@ public class OrderService {
             throw new BaseException(CustomerCodeEnum.NOT_NEW_ORDER, "非新订单,不能取消");
         }
         OrderMaster tmp = new OrderMaster();
-        tmp.setOrderId(orderId);
+        tmp.setId(orderId);
         tmp.setOrderStatus(OrderMaster.ORDER_STATUS_CANCEL);
         orderMasterMapper.updateByPrimaryKeySelective(tmp);
         log.info("openid={} cancel orderId={}", openid, orderId);
@@ -130,7 +130,7 @@ public class OrderService {
             throw new BaseException(CustomerCodeEnum.NOT_NEW_ORDER, "非新订单,不能付款");
         }
         OrderMaster tmp = new OrderMaster();
-        tmp.setOrderId(orderId);
+        tmp.setId(orderId);
         tmp.setPayStatus(OrderMaster.PAY_STATUS_SUCCESS);
         orderMasterMapper.updateByPrimaryKeySelective(tmp);
         log.info("openid={} pay order={}", openid, orderId);
@@ -139,7 +139,7 @@ public class OrderService {
         orderDetailDtos.forEach(orderDetailDto -> {
             ProductInfo productInfo = new ProductInfo();
             String productInfoId = orderDetailDto.getProductInfoId();
-            productInfo.setProductId(productInfoId);
+            productInfo.setId(productInfoId);
             int count = orderDetailDto.getCount();
             productInfo.setSellCount(count);
             productInfoMapper.updateByPrimaryKeySelective(productInfo);
