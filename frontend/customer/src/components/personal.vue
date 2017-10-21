@@ -17,20 +17,25 @@
   import {Field} from 'mint-ui';
   import {Header} from 'mint-ui';
 
-  const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+
   export default {
     name: 'personal',
     data() {
       return {
-        name: userInfo.name,
-        phone: userInfo.phone,
-        age: userInfo.age,
-        sessionId: localStorage.getItem('sessionId')
+        name: '',
+        phone: '',
+        age: '',
+        sessionId: ''
       }
     },
-    created() {
-      this.heartBeat();
-    },
+      mounted(){
+          const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+          this.sessionId = localStorage.getItem('sessionId');
+          this.name = userInfo.name;
+          this.phone = userInfo.phone;
+          this.age = userInfo.age;
+          this.heartBeat();
+      },
     methods: {
       async heartBeat() {
         const self = this;

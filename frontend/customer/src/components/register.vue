@@ -5,7 +5,7 @@
         <mt-button icon="back"></mt-button>
       </router-link>
     </mt-header>
-    <mt-field label="年龄" placeholder="请输入年龄" v-model="age" type="number" min="18"></mt-field>
+    <mt-field label="年龄" placeholder="请输入年龄" v-model="age" type="number"></mt-field>
     <br/>
     <mt-field label="姓名" placeholder="请输入姓名" v-model="username"></mt-field><br/>
     <mt-field label="密码" placeholder="请输入密码" v-model="password"></mt-field>
