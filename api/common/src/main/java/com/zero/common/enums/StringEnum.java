@@ -6,5 +6,8 @@ package com.zero.common.enums;
  */
 public interface StringEnum {
 
+    /**
+     * 返回codeEnum
+     */
     String getCodeEnum();
 }

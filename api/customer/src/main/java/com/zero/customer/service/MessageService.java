@@ -12,6 +12,9 @@ import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import static com.zero.common.constants.SystemConstants.MESSAGE_TYPE_FORGET;
+import static com.zero.common.constants.SystemConstants.MESSAGE_TYPE_REGISTER;
+
 /**
  * @author yezhaoxing
  * @date 2017/09/26
@@ -33,10 +36,10 @@ public class MessageService {
         String wrapperOftenKey = wrapperOftenKey(phone, type);
         if (redisHelper.get(wrapperOftenKey) == null) {
             boolean existPhone = userService.existPhone(phone);
-            if (type == 1 && existPhone) {
+            if (type == MESSAGE_TYPE_REGISTER && existPhone) {
                 throw new BaseException(CodeEnum.PHONE_HAS_EXIST, "手机号已经存在!");
             }
-            if (type == 2 && !existPhone) {
+            if (type == MESSAGE_TYPE_FORGET && !existPhone) {
                 throw new BaseException(CodeEnum.PHONE_NOT_EXIST, "该手机号还未注册!");
             }
             String code = StringHelper.generateCode();

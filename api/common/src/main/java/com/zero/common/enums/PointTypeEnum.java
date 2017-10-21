@@ -6,5 +6,18 @@ package com.zero.common.enums;
  */
 public enum PointTypeEnum {
 
-    登录, 签到, 连续签到
+    /**
+     * 登录
+     */
+    登录,
+
+    /**
+     * 签到
+     */
+    签到,
+
+    /**
+     * 连续签到
+     */
+    连续签到
 }

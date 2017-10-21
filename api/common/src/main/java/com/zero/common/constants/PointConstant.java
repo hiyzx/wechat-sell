@@ -6,6 +6,12 @@ package com.zero.common.constants;
  */
 public interface PointConstant {
 
+    int CONTINUE_CHECK_DAY_3 = 3;
+
+    int CONTINUE_CHECK_DAY_7 = 7;
+
+    int CONTINUE_CHECK_DAY_30 = 30;
+
     int POINT_LOGIN = 2;
 
     int POINT_CHECK = 2;

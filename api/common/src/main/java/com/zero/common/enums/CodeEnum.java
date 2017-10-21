@@ -40,14 +40,15 @@ public enum CodeEnum implements StringEnum {
 
     SUCCESS("000000");
 
-    private String CodeEnum;
+    private String codeEnum;
 
     private CodeEnum(String value) {
-        this.CodeEnum = value;
+        this.codeEnum = value;
     }
 
+    @Override
     public String getCodeEnum() {
-        return CodeEnum;
+        return codeEnum;
     }
 
 }

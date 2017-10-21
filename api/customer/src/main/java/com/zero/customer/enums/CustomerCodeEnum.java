@@ -20,14 +20,14 @@ public enum CustomerCodeEnum implements StringEnum {
     CAPTCHA_WRONG("200004"),
 
     CHECK_REPEAT("200005");
-    private String CodeEnum;
+    private String codeEnum;
 
     private CustomerCodeEnum(String value) {
-        this.CodeEnum = value;
+        this.codeEnum = value;
     }
 
     @Override
     public String getCodeEnum() {
-        return CodeEnum;
+        return codeEnum;
     }
 }

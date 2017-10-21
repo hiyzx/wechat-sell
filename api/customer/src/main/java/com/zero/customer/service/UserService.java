@@ -53,11 +53,12 @@ public class UserService {
         return null;
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void check(Integer userId) throws BaseException {
         UserCheckCount userCheckCount = userCheckCountService.getByUserId(userId);
         Date now = DateHelper.getCurrentDateTime();
-        if (userCheckCount == null) {// 第一次签到
+        // 第一次签到
+        if (userCheckCount == null) {
             UserCheckCount tmp = new UserCheckCount();
             tmp.setUserId(userId);
             tmp.setCheckTime(now);
@@ -72,7 +73,8 @@ public class UserService {
         } else {// 非第一次签到
             Date checkTime = userCheckCount.getCheckTime();
             boolean sameDate = DateHelper.isSameDate(checkTime, now);
-            if (!sameDate) {// 同一天签到不加分
+            // 同一天签到不加分
+            if (!sameDate) {
                 int daysBetween = DateHelper.daysBetween(checkTime, now);
                 UserCheckCount tmp = new UserCheckCount();
                 tmp.setId(userCheckCount.getId());
@@ -102,14 +104,16 @@ public class UserService {
         }
     }
 
-    // 连续签到获取积分规则
+    /**
+     * 连续签到获取积分规则
+     */
     private Integer continueCheckScore(int continueCheckCount) {
         Integer rtn;
-        if (continueCheckCount == 3) {
+        if (continueCheckCount == PointConstant.CONTINUE_CHECK_DAY_3) {
             rtn = PointConstant.POINT_CONTINUE_3;
-        } else if (continueCheckCount == 7) {
+        } else if (continueCheckCount == PointConstant.CONTINUE_CHECK_DAY_7) {
             rtn = PointConstant.POINT_CONTINUE_7;
-        } else if (continueCheckCount == 30) {
+        } else if (continueCheckCount == PointConstant.CONTINUE_CHECK_DAY_30) {
             rtn = PointConstant.POINT_CONTINUE_30;
         } else {
             rtn = null;
