@@ -9,6 +9,21 @@
     <mt-field label="姓名" v-model="name"></mt-field>
     <mt-field label="手机号" v-model="phone" readonly="readonly"></mt-field>
     <mt-field label="年龄" v-model="age"></mt-field>
+
+    <mt-tabbar v-model="bottom_selected" fixed>
+      <mt-tab-item id="外卖">
+        <img slot="icon" src="../../static/img/store.png">
+        外卖
+      </mt-tab-item>
+      <mt-tab-item id="订单">
+        <img slot="icon" src="../../static/img/order.png">
+        订单
+      </mt-tab-item>
+      <mt-tab-item id="我的">
+        <img slot="icon" src="../../static/img/my.png">
+        我的
+      </mt-tab-item>
+    </mt-tabbar>
   </div>
 </template>
 
@@ -25,7 +40,8 @@
         name: '',
         phone: '',
         age: '',
-        sessionId: ''
+        sessionId: '',
+        bottom_selected: '我的'
       }
     },
       mounted(){
@@ -57,7 +73,7 @@
             duration: 1000
           });
           window.setTimeout(function () {
-            self.$router.push({path: '/'})
+            self.$router.push({path: '/login'})
           }, 1000)
         }
       },
@@ -81,7 +97,7 @@
               duration: 1000
             });
             window.setTimeout(function () {
-              self.$router.push({path: '/'})
+              self.$router.push({path: '/login'})
             }, 1000)
           } else {
             Toast({
@@ -111,6 +127,17 @@
             position: 'middle',
             duration: 2000
           });
+        }
+      }
+    },
+    watch: {
+      bottom_selected: function () {
+        if ('外卖' === this.bottom_selected) {
+          this.$router.push({path: '/'});
+        } else if ('订单' === this.bottom_selected) {
+          this.$router.push({path: '/'});
+        } else {
+          this.$router.push({path: '/personal'})
         }
       }
     }

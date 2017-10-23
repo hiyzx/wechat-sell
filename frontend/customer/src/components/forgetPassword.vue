@@ -28,7 +28,7 @@
     },
     methods: {
       async restPassword() {
-        if(this.phone === '' || this.phone === undefined){
+        if (this.phone === '' || this.phone === undefined) {
           Toast({
             message: '手机号不能为空',
             position: 'middle',
@@ -36,7 +36,7 @@
           });
           return;
         }
-        if(this.password1 === '' || this.password1 === undefined){
+        if (this.password1 === '' || this.password1 === undefined) {
           Toast({
             message: '密码不能为空',
             position: 'middle',
@@ -44,7 +44,7 @@
           });
           return;
         }
-        if(this.password2 === '' || this.password2 === undefined){
+        if (this.password2 === '' || this.password2 === undefined) {
           Toast({
             message: '密码不能为空',
             position: 'middle',
@@ -58,9 +58,14 @@
           password2: this.password2
         }, {emulateJSON: true});
         if (res.resCode === '000000') {
-          MessageBox.alert('重置成功').then(action => {
-            this.$router.push({path: '/', query: {phone: this.phone}})
+          Toast({
+            message: '重置成功',
+            position: 'middle',
+            duration: 1000
           });
+          window.setTimeout(function () {
+            self.$router.push({path: '/login', query: {phone: this.phone}})
+          }, 1000)
         } else {
           Toast({
             message: res.resDes,

@@ -115,7 +115,7 @@
       async listCategory() {
         const res = await this.$httpGet("/product/listCategory.json", {}, {credentials: true, emulateJSON: true});
         this.categories = res.data;
-        this.category_selected = this.categories[0].id
+        this.category_selected = this.categories[0].id;
         this.getProductInfos();
       },
       async getProductInfos() {
@@ -123,6 +123,17 @@
           categoryId: this.category_selected
         }, {credentials: true, emulateJSON: true});
         this.productInfos = res.data;
+      }
+    },
+    watch: {
+      bottom_selected: function () {
+        if ('外卖' === this.bottom_selected) {
+          this.$router.push({path: '/'});
+        } else if ('订单' === this.bottom_selected) {
+          this.$router.push({path: '/'});
+        } else {
+          this.$router.push({path: '/personal'})
+        }
       }
     }
   };
