@@ -45,12 +45,12 @@
       }
     },
       mounted(){
-          const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-          this.sessionId = localStorage.getItem('sessionId');
-          this.name = userInfo.name;
-          this.phone = userInfo.phone;
-          this.age = userInfo.age;
-          this.heartBeat();
+        this.sessionId = localStorage.getItem('sessionId');
+        this.heartBeat();
+        const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+        this.name = userInfo.name;
+        this.phone = userInfo.phone;
+        this.age = userInfo.age;
       },
     methods: {
       async heartBeat() {
