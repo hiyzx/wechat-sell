@@ -5,6 +5,7 @@ import code from '@/components/code'
 import register from '@/components/register'
 import forgetPassword from '@/components/forgetPassword'
 import personal from '@/components/personal'
+import index from '@/components/index'
 
 
 Vue.use(Router)
@@ -35,6 +36,11 @@ export default new Router({
       path: '/personal',
       name: 'personal',
       component: personal
+    },
+    {
+      path: '/index',
+      name: 'index',
+      component: index
     }
   ]
 })
