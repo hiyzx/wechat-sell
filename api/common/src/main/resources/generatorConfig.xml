@@ -31,7 +31,11 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
         <!-- 要生成的表 tableName是数据库中的表名或视图名 domainObjectName是实体类名 -->
-        <table tableName="order_detail" domainObjectName="OrderDetail">
+        <table tableName="product_info" domainObjectName="ProductInfo">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride property="is_delete" column="isDelete" javaType="java.lang.Boolean"/>
+        </table>
+        <!--<table tableName="order_detail" domainObjectName="OrderDetail">
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
             <columnOverride property="is_delete" column="isDelete" javaType="java.lang.Boolean"/>
         </table>
@@ -40,10 +44,6 @@
             <columnOverride property="is_delete" column="isDelete" javaType="java.lang.Boolean"/>
         </table>
         <table tableName="product_category" domainObjectName="ProductCategory">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-            <columnOverride property="is_delete" column="isDelete" javaType="java.lang.Boolean"/>
-        </table>
-        <table tableName="product_info" domainObjectName="ProductInfo">
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
             <columnOverride property="is_delete" column="isDelete" javaType="java.lang.Boolean"/>
         </table>
@@ -71,8 +71,8 @@
         </table>
         <table tableName="user_point_record" domainObjectName="UserPointRecord">
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-            <!--<columnOverride property="type" column="type" javaType="com.zero.enums.PointTypeEnum"/>-->
-        </table>
+            &lt;!&ndash;<columnOverride property="type" column="type" javaType="com.zero.enums.PointTypeEnum"/>&ndash;&gt;
+        </table>-->
 
     </context>
 </generatorConfiguration>  

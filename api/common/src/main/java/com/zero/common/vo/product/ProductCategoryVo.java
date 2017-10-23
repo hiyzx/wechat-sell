@@ -13,10 +13,10 @@ import lombok.Data;
 public class ProductCategoryVo {
 
     @ApiModelProperty(value = "类目id")
-    private Integer categoryId;
+    private Integer id;
 
     @ApiModelProperty(value = "类目名称")
-    private String categoryName;
+    private String name;
 
     @ApiModelProperty(value = "展示顺序")
     private Integer showIndex;

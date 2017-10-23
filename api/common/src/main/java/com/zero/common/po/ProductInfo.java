@@ -1,14 +1,15 @@
 package com.zero.common.po;
 
 import io.swagger.annotations.ApiModelProperty;
-import java.io.Serializable;
-import java.util.Date;
+import lombok.Data;
+import lombok.ToString;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import lombok.Data;
-import lombok.ToString;
+import java.io.Serializable;
+import java.util.Date;
 
 @Data
 @ToString
@@ -25,11 +26,14 @@ public class ProductInfo implements Serializable {
     @ApiModelProperty(value = "单价")
     private Double price;
 
-    @ApiModelProperty(value = "库存")
+    @ApiModelProperty(value = "销量")
     private Integer sellCount;
 
     @ApiModelProperty(value = "描述")
     private String description;
+
+    @ApiModelProperty(value = "简介")
+    private String info;
 
     @ApiModelProperty(value = "小图")
     private String icon;

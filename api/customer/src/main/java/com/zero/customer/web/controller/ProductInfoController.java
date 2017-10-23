@@ -27,13 +27,13 @@ public class ProductInfoController {
     @Resource
     private ProductInfoService productInfoService;
 
-    @GetMapping("/listCategory")
+    @GetMapping("/listCategory.json")
     @ApiOperation("查询所有的商品类目名称")
     public ReturnVo<List<ProductCategoryVo>> listCategory() {
         return ReturnVo.success(productInfoService.listCategory());
     }
 
-    @GetMapping("/listByCategory")
+    @GetMapping("/listByCategory.json")
     @ApiOperation("查询某一类目下的所有商品")
     public ReturnVo<List<ProductInfoVo>> listByCategory(@ApiParam("类目Id") @RequestParam Integer categoryId) {
         return ReturnVo.success(productInfoService.listByCategory(categoryId));
