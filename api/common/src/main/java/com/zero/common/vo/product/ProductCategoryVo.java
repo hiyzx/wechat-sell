@@ -9,7 +9,7 @@ import lombok.Data;
  * @date 2017/09/18
  */
 @Data
-@ApiModel("商品类目对象")
+@ApiModel("商品类目vo对象")
 public class ProductCategoryVo {
 
     @ApiModelProperty(value = "类目id")

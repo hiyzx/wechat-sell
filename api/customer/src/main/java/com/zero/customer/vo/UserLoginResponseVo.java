@@ -1,5 +1,6 @@
 package com.zero.customer.vo;
 
+import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ApiModel("用户登录返回vo对象")
 public class UserLoginResponseVo {
 
     private String cookieValue;

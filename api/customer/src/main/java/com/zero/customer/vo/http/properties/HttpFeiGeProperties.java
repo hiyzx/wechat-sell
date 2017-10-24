@@ -1,5 +1,7 @@
 package com.zero.customer.vo.http.properties;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -12,10 +14,16 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "http.feige")
 @Data
+@ApiModel("http请求属性对象")
 public class HttpFeiGeProperties {
 
-    private String scheme;// 协议
-    private String hostname;// 域名
+    @ApiModelProperty("协议")
+    private String scheme;
+
+    @ApiModelProperty("域名")
+    private String hostname;
+
+    @ApiModelProperty("端口")
     private String port;// 端口
 
 }

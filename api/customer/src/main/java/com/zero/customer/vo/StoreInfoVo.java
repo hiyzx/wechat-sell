@@ -8,7 +8,7 @@ import lombok.Data;
  * @author yezhaoxing
  * @date 2017/10/23
  */
-@ApiModel("商家信息")
+@ApiModel("商家信息vo对象")
 @Data
 public class StoreInfoVo {
 
@@ -31,6 +31,6 @@ public class StoreInfoVo {
     }
 
     public String getShortIntro() {
-        return introduction.length() > 10 ? String.format("%s%s",introduction.substring(0, 20),"。。。。") : introduction;
+        return introduction.length() > 10 ? String.format("%s%s",introduction.substring(0, 15),"。。。。") : introduction;
     }
 }

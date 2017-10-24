@@ -1,6 +1,7 @@
 package com.zero.customer.vo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -10,6 +11,7 @@ import lombok.Data;
  */
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@ApiModel("订单详情vo对象")
 public class OrderDetailVo {
 
     @ApiModelProperty("商品id")

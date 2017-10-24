@@ -1,5 +1,6 @@
 package com.zero.common.vo;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
@@ -8,6 +9,7 @@ import io.swagger.annotations.ApiModelProperty;
  * @author yezhaoxing
  * @date 2017/5/18
  */
+@ApiModel("健康检出vo对象")
 public class HealthCheckVo {
     @ApiModelProperty("服务名")
     private String serviceName;

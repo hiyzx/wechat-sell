@@ -1,5 +1,6 @@
 package com.zero.customer.vo;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -10,6 +11,7 @@ import java.util.Date;
  * @date 2017/08/18
  */
 @Data
+@ApiModel("签到vo")
 public class CheckRecordVo {
 
 

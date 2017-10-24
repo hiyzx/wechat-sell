@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
  * @date : 2017/4/17
  */
 @Data
-@ApiModel("用户注册dto")
+@ApiModel("用户注册dto对象")
 public class UserDto {
 
     @ApiModelProperty(value = "年龄")

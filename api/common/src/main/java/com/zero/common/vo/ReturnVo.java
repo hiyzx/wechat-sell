@@ -2,6 +2,7 @@ package com.zero.common.vo;
 
 
 import com.zero.common.enums.CodeEnum;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
@@ -10,6 +11,7 @@ import io.swagger.annotations.ApiModelProperty;
  * @author yezhaoxing
  * @date 2017/4/29
  */
+@ApiModel("返回带有数据的vo对象")
 public class ReturnVo<T> extends BaseReturnVo {
 
     @ApiModelProperty("返回结果")

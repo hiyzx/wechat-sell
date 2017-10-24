@@ -3,6 +3,7 @@ package com.zero.common.vo;
 
 import com.zero.common.enums.CodeEnum;
 import com.zero.common.enums.StringEnum;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
@@ -11,6 +12,7 @@ import io.swagger.annotations.ApiModelProperty;
  * @author yezhaoxing
  * @date 2017/4/29
  */
+@ApiModel("基础返回vo对象")
 public class BaseReturnVo {
 
     final static String SUCCESS_DEFAULT_DESC = "success";

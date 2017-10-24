@@ -7,7 +7,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 @Data
-@ApiModel("商品信息对象")
+@ApiModel("商品信息vo对象")
 public class ProductInfoVo implements Serializable {
 
     @ApiModelProperty(value = "商品id")
