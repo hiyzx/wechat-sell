@@ -5,6 +5,8 @@ import com.zero.common.vo.BaseReturnVo;
 import com.zero.common.vo.ReturnVo;
 import com.zero.customer.annotation.Authorize;
 import com.zero.customer.service.OrderService;
+import com.zero.customer.util.SessionHelper;
+import com.zero.customer.vo.MyOrderVo;
 import com.zero.customer.vo.OrderVo;
 import com.zero.customer.vo.dto.OrderDto;
 import io.swagger.annotations.Api;
@@ -13,6 +15,7 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author yezhaoxing
@@ -25,6 +28,17 @@ public class OrderController {
 
     @Resource
     private OrderService orderService;
+    @Resource
+    private SessionHelper sessionHelper;
+
+    @Authorize
+    @PostMapping("/list")
+    @ApiOperation("我的订单列表")
+    public ReturnVo<List<MyOrderVo>> list(@RequestParam String sessionId,
+            @ApiParam(value = "当前页", required = true) @RequestParam Integer page,
+            @ApiParam(value = "每页大小", required = true) @RequestParam Integer pageSize) throws BaseException {
+        return ReturnVo.success(orderService.list(sessionHelper.getUserId(sessionId), page, pageSize));
+    }
 
     @Authorize
     @PostMapping("/add")

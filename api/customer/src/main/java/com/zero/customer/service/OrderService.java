@@ -1,5 +1,6 @@
 package com.zero.customer.service;
 
+import com.github.pagehelper.PageHelper;
 import com.zero.common.constants.RedisPrefix;
 import com.zero.common.dao.OrderDetailMapper;
 import com.zero.common.dao.OrderMasterMapper;
@@ -13,6 +14,7 @@ import com.zero.common.util.NumberUtil;
 import com.zero.common.util.StringHelper;
 import com.zero.customer.enums.CustomerCodeEnum;
 import com.zero.customer.util.RedisHelper;
+import com.zero.customer.vo.MyOrderVo;
 import com.zero.customer.vo.OrderDetailVo;
 import com.zero.customer.vo.OrderVo;
 import com.zero.customer.vo.dto.OrderDetailDto;
@@ -43,11 +45,36 @@ public class OrderService {
     @Resource
     private RedisHelper<String, List<OrderDetailDto>> redisHelper;
 
+    public List<MyOrderVo> list(Integer userId, Integer page, Integer pageSize) {
+        Condition masterCondition = new Condition(OrderMaster.class);
+        masterCondition.createCriteria().andEqualTo("buyerId", userId);
+        masterCondition.orderBy("createTime").desc();
+        PageHelper.startPage(page, pageSize);
+        List<OrderMaster> orderMasters = orderMasterMapper.selectByExample(masterCondition);
+        List<MyOrderVo> rtn = new ArrayList<>(orderMasters.size());
+        for (OrderMaster orderMaster : orderMasters) {
+            MyOrderVo myOrderVo = new MyOrderVo();
+            myOrderVo.setTotalCount(orderMaster.getTotalCount());
+            myOrderVo.setTotalAmount(orderMaster.getTotalAmount());
+            Condition detailCondition = new Condition(OrderDetail.class);
+            detailCondition.createCriteria().andEqualTo("orderId", orderMaster.getId());
+            detailCondition.orderBy("createTime").asc();
+            OrderDetail orderDetail = orderDetailMapper.selectByExample(detailCondition).get(0);
+            myOrderVo.setProductName(orderDetail.getProductName());
+            myOrderVo.setProductImage(orderDetail.getProductIcon());
+            myOrderVo.setOrderTime(orderMaster.getCreateTime());
+            myOrderVo.setOrderStatus(orderMaster.getOrderStatus());
+            rtn.add(myOrderVo);
+        }
+        return rtn;
+    }
+
     public void add(OrderDto orderDto) throws BaseException {
         // 将订单表和订单详情表写入数据库中
         List<OrderDetailDto> orderDetailDtos = orderDto.getOrderDetailDtos();
         String orderId = StringHelper.generateMasterKey();
         Double amount = 0D;
+        Integer totalCount = 0;
         List<OrderDetail> orderDetailList = new ArrayList<>(orderDetailDtos.size());
         for (OrderDetailDto orderDetailDto : orderDetailDtos) {
             String productInfoId = orderDetailDto.getProductInfoId();
@@ -66,6 +93,7 @@ public class OrderService {
             orderDetail.setCreateTime(DateHelper.getCurrentDateTime());
             orderDetail.setProductPrice(NumberUtil.mul(productInfo.getPrice(), count));
             orderDetailList.add(orderDetail);
+            totalCount += count;
             amount = NumberUtil.add(amount, orderDetail.getProductPrice());
         }
         orderDetailMapper.insertList(orderDetailList);
@@ -73,7 +101,8 @@ public class OrderService {
         BeanUtils.copyProperties(orderDto, orderMaster);
         orderMaster.setId(orderId);
         orderMaster.setCreateTime(DateHelper.getCurrentDateTime());
-        orderMaster.setOrderAmount(amount);
+        orderMaster.setTotalAmount(amount);
+        orderMaster.setTotalCount(totalCount);
         orderMaster.setPayStatus(OrderMaster.PAY_STATUS_NOT);
         orderMaster.setOrderStatus(OrderMaster.ORDER_STATUS_NEW);
         orderMasterMapper.insertSelective(orderMaster);
