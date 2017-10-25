@@ -1,10 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import login from '@/components/login'
-import code from '@/components/code'
-import register from '@/components/register'
-import forgetPassword from '@/components/forgetPassword'
-import personal from '@/components/personal'
+import login from '@/components/user/login'
+import code from '@/components/user/code'
+import register from '@/components/user/register'
+import forgetPassword from '@/components/user/forgetPassword'
+import personal from '@/components/user/personal'
+import myOrder from '@/components/order/myOrder'
 import index from '@/components/index'
 
 
@@ -41,6 +42,11 @@ export default new Router({
       path: '/',
       name: 'index',
       component: index
+    },
+    {
+      path: '/myOrder',
+      name: 'myOrder',
+      component: myOrder
     }
   ]
 })

@@ -2,92 +2,20 @@
   <div id="index">
     <mt-header fixed title="首页" style="font-size: 22px;"></mt-header>
 
-    <div class="mains">
-      <div style="overflow: hidden;margin-bottom: 10px;">
-        <div class="product_img">
-          <img :src="store.avatar"/>
-        </div>
-        <div class="product_main">
-          <div>
-            <div class="brand">品牌</div>
-            <div>{{store.name}}</div>
-          </div>
-          <div>
-            {{store.deliveryStr}}
-          </div>
-          <div>
-            <div class="reduce">减</div>
-            <div>在线支付满28减5</div>
-          </div>
-        </div>
-      </div>
-      <div class="notice">
-        <div class="notice_title">公告</div>
-        <div class="notice_content">{{store.shortIntro}}</div>
-        <div class="notice_back"></div>
-      </div>
-    </div>
+    <page-header></page-header>
+    <category-product></category-product>
+    <page-bottom></page-bottom>
 
-    <mt-navbar v-model="top_selected">
-      <mt-tab-item id="1">商品</mt-tab-item>
-      <mt-tab-item id="2">商家</mt-tab-item>
-    </mt-navbar>
-
-    <mt-tab-container v-model="top_selected" style="overflow: scroll;height: 600px">
-      <mt-tab-container-item id="1">
-        <div class="category_1">
-          <div :class="{category:true, click:category.id == category_selected}" v-for="category in categories"
-               @click="changeSelectCategory(category.id)">
-            {{category.name}}
-          </div>
-        </div>
-        <div>
-          <div class="category_product" v-for="productInfo in productInfos">
-            <div class="product_img">
-              <img :src="productInfo.icon"/>
-            </div>
-            <div class="product_info_1">
-              <div>
-                <div class="product">{{productInfo.name}}</div>
-              </div>
-              <div class="sell">
-                月售:{{productInfo.sellCount}}  好评:{{productInfo.commentCount}}
-              </div>
-              <div class="price">
-                ￥{{productInfo.price}}
-              </div>
-              <div class="add">
-                +
-              </div>
-            </div>
-          </div>
-        </div>
-      </mt-tab-container-item>
-      <mt-tab-container-item id="2">
-
-      </mt-tab-container-item>
-    </mt-tab-container>
-
-    <mt-tabbar v-model="bottom_selected" fixed>
-      <mt-tab-item id="外卖">
-        <img slot="icon" src="../../static/img/store.png">
-        外卖
-      </mt-tab-item>
-      <mt-tab-item id="订单">
-        <img slot="icon" src="../../static/img/order.png">
-        订单
-      </mt-tab-item>
-      <mt-tab-item id="我的">
-        <img slot="icon" src="../../static/img/my.png">
-        我的
-      </mt-tab-item>
-    </mt-tabbar>
   </div>
 </template>
 <script>
   import {Tabbar, TabItem} from 'mint-ui';
+  import pageHeader from './product/header'
+  import CategoryProduct from './product/categoryProduct'
+  import pageBottom from './common/bottom'
 
   export default {
+    components: {pageHeader, CategoryProduct, pageBottom},
     name: 'page-tabbar',
     mounted() {
       this.getStoreInfo();
@@ -236,6 +164,8 @@
     margin-top: 30px;
     text-align: left;
     margin-left: 100px;
+    overflow: hidden;
+    position: relative;
   }
 
   .product_info_1 {
@@ -263,14 +193,14 @@
 
   .add {
     font-size: 25px;
-    margin-top: 12px;
-    line-height: 24px;
-    margin-left: 90px;
-    float: right;
     border-radius: 15px;
     color: white;
     background: deepskyblue;
-    padding: 4px;
+    padding: 6px;
+    position: absolute;
+    bottom: 0;
+    right: 24px;
+    line-height: 14px;
   }
 
   .click {

@@ -10,20 +10,7 @@
     <mt-field label="手机号" v-model="phone" readonly="readonly"></mt-field>
     <mt-field label="年龄" v-model="age"></mt-field>
 
-    <mt-tabbar v-model="bottom_selected" fixed>
-      <mt-tab-item id="外卖">
-        <img slot="icon" src="../../static/img/store.png">
-        外卖
-      </mt-tab-item>
-      <mt-tab-item id="订单">
-        <img slot="icon" src="../../static/img/order.png">
-        订单
-      </mt-tab-item>
-      <mt-tab-item id="我的">
-        <img slot="icon" src="../../static/img/my.png">
-        我的
-      </mt-tab-item>
-    </mt-tabbar>
+    <page-bottom></page-bottom>
   </div>
 </template>
 
@@ -31,9 +18,11 @@
   import {Toast} from 'mint-ui';
   import {Field} from 'mint-ui';
   import {Header} from 'mint-ui';
+  import pageBottom from './../common/bottom'
 
 
   export default {
+    components: {pageBottom},
     name: 'personal',
     data() {
       return {
