@@ -43,33 +43,34 @@ public class OrderController {
     @Authorize
     @PostMapping("/add")
     @ApiOperation("下单")
-    public BaseReturnVo add(OrderDto orderDto) throws BaseException {
-        orderService.add(orderDto);
+    public BaseReturnVo add(@RequestParam String sessionId, @RequestBody OrderDto orderDto) throws BaseException {
+        orderService.add(sessionHelper.getUserId(sessionId), orderDto);
         return BaseReturnVo.success();
     }
 
     @Authorize
     @GetMapping("/get")
     @ApiOperation("查询单个订单")
-    public ReturnVo<OrderVo> get(@ApiParam("订单id") @RequestParam String orderId) throws BaseException {
+    public ReturnVo<OrderVo> get(@RequestParam String sessionId, @ApiParam("订单id") @RequestParam String orderId)
+            throws BaseException {
         return ReturnVo.success(orderService.getByOrderId(orderId));
     }
 
     @Authorize
     @PostMapping("/cancel")
     @ApiOperation("取消某个订单")
-    public BaseReturnVo cancel(@ApiParam("订单人") @RequestParam String openid,
+    public BaseReturnVo cancel(@ApiParam("订单人") @RequestParam String sessionId,
             @ApiParam("订单id") @RequestParam String orderId) throws BaseException {
-        orderService.cancel(openid, orderId);
+        orderService.cancel(String.valueOf(sessionHelper.getUserId(sessionId)), orderId);
         return BaseReturnVo.success();
     }
 
     @Authorize
     @PostMapping("/pay")
     @ApiOperation("支付")
-    public BaseReturnVo pay(@ApiParam("订单人") @RequestParam String openid,
+    public BaseReturnVo pay(@ApiParam("订单人") @RequestParam String sessionId,
             @ApiParam("订单id") @RequestParam String orderId) throws BaseException {
-        orderService.pay(openid, orderId);
+        orderService.pay(String.valueOf(sessionHelper.getUserId(sessionId)), orderId);
         return BaseReturnVo.success();
     }
 }

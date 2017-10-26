@@ -10,8 +10,6 @@ import java.util.*;
  */
 public class StringHelper {
 
-    private static UUID uuid = UUID.randomUUID();
-
     public static String generateMasterKey() {
         return String.format("%s%s", "master", generateKey());
     }
@@ -44,7 +42,7 @@ public class StringHelper {
     }
 
     private static String generateKey() {
-        return uuid.toString().replaceAll("-", "").substring(0, 20);
+        return UUID.randomUUID().toString().replaceAll("-", "").substring(0, 20);
     }
 
     public static String generateCode() {

@@ -14,9 +14,6 @@ import java.util.List;
 @ApiModel("订单主表dto对象")
 public class OrderDto {
 
-    @ApiModelProperty("下单人")
-    private String buyerOpenid;
-
     @ApiModelProperty("姓名")
     private String buyerName;
 
@@ -27,14 +24,4 @@ public class OrderDto {
     private String buyerAddress;
 
     private List<OrderDetailDto> orderDetailDtos;
-
-    @Override
-    public String toString() {
-        return "OrderDto{" +
-                "buyerOpenid='" + buyerOpenid + '\'' +
-                ", buyerName='" + buyerName + '\'' +
-                ", buyerPhone='" + buyerPhone + '\'' +
-                ", buyerAddress='" + buyerAddress + '\'' +
-                '}';
-    }
 }

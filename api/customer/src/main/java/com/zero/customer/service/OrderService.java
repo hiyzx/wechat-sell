@@ -22,10 +22,12 @@ import com.zero.customer.vo.dto.OrderDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Condition;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -34,6 +36,7 @@ import java.util.List;
  */
 @Service
 @Slf4j
+@Transactional(rollbackFor = Exception.class)
 public class OrderService {
 
     @Resource
@@ -64,18 +67,19 @@ public class OrderService {
             myOrderVo.setProductImage(orderDetail.getProductIcon());
             myOrderVo.setOrderTime(orderMaster.getCreateTime());
             myOrderVo.setOrderStatus(orderMaster.getOrderStatus());
+            myOrderVo.setPayStatus(orderMaster.getPayStatus());
             rtn.add(myOrderVo);
         }
         return rtn;
     }
 
-    public void add(OrderDto orderDto) throws BaseException {
+    public void add(Integer userId, OrderDto orderDto) throws BaseException {
         // 将订单表和订单详情表写入数据库中
         List<OrderDetailDto> orderDetailDtos = orderDto.getOrderDetailDtos();
         String orderId = StringHelper.generateMasterKey();
         Double amount = 0D;
         Integer totalCount = 0;
-        List<OrderDetail> orderDetailList = new ArrayList<>(orderDetailDtos.size());
+        Date now = DateHelper.getCurrentDateTime();
         for (OrderDetailDto orderDetailDto : orderDetailDtos) {
             String productInfoId = orderDetailDto.getProductInfoId();
             ProductInfo productInfo = productInfoMapper.selectByPrimaryKey(productInfoId);
@@ -90,21 +94,25 @@ public class OrderService {
             Integer count = orderDetailDto.getCount();
             orderDetail.setProductQuantity(count);
             orderDetail.setProductIcon(productInfo.getIcon());
-            orderDetail.setCreateTime(DateHelper.getCurrentDateTime());
-            orderDetail.setProductPrice(NumberUtil.mul(productInfo.getPrice(), count));
-            orderDetailList.add(orderDetail);
+            orderDetail.setCreateTime(now);
+            orderDetail.setProductPrice(productInfo.getPrice());
+            orderDetail.setUpdateTime(now);
+            orderDetail.setIsDelete(false);
+            orderDetailMapper.insert(orderDetail);
             totalCount += count;
-            amount = NumberUtil.add(amount, orderDetail.getProductPrice());
+            amount = NumberUtil.add(amount, NumberUtil.mul(productInfo.getPrice(), count));
         }
-        orderDetailMapper.insertList(orderDetailList);
         OrderMaster orderMaster = new OrderMaster();
         BeanUtils.copyProperties(orderDto, orderMaster);
+        orderMaster.setBuyerId(String.valueOf(userId));
         orderMaster.setId(orderId);
-        orderMaster.setCreateTime(DateHelper.getCurrentDateTime());
+        orderMaster.setCreateTime(now);
         orderMaster.setTotalAmount(amount);
         orderMaster.setTotalCount(totalCount);
         orderMaster.setPayStatus(OrderMaster.PAY_STATUS_NOT);
         orderMaster.setOrderStatus(OrderMaster.ORDER_STATUS_NEW);
+        orderMaster.setUpdateTime(now);
+        orderMaster.setIsDelete(false);
         orderMasterMapper.insertSelective(orderMaster);
         log.info("{} order", orderDto.toString());
         // 将销量暂时放在缓存中,付款成功后再增加到数据库中

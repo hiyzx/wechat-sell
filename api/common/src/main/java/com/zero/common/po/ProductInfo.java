@@ -29,11 +29,11 @@ public class ProductInfo implements Serializable {
     @ApiModelProperty(value = "销量")
     private Integer sellCount;
 
-    @ApiModelProperty(value = "描述")
-    private String description;
-
     @ApiModelProperty(value = "简介")
     private String info;
+
+    @ApiModelProperty(value = "描述")
+    private String description;
 
     @ApiModelProperty(value = "小图")
     private String icon;
@@ -54,5 +54,5 @@ public class ProductInfo implements Serializable {
     private Date updateTime;
 
     @ApiModelProperty(value = "是否删除")
-    private Byte isDelete;
+    private Boolean isDelete;
 }

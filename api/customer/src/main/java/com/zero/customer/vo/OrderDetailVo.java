@@ -19,4 +19,7 @@ public class OrderDetailVo {
 
     @ApiModelProperty("下单数量")
     private Integer productQuantity;
+
+    @ApiModelProperty("商品名称")
+    private String productName;
 }

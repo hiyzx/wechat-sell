@@ -4,8 +4,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.ToString;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
@@ -24,7 +22,6 @@ public class OrderMaster implements Serializable {
     public static final int PAY_STATUS_SUCCESS = 1;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
     @ApiModelProperty(value = "买家名字")
@@ -56,5 +53,5 @@ public class OrderMaster implements Serializable {
     private Date updateTime;
 
     @ApiModelProperty(value = "是否删除")
-    private Byte isDelete;
+    private Boolean isDelete;
 }
