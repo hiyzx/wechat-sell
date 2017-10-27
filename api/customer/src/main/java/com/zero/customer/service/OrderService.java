@@ -1,6 +1,7 @@
 package com.zero.customer.service;
 
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.zero.common.constants.RedisPrefix;
 import com.zero.common.dao.OrderDetailMapper;
 import com.zero.common.dao.OrderMasterMapper;
@@ -48,13 +49,14 @@ public class OrderService {
     @Resource
     private RedisHelper<String, List<OrderDetailDto>> redisHelper;
 
-    public List<MyOrderVo> list(Integer userId, Integer page, Integer pageSize) {
+    public PageInfo<MyOrderVo> list(Integer userId, Integer page, Integer pageSize) {
         Condition masterCondition = new Condition(OrderMaster.class);
         masterCondition.createCriteria().andEqualTo("buyerId", userId);
         masterCondition.orderBy("createTime").desc();
         PageHelper.startPage(page, pageSize);
         List<OrderMaster> orderMasters = orderMasterMapper.selectByExample(masterCondition);
-        List<MyOrderVo> rtn = new ArrayList<>(orderMasters.size());
+        PageInfo<OrderMaster> tmpPageInfo = new PageInfo<>(orderMasters);
+        List<MyOrderVo> myOrderVos = new ArrayList<>(orderMasters.size());
         for (OrderMaster orderMaster : orderMasters) {
             MyOrderVo myOrderVo = new MyOrderVo();
             myOrderVo.setTotalCount(orderMaster.getTotalCount());
@@ -68,9 +70,12 @@ public class OrderService {
             myOrderVo.setOrderTime(orderMaster.getCreateTime());
             myOrderVo.setOrderStatus(orderMaster.getOrderStatus());
             myOrderVo.setPayStatus(orderMaster.getPayStatus());
-            rtn.add(myOrderVo);
+            myOrderVos.add(myOrderVo);
         }
-        return rtn;
+        PageInfo<MyOrderVo> pageInfo = new PageInfo<>();
+        BeanUtils.copyProperties(tmpPageInfo, pageInfo);
+        pageInfo.setList(myOrderVos);
+        return pageInfo;
     }
 
     public void add(Integer userId, OrderDto orderDto) throws BaseException {

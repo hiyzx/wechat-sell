@@ -1,37 +1,41 @@
 <template>
   <div>
     <mt-header fixed title="订单列表" style="font-size: 22px;"></mt-header>
-    <div class="main">
-      <div class="main_content">
-        <div class="head_img">
-          <img src="http://114.67.147.157/file/image/store.jpg"/>
-        </div>
-        <div>
-          <div class="information">
-            <div class="information_data">
-              <div id="">
-                都骄傲手动驾驶都骄傲手动驾驶(龙科店)
+
+    <div style="overflow: scroll;">
+      <mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore">
+
+        <div v-for="myOrder in orderList">
+          <div class="main">
+            <div class="main_content">
+              <div class="head_img">
+                <img :src="myOrder.productImage"/>
               </div>
-              <div>
-                2017-10-23 11:22
+              <div style="width: 100%;text-align: left;margin-left: 30px">
+                <div class="information">
+                  <div class="information_data">
+                    <div id="">
+                      {{myOrder.productName}} 等商品
+                    </div>
+                    <div style="font-size: 15px;margin-top: 5px">
+                      {{myOrder.orderTime}}
+                    </div>
+                  </div>
+                  <div class="dstate">
+                    {{myOrder.orderStatusDisplay}}
+                  </div>
+                </div>
+                <div>
+                  {{myOrder.totalCount}}件商品  总金额:￥{{myOrder.totalAmount}}
+                </div>
               </div>
             </div>
-            <div class="dstate">
-              订单已经完成
+            <div class="main_button">
+              <div class="button_one">再来一单</div>
             </div>
           </div>
-          <div>
-            <div class="details">点击都奥死军大搜军军军军多多多多多多多多多多多多多多多多多多多多多多多多多多</div>
-          </div>
-          <div>
-            $13
-          </div>
         </div>
-      </div>
-      <div class="main_button">
-        <div class="button_one">再来一单</div>
-        <div class="button_two">评价得10金币</div>
-      </div>
+      </mt-loadmore>
     </div>
 
     <page-bottom></page-bottom>
@@ -39,9 +43,61 @@
 </template>
 <script>
   import pageBottom from './../common/bottom'
+  import {Toast} from 'mint-ui';
+  import {Loadmore} from 'mint-ui';
 
   export default {
-    components: {pageBottom}
+    components: {pageBottom},
+    data() {
+      return {
+        allLoaded: false,
+        sessionId: '',
+        page: 1,
+        pageSize: 4,
+        pageInfo: {},
+        orderList: {}
+      };
+    },
+    mounted() {
+      this.sessionId = localStorage.getItem('sessionId');
+      this.listMyOrders();
+    },
+    methods: {
+      loadTop() {
+        this.page = this.page - 1;
+        this.listMyOrders();
+        this.$refs.loadmore.onTopLoaded();
+      },
+      loadBottom() {
+        this.page = this.page + 1;
+        this.listMyOrders();
+        this.$refs.loadmore.onBottomLoaded();
+      },
+      async listMyOrders() {
+        const self = this;
+        const res = await
+          this.$httpPost('/order/list.json', {
+            sessionId: this.sessionId,
+            page: this.page,
+            pageSize: this.pageSize
+          }, {emulateJSON: true});
+        if (res.resCode === '000000') {
+          self.pageInfo = res.data;
+          self.orderList = res.data.list;
+          self.allLoaded = !res.data.hasNextPage;
+        }
+        if (res.resCode === '403') {
+          Toast({
+            message: '未登录',
+            position: 'middle',
+            duration: 1000
+          });
+          window.setTimeout(function () {
+            self.$router.push({path: '/login'})
+          }, 1000)
+        }
+      }
+    }
   }
 </script>
 <style type="text/css">
@@ -61,8 +117,8 @@
   }
 
   .head_img {
-    min-width: 14%;
-    max-width: 14%;
+    min-width: 16%;
+    max-width: 16%;
   }
 
   .head_img img {

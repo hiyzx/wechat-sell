@@ -1,5 +1,6 @@
 package com.zero.customer.web.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.zero.common.exception.BaseException;
 import com.zero.common.vo.BaseReturnVo;
 import com.zero.common.vo.ReturnVo;
@@ -15,7 +16,6 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * @author yezhaoxing
@@ -32,16 +32,16 @@ public class OrderController {
     private SessionHelper sessionHelper;
 
     @Authorize
-    @PostMapping("/list")
+    @PostMapping("/list.json")
     @ApiOperation("我的订单列表")
-    public ReturnVo<List<MyOrderVo>> list(@RequestParam String sessionId,
+    public ReturnVo<PageInfo<MyOrderVo>> list(@RequestParam String sessionId,
             @ApiParam(value = "当前页", required = true) @RequestParam Integer page,
             @ApiParam(value = "每页大小", required = true) @RequestParam Integer pageSize) throws BaseException {
         return ReturnVo.success(orderService.list(sessionHelper.getUserId(sessionId), page, pageSize));
     }
 
     @Authorize
-    @PostMapping("/add")
+    @PostMapping("/add.json")
     @ApiOperation("下单")
     public BaseReturnVo add(@RequestParam String sessionId, @RequestBody OrderDto orderDto) throws BaseException {
         orderService.add(sessionHelper.getUserId(sessionId), orderDto);
@@ -49,7 +49,7 @@ public class OrderController {
     }
 
     @Authorize
-    @GetMapping("/get")
+    @GetMapping("/get.json")
     @ApiOperation("查询单个订单")
     public ReturnVo<OrderVo> get(@RequestParam String sessionId, @ApiParam("订单id") @RequestParam String orderId)
             throws BaseException {
@@ -57,7 +57,7 @@ public class OrderController {
     }
 
     @Authorize
-    @PostMapping("/cancel")
+    @PostMapping("/cancel.json")
     @ApiOperation("取消某个订单")
     public BaseReturnVo cancel(@ApiParam("订单人") @RequestParam String sessionId,
             @ApiParam("订单id") @RequestParam String orderId) throws BaseException {
@@ -66,7 +66,7 @@ public class OrderController {
     }
 
     @Authorize
-    @PostMapping("/pay")
+    @PostMapping("/pay.json")
     @ApiOperation("支付")
     public BaseReturnVo pay(@ApiParam("订单人") @RequestParam String sessionId,
             @ApiParam("订单id") @RequestParam String orderId) throws BaseException {

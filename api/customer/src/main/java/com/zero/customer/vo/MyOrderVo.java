@@ -16,7 +16,7 @@ import java.util.Date;
 public class MyOrderVo {
 
     @ApiModelProperty("下单时间")
-    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm")
     private Date orderTime;
 
     @ApiModelProperty("第一个商品图片")
