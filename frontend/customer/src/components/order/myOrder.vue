@@ -5,6 +5,9 @@
     <div style="overflow: scroll;">
       <mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore">
 
+        <div v-if="pageInfo.total == 0">
+          暂无订单!!!
+        </div>
         <div v-for="myOrder in orderList">
           <div class="main">
             <div class="main_content">
@@ -35,6 +38,7 @@
             </div>
           </div>
         </div>
+
       </mt-loadmore>
     </div>
 

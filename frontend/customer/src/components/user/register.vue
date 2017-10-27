@@ -65,6 +65,9 @@
             position: 'middle',
             duration: 2000
           });
+          window.setTimeout(function () {
+            this.$router.push({path: '/login', query: {phone: this.phone}})
+          }, 1000)
         } else {
           Toast({
             message: resp.resDes,
