@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: dev
+    active: test
   resources:
     add-mappings: false
   mvc:

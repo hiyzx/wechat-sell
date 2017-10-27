@@ -7,7 +7,6 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -57,12 +56,6 @@ public class HealthCheckController {
     @ApiOperation(value = "检查DB,第三方服务等是否能正常连接")
     public List<HealthCheckVo> healthCheck() {
         return healthCheckService.healthCheck();
-    }
-
-    @GetMapping(value = "/checkRedis")
-    @ApiOperation(value = "测试redis")
-    public String checkRedis(@RequestParam String key) {
-        return healthCheckService.checkRedis(key);
     }
 
 }
