@@ -104,7 +104,7 @@ public class OrderService {
         }
         OrderMaster orderMaster = new OrderMaster();
         BeanUtils.copyProperties(orderDto, orderMaster);
-        orderMaster.setBuyerId(String.valueOf(userId));
+        orderMaster.setBuyerId(userId);
         orderMaster.setId(orderId);
         orderMaster.setCreateTime(now);
         orderMaster.setTotalAmount(amount);

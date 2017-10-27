@@ -34,7 +34,7 @@ public class OrderMaster implements Serializable {
     private String buyerAddress;
 
     @ApiModelProperty(value = "买家唯一id")
-    private String buyerId;
+    private Integer buyerId;
 
     @ApiModelProperty(value = "总数量")
     private Integer totalCount;
