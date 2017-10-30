@@ -10,8 +10,8 @@ import java.io.Serializable;
 @ApiModel("商品信息vo对象")
 public class ProductInfoVo implements Serializable {
 
-    @ApiModelProperty(value = "商品id")
-    private String id;
+    @ApiModelProperty(value = "商品uid")
+    private String uid;
 
     @ApiModelProperty(value = "商品名称")
     private String name;

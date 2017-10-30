@@ -6,6 +6,7 @@ import com.zero.common.constants.RedisPrefix;
 import com.zero.common.dao.OrderDetailMapper;
 import com.zero.common.dao.OrderMasterMapper;
 import com.zero.common.dao.ProductInfoMapper;
+import com.zero.common.enums.CodeEnum;
 import com.zero.common.exception.BaseException;
 import com.zero.common.po.OrderDetail;
 import com.zero.common.po.OrderMaster;
@@ -52,6 +53,8 @@ public class OrderService {
     private RedisHelper<String, List<OrderDetailDto>> redisHelper;
     @Resource
     private MessageProducer messageProducer;
+    @Resource
+    private ProductInfoService productInfoService;
 
     public PageInfo<MyOrderVo> list(Integer userId, Integer page, Integer pageSize) {
         Condition masterCondition = new Condition(OrderMaster.class);
@@ -66,10 +69,10 @@ public class OrderService {
             myOrderVo.setTotalCount(orderMaster.getTotalCount());
             myOrderVo.setTotalAmount(orderMaster.getTotalAmount());
             Condition detailCondition = new Condition(OrderDetail.class);
-            detailCondition.createCriteria().andEqualTo("orderId", orderMaster.getId());
+            detailCondition.createCriteria().andEqualTo("orderUid", orderMaster.getUid());
             detailCondition.orderBy("createTime").asc();
             OrderDetail orderDetail = orderDetailMapper.selectByExample(detailCondition).get(0);
-            myOrderVo.setOrderId(orderMaster.getId());
+            myOrderVo.setOrderId(orderMaster.getUid());
             myOrderVo.setProductName(orderDetail.getProductName());
             myOrderVo.setProductImage(orderDetail.getProductIcon());
             myOrderVo.setOrderTime(orderMaster.getCreateTime());
@@ -90,16 +93,17 @@ public class OrderService {
         Double amount = 0D;
         Integer totalCount = 0;
         Date now = DateHelper.getCurrentDateTime();
+        List<OrderDetail> orderDetailList = new ArrayList<>(orderDetailDtos.size());
         for (OrderDetailDto orderDetailDto : orderDetailDtos) {
-            String productInfoId = orderDetailDto.getProductInfoId();
-            ProductInfo productInfo = productInfoMapper.selectByPrimaryKey(productInfoId);
+            String productInfoUid = orderDetailDto.getProductInfoUid();
+            ProductInfo productInfo = productInfoService.getByProductUid(productInfoUid);
             if (productInfo == null) {
                 throw new BaseException(CustomerCodeEnum.PRODUCT_NOT_EXIST, "product is not exist");
             }
             OrderDetail orderDetail = new OrderDetail();
-            orderDetail.setId(StringHelper.generateDetailKey());
-            orderDetail.setOrderId(orderId);
-            orderDetail.setProductId(productInfoId);
+            orderDetail.setUid(StringHelper.generateDetailKey());
+            orderDetail.setOrderUid(orderId);
+            orderDetail.setProductId(productInfo.getId());
             orderDetail.setProductName(productInfo.getName());
             Integer count = orderDetailDto.getCount();
             orderDetail.setProductQuantity(count);
@@ -108,14 +112,16 @@ public class OrderService {
             orderDetail.setProductPrice(productInfo.getPrice());
             orderDetail.setUpdateTime(now);
             orderDetail.setIsDelete(false);
-            orderDetailMapper.insert(orderDetail);
+            orderDetailList.add(orderDetail);
+
             totalCount += count;
             amount = NumberUtil.add(amount, NumberUtil.mul(productInfo.getPrice(), count));
         }
+        orderDetailMapper.insertList(orderDetailList);
         OrderMaster orderMaster = new OrderMaster();
         BeanUtils.copyProperties(orderDto, orderMaster);
         orderMaster.setBuyerId(userId);
-        orderMaster.setId(orderId);
+        orderMaster.setUid(orderId);
         orderMaster.setCreateTime(now);
         orderMaster.setTotalAmount(amount);
         orderMaster.setTotalCount(totalCount);
@@ -129,8 +135,11 @@ public class OrderService {
         redisHelper.set(wrapperRedisKey(orderId), orderDetailDtos);
     }
 
-    public OrderVo getByOrderId(String orderId) {
-        OrderMaster orderMaster = orderMasterMapper.selectByPrimaryKey(orderId);
+    public OrderVo getByOrderId(String orderId) throws BaseException {
+        OrderMaster orderMaster = getByUid(orderId);
+        if (orderMaster == null) {
+            throw new BaseException(CodeEnum.ORDER_NOT_FOUND, "未找到该订单");
+        }
         List<OrderDetailVo> orderDetails = this.getOrderDetailByMasterId(orderId);
         OrderVo rtn = new OrderVo();
         BeanUtils.copyProperties(orderMaster, rtn);
@@ -140,7 +149,7 @@ public class OrderService {
 
     private List<OrderDetailVo> getOrderDetailByMasterId(String orderId) {
         Condition condition = new Condition(OrderDetail.class);
-        condition.createCriteria().andEqualTo("orderId", orderId);
+        condition.createCriteria().andEqualTo("orderUid", orderId);
         List<OrderDetail> orderDetails = orderDetailMapper.selectByExample(condition);
         List<OrderDetailVo> rtn = new ArrayList<>(orderDetails.size());
         orderDetails.forEach(orderDetail -> {
@@ -152,7 +161,10 @@ public class OrderService {
     }
 
     public void cancel(Integer userId, String orderId) throws BaseException {
-        OrderMaster orderMaster = orderMasterMapper.selectByPrimaryKey(orderId);
+        OrderMaster orderMaster = getByUid(orderId);
+        if (orderMaster == null) {
+            throw new BaseException(CodeEnum.ORDER_NOT_FOUND, "未找到该订单");
+        }
         if (orderMaster.getPayStatus() == OrderMaster.PAY_STATUS_SUCCESS) {
             throw new BaseException(CustomerCodeEnum.HAS_PAY, "已经付款,不能取消");
         }
@@ -160,7 +172,7 @@ public class OrderService {
             throw new BaseException(CustomerCodeEnum.NOT_NEW_ORDER, "非新订单,不能取消");
         }
         OrderMaster tmp = new OrderMaster();
-        tmp.setId(orderId);
+        tmp.setId(orderMaster.getId());
         tmp.setOrderStatus(OrderMaster.ORDER_STATUS_CANCEL);
         orderMasterMapper.updateByPrimaryKeySelective(tmp);
         log.info("userId={} cancel orderId={}", userId, orderId);
@@ -169,7 +181,10 @@ public class OrderService {
     }
 
     public void pay(Integer userId, String orderId) throws BaseException {
-        OrderMaster orderMaster = orderMasterMapper.selectByPrimaryKey(orderId);
+        OrderMaster orderMaster = getByUid(orderId);
+        if (orderMaster == null) {
+            throw new BaseException(CodeEnum.ORDER_NOT_FOUND, "未找到该订单");
+        }
         if (orderMaster.getPayStatus() == OrderMaster.PAY_STATUS_SUCCESS) {
             throw new BaseException(CustomerCodeEnum.HAS_PAY, "已经付款");
         }
@@ -177,7 +192,7 @@ public class OrderService {
             throw new BaseException(CustomerCodeEnum.NOT_NEW_ORDER, "非新订单,不能付款");
         }
         OrderMaster tmp = new OrderMaster();
-        tmp.setId(orderId);
+        tmp.setId(orderMaster.getId());
         tmp.setPayStatus(OrderMaster.PAY_STATUS_SUCCESS);
         orderMasterMapper.updateByPrimaryKeySelective(tmp);
         log.info("userId={} pay order={}", userId, orderId);
@@ -187,6 +202,13 @@ public class OrderService {
         messageProducer.sendUserPayMessage(new UserPayMessage(userId, orderDetailDtos));
         // 支付成功,将缓存移除
         redisHelper.delete(wrapperRedisKey(orderId));
+    }
+
+    private OrderMaster getByUid(String orderId) {
+        Condition condition = new Condition(OrderMaster.class);
+        condition.createCriteria().andEqualTo("uid", orderId);
+        List<OrderMaster> orderMasters = orderMasterMapper.selectByExample(condition);
+        return orderMasters.isEmpty() ? null : orderMasters.get(0);
     }
 
     private String wrapperRedisKey(String orderId) {

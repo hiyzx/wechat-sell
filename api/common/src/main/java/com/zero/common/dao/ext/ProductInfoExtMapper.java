@@ -8,5 +8,5 @@ import org.apache.ibatis.annotations.Param;
  */
 public interface ProductInfoExtMapper {
 
-    void increaseSellCount(@Param("productInfoId") String productInfoId, @Param("count") Integer count);
+    void increaseSellCount(@Param("productInfoId") Integer productInfoId, @Param("count") Integer count);
 }

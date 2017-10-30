@@ -27,6 +27,13 @@ spring:
             max-idle: 10
             max-wait: -1
 
+  activemq:
+      broker-url: tcp://www.hiyzx.cn:61616
+      user: admin
+      password: admin
+      packages:
+        trust-all: true
+
 project:
   version: @project.version@
   buildTime: @project.build.time@

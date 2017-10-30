@@ -26,6 +26,13 @@ public class ProductInfoService {
     @Resource
     private ProductInfoMapper productInfoMapper;
 
+    public ProductInfo getByProductUid(String productInfoUid){
+        Condition condition = new Condition(ProductInfo.class);
+        condition.createCriteria().andEqualTo("uid", productInfoUid);
+        List<ProductInfo> productInfos = productInfoMapper.selectByExample(condition);
+        return productInfos.isEmpty() ? null : productInfos.get(0);
+    }
+
     public List<ProductCategoryVo> listCategory() {
         Condition condition = new Condition(ProductCategory.class);
         condition.orderBy("show_index");

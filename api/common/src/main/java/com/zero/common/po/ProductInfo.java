@@ -17,8 +17,10 @@ import java.util.Date;
 public class ProductInfo implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ApiModelProperty(value = "商品id")
-    private String id;
+    private Integer id;
+
+    @ApiModelProperty(value = "商品uid")
+    private String uid;
 
     @ApiModelProperty(value = "商品名称")
     private String name;

@@ -33,10 +33,12 @@ public enum CodeEnum implements StringEnum {
 
     PASSWORD_NOT_CONSISTENT("100007"),
 
+    ORDER_NOT_FOUND("100008"),
+
     /**
      * 参数校验失败
      */
-    VALID_FAIL("100006"),
+    VALID_FAIL("100009"),
 
     SUCCESS("000000");
 

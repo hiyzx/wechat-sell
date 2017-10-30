@@ -15,7 +15,7 @@ import java.io.Serializable;
 public class OrderDetailDto implements Serializable {
 
     @ApiModelProperty("商品id")
-    private String productInfoId;
+    private String productInfoUid;
 
     @ApiModelProperty("下单数量")
     private Integer count;

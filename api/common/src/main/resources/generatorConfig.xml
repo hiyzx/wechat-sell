@@ -32,22 +32,19 @@
         </javaClientGenerator>
 
         <!-- 要生成的表 tableName是数据库中的表名或视图名 domainObjectName是实体类名 -->
-        <!--<table tableName="order_detail" domainObjectName="OrderDetail">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-            <columnOverride property="isDelete" column="is_delete" javaType="java.lang.Boolean"/>
-        </table>-->
-        <table tableName="order_master" domainObjectName="OrderMaster">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-            <columnOverride property="isDelete" column="is_delete" javaType="java.lang.Boolean"/>
-        </table>
-        <!-- <table tableName="product_info" domainObjectName="ProductInfo">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-            <columnOverride property="isDelete" column="is_delete" javaType="java.lang.Boolean"/>
-        </table>
         <table tableName="order_detail" domainObjectName="OrderDetail">
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
             <columnOverride property="isDelete" column="is_delete" javaType="java.lang.Boolean"/>
         </table>
+        <!--<table tableName="order_master" domainObjectName="OrderMaster">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride property="isDelete" column="is_delete" javaType="java.lang.Boolean"/>
+        </table>
+        <table tableName="product_info" domainObjectName="ProductInfo">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride property="isDelete" column="is_delete" javaType="java.lang.Boolean"/>
+        </table>-->
+        <!--
         <table tableName="product_category" domainObjectName="ProductCategory">
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
             <columnOverride property="isDelete" column="is_delete" javaType="java.lang.Boolean"/>

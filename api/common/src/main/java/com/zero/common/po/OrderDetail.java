@@ -4,6 +4,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.ToString;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
@@ -14,11 +16,16 @@ import java.util.Date;
 @Table(name = "order_detail")
 public class OrderDetail implements Serializable {
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-    private String orderId;
+    private String uid;
 
-    private String productId;
+    @ApiModelProperty(value = "订单主表uid")
+    private String orderUid;
+
+    @ApiModelProperty(value = "商品id")
+    private Integer productId;
 
     @ApiModelProperty(value = "商品名称")
     private String productName;
