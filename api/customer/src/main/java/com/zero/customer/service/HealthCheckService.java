@@ -7,6 +7,7 @@ import com.zero.customer.util.HttpClient;
 import com.zero.customer.util.RedisHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -30,6 +31,10 @@ public class HealthCheckService {
     private HikariDataSource masterDataSource;
     @Resource
     private RedisHelper<String, String> redisHelper;
+    @Value("${spring.redis.host}")
+    private String redisHost;
+    @Value("${spring.redis.port}")
+    private String redisPort;
     @Resource(name = "feiGeHttpClient")
     private HttpClient feiGeHttpClient;
 
@@ -84,7 +89,7 @@ public class HealthCheckService {
 
     private HealthCheckVo checkRedisConnection() {
         HealthCheckVo healthCheckVo = new HealthCheckVo();
-        healthCheckVo.setServiceName("redis");
+        healthCheckVo.setServiceName(String.format("redis-->%s:%s", redisHost, redisPort));
         try {
             long startTimeMillis = System.currentTimeMillis();
             redisHelper.set(String.format("%scheckRedisConnection", ""),
