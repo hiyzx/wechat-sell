@@ -3,6 +3,7 @@ package com.zero.customer.service;
 import com.zaxxer.hikari.HikariDataSource;
 import com.zero.common.util.DateHelper;
 import com.zero.common.vo.HealthCheckVo;
+import com.zero.customer.util.HttpClient;
 import com.zero.customer.util.RedisHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +30,8 @@ public class HealthCheckService {
     private HikariDataSource masterDataSource;
     @Resource
     private RedisHelper<String, String> redisHelper;
+    @Resource(name = "feiGeHttpClient")
+    private HttpClient feiGeHttpClient;
 
     /**
      * 健康检查
@@ -37,6 +40,7 @@ public class HealthCheckService {
         List<HealthCheckVo> healthCheckVos = new ArrayList<>();
         healthCheckVos.add(checkDBConnection());
         healthCheckVos.add(checkRedisConnection());
+        healthCheckVos.add(feiGeHttpClient.healthCheck());
         return healthCheckVos;
     }
 

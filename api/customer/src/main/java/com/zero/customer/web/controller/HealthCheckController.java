@@ -25,7 +25,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/monitor")
-@Api(description = "监控相关接口")
+@Api(description = "监控接口")
 public class HealthCheckController {
 
     private static final ThreadLocal<DateFormat> DATE_FORMAT = ThreadLocal
@@ -57,5 +57,4 @@ public class HealthCheckController {
     public List<HealthCheckVo> healthCheck() {
         return healthCheckService.healthCheck();
     }
-
 }
