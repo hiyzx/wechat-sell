@@ -183,6 +183,12 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- 集成activeMQ -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-activemq</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>com.github.binarywang</groupId>
             <artifactId>java-emoji-converter</artifactId>
@@ -253,7 +259,8 @@
                 <configuration>
                     <systemPropertyVariables>
                         <io.springfox.staticdocs.outputDir>${swagger.output.dir}</io.springfox.staticdocs.outputDir>
-                        <io.springfox.staticdocs.snippetsOutputDir>${swagger.snippetOutput.dir}</io.springfox.staticdocs.snippetsOutputDir>
+                        <io.springfox.staticdocs.snippetsOutputDir>${swagger.snippetOutput.dir}
+                        </io.springfox.staticdocs.snippetsOutputDir>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
@@ -282,13 +289,23 @@
                         <swagger2markup.markupLanguage>ASCIIDOC</swagger2markup.markupLanguage>
                         <swagger2markup.pathsGroupedBy>TAGS</swagger2markup.pathsGroupedBy>
 
-                        <swagger2markup.extensions.dynamicOverview.contentPath>${project.basedir}/src/docs/asciidoc/extensions/overview</swagger2markup.extensions.dynamicOverview.contentPath>
-                        <swagger2markup.extensions.dynamicDefinitions.contentPath>${project.basedir}/src/docs/asciidoc/extensions/definitions</swagger2markup.extensions.dynamicDefinitions.contentPath>
-                        <swagger2markup.extensions.dynamicPaths.contentPath>${project.basedir}/src/docs/asciidoc/extensions/paths</swagger2markup.extensions.dynamicPaths.contentPath>
-                        <swagger2markup.extensions.dynamicSecurity.contentPath>${project.basedir}src/docs/asciidoc/extensions/security/</swagger2markup.extensions.dynamicSecurity.contentPath>
+                        <swagger2markup.extensions.dynamicOverview.contentPath>
+                            ${project.basedir}/src/docs/asciidoc/extensions/overview
+                        </swagger2markup.extensions.dynamicOverview.contentPath>
+                        <swagger2markup.extensions.dynamicDefinitions.contentPath>
+                            ${project.basedir}/src/docs/asciidoc/extensions/definitions
+                        </swagger2markup.extensions.dynamicDefinitions.contentPath>
+                        <swagger2markup.extensions.dynamicPaths.contentPath>
+                            ${project.basedir}/src/docs/asciidoc/extensions/paths
+                        </swagger2markup.extensions.dynamicPaths.contentPath>
+                        <swagger2markup.extensions.dynamicSecurity.contentPath>
+                            ${project.basedir}src/docs/asciidoc/extensions/security/
+                        </swagger2markup.extensions.dynamicSecurity.contentPath>
 
-                        <swagger2markup.extensions.springRestDocs.snippetBaseUri>${swagger.snippetOutput.dir}</swagger2markup.extensions.springRestDocs.snippetBaseUri>
-                        <swagger2markup.extensions.springRestDocs.defaultSnippets>true</swagger2markup.extensions.springRestDocs.defaultSnippets>
+                        <swagger2markup.extensions.springRestDocs.snippetBaseUri>${swagger.snippetOutput.dir}
+                        </swagger2markup.extensions.springRestDocs.snippetBaseUri>
+                        <swagger2markup.extensions.springRestDocs.defaultSnippets>true
+                        </swagger2markup.extensions.springRestDocs.defaultSnippets>
                     </config>
                 </configuration>
                 <executions>

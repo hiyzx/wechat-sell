@@ -14,12 +14,14 @@ import com.zero.common.util.DateHelper;
 import com.zero.common.util.NumberUtil;
 import com.zero.common.util.StringHelper;
 import com.zero.customer.enums.CustomerCodeEnum;
+import com.zero.customer.mq.MessageProducer;
 import com.zero.customer.util.RedisHelper;
 import com.zero.customer.vo.MyOrderVo;
 import com.zero.customer.vo.OrderDetailVo;
 import com.zero.customer.vo.OrderVo;
 import com.zero.customer.vo.dto.OrderDetailDto;
 import com.zero.customer.vo.dto.OrderDto;
+import com.zero.customer.vo.message.UserPayMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -48,6 +50,8 @@ public class OrderService {
     private ProductInfoMapper productInfoMapper;
     @Resource
     private RedisHelper<String, List<OrderDetailDto>> redisHelper;
+    @Resource
+    private MessageProducer messageProducer;
 
     public PageInfo<MyOrderVo> list(Integer userId, Integer page, Integer pageSize) {
         Condition masterCondition = new Condition(OrderMaster.class);
@@ -147,7 +151,7 @@ public class OrderService {
         return rtn;
     }
 
-    public void cancel(String openid, String orderId) throws BaseException {
+    public void cancel(Integer userId, String orderId) throws BaseException {
         OrderMaster orderMaster = orderMasterMapper.selectByPrimaryKey(orderId);
         if (orderMaster.getPayStatus() == OrderMaster.PAY_STATUS_SUCCESS) {
             throw new BaseException(CustomerCodeEnum.HAS_PAY, "已经付款,不能取消");
@@ -159,12 +163,12 @@ public class OrderService {
         tmp.setId(orderId);
         tmp.setOrderStatus(OrderMaster.ORDER_STATUS_CANCEL);
         orderMasterMapper.updateByPrimaryKeySelective(tmp);
-        log.info("openid={} cancel orderId={}", openid, orderId);
+        log.info("userId={} cancel orderId={}", userId, orderId);
         // 取消订单,将缓存移除
         redisHelper.delete(wrapperRedisKey(orderId));
     }
 
-    public void pay(String openid, String orderId) throws BaseException {
+    public void pay(Integer userId, String orderId) throws BaseException {
         OrderMaster orderMaster = orderMasterMapper.selectByPrimaryKey(orderId);
         if (orderMaster.getPayStatus() == OrderMaster.PAY_STATUS_SUCCESS) {
             throw new BaseException(CustomerCodeEnum.HAS_PAY, "已经付款");
@@ -176,18 +180,11 @@ public class OrderService {
         tmp.setId(orderId);
         tmp.setPayStatus(OrderMaster.PAY_STATUS_SUCCESS);
         orderMasterMapper.updateByPrimaryKeySelective(tmp);
-        log.info("openid={} pay order={}", openid, orderId);
+        log.info("userId={} pay order={}", userId, orderId);
         // 支付成功,修改商品销量
         List<OrderDetailDto> orderDetailDtos = redisHelper.get(wrapperRedisKey(orderId));
-        orderDetailDtos.forEach(orderDetailDto -> {
-            ProductInfo productInfo = new ProductInfo();
-            String productInfoId = orderDetailDto.getProductInfoId();
-            productInfo.setId(productInfoId);
-            int count = orderDetailDto.getCount();
-            productInfo.setSellCount(count);
-            productInfoMapper.updateByPrimaryKeySelective(productInfo);
-            log.info("openid={} pay success and modify the sellCount={} of productId={}", openid, count, productInfoId);
-        });
+        // 将商品信息写入mq进行统计
+        messageProducer.sendUserPayMessage(new UserPayMessage(userId, orderDetailDtos));
         // 支付成功,将缓存移除
         redisHelper.delete(wrapperRedisKey(orderId));
     }

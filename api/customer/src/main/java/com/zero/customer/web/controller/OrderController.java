@@ -61,7 +61,7 @@ public class OrderController {
     @ApiOperation("取消某个订单")
     public BaseReturnVo cancel(@ApiParam("订单人") @RequestParam String sessionId,
             @ApiParam("订单id") @RequestParam String orderId) throws BaseException {
-        orderService.cancel(String.valueOf(sessionHelper.getUserId(sessionId)), orderId);
+        orderService.cancel(sessionHelper.getUserId(sessionId), orderId);
         return BaseReturnVo.success();
     }
 
@@ -70,7 +70,7 @@ public class OrderController {
     @ApiOperation("支付")
     public BaseReturnVo pay(@ApiParam("订单人") @RequestParam String sessionId,
             @ApiParam("订单id") @RequestParam String orderId) throws BaseException {
-        orderService.pay(String.valueOf(sessionHelper.getUserId(sessionId)), orderId);
+        orderService.pay(sessionHelper.getUserId(sessionId), orderId);
         return BaseReturnVo.success();
     }
 }

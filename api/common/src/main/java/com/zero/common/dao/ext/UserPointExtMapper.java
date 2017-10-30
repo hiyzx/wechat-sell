@@ -8,8 +8,5 @@ import org.apache.ibatis.annotations.Param;
  */
 public interface UserPointExtMapper {
 
-    /**
-     * 增加积分
-     */
     void increasePoint(@Param("userId") Integer userId, @Param("gainScore") Integer gainScore);
 }
