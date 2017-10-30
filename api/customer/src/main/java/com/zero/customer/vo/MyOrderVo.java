@@ -15,6 +15,8 @@ import java.util.Date;
 @Data
 public class MyOrderVo {
 
+    private String orderId;
+
     @ApiModelProperty("下单时间")
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm")
     private Date orderTime;

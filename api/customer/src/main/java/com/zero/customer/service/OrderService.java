@@ -65,6 +65,7 @@ public class OrderService {
             detailCondition.createCriteria().andEqualTo("orderId", orderMaster.getId());
             detailCondition.orderBy("createTime").asc();
             OrderDetail orderDetail = orderDetailMapper.selectByExample(detailCondition).get(0);
+            myOrderVo.setOrderId(orderMaster.getId());
             myOrderVo.setProductName(orderDetail.getProductName());
             myOrderVo.setProductImage(orderDetail.getProductIcon());
             myOrderVo.setOrderTime(orderMaster.getCreateTime());

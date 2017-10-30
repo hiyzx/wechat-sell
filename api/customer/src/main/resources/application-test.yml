@@ -27,20 +27,6 @@ spring:
             max-idle: 10
             max-wait: -1
 
-mybatis:
-    type-aliases-package: com.zero.common.po
-    mapper-locations: classpath:com.zero.common.dao/*.xml
-mapper:
-    mappers:
-        - com.zero.common.conf.MyMapper
-    not-empty: false
-    identity: MYSQL
-pagehelper:
-    helperDialect: mysql
-    reasonable: true
-    supportMethodsArguments: true
-    params: count=countSql
-
 project:
   version: @project.version@
   buildTime: @project.build.time@
@@ -48,10 +34,7 @@ project:
 
 logging:
   level:
-    com.zero: info
-    org.springframework.web: info
-    springframework.transaction: info
-    org.mybatis: debug
+    com.zero: debug
 
 feige:
   secret:
