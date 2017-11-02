@@ -174,6 +174,7 @@ public class HttpClient {
     }
 
     public String post(String path, Map<String, String> params) throws IOException {
+        System.setProperty ("jsse.enableSNIExtension", "false");
         Map<String, String> headers = Collections.emptyMap();
         return post(path, params, headers);
     }
@@ -241,6 +242,7 @@ public class HttpClient {
     }
 
     public String get(String path, Map<String, String> params) {
+        System.setProperty ("jsse.enableSNIExtension", "false");
         CloseableHttpResponse response = null;
         String rtn = null;
         try {

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,5 +54,20 @@ public class WeChatService {
             log.error("getAccessToken error：errCode={},errMsg={}", accessTokenMap.get("errcode"),
                     accessTokenMap.get("errmsg"));
         }
+    }
+
+    public String getMaterial() throws IOException {
+        String uri = String.format("%s/%s", CONTENT_PATH,
+                String.format("material/batchget_material?access_token=%s", getAccessToken()));
+        log.info(uri);
+        Map<String, String> params = new HashMap<>(5);
+        params.put("type", "news");
+        params.put("offset", "0");
+        params.put("count", "20");
+        return weChatHttpClient.post(uri, params);
+    }
+
+    private String getAccessToken() {
+        return redisHelper.get(SystemConstants.REDIS_KEY_WECHAT_ACCESS_TOKEN);
     }
 }

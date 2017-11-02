@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Objects;
 
 /**
@@ -52,6 +53,13 @@ public class WeChatController {
     @GetMapping("/token")
     @ApiOperation("获取access_token")
     public ReturnVo<String> getAccessToken() {
+        weChatService.refreshAccessToken();
         return ReturnVo.success(redisHelper.get(SystemConstants.REDIS_KEY_WECHAT_ACCESS_TOKEN));
+    }
+
+    @GetMapping("/getMaterial")
+    @ApiOperation("获取素材")
+    public ReturnVo<String> getMaterial() throws IOException {
+        return ReturnVo.success(weChatService.getMaterial());
     }
 }

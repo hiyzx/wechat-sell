@@ -11,20 +11,19 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>customer</artifactId>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
     <properties>
         <java.version>1.8</java.version>
-        <swagger2markup.version>1.2.0</swagger2markup.version>
-        <asciidoctor.input.directory>${project.basedir}/src/docs/asciidoc</asciidoctor.input.directory>
 
+        <!--<swagger2markup.version>1.2.0</swagger2markup.version>
+        <asciidoctor.input.directory>${project.basedir}/src/docs/asciidoc</asciidoctor.input.directory>
         <swagger.output.dir>${project.build.directory}/swagger</swagger.output.dir>
         <swagger.snippetOutput.dir>${project.build.directory}/asciidoc/snippets</swagger.snippetOutput.dir>
         <generated.asciidoc.directory>${project.build.directory}/asciidoc/generated</generated.asciidoc.directory>
         <asciidoctor.html.output.directory>${project.build.directory}/asciidoc/html</asciidoctor.html.output.directory>
         <asciidoctor.pdf.output.directory>${project.build.directory}/asciidoc/pdf</asciidoctor.pdf.output.directory>
-
-        <swagger.input>${swagger.output.dir}/swagger.json</swagger.input>
+        <swagger.input>${swagger.output.dir}/swagger.json</swagger.input>-->
     </properties>
 
     <pluginRepositories>
@@ -71,7 +70,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <!-- 打成war包需要tomcat-->
+            <!-- 打成war包需要移除tomcat-->
             <!--<exclusions>
                 <exclusion>
                     <groupId>org.springframework.boot</groupId>
@@ -195,7 +194,7 @@
         </dependency>
 
         <!-- 从这里开始是和swagger文档生成相关jar包 -->
-        <dependency>
+        <!--<dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-staticdocs</artifactId>
             <version>2.4.0</version>
@@ -221,7 +220,7 @@
             <artifactId>swagger2markup-spring-restdocs-ext</artifactId>
             <version>${swagger2markup.version}</version>
             <scope>test</scope>
-        </dependency>
+        </dependency>-->
 
     </dependencies>
 
@@ -252,7 +251,7 @@
             </plugin>
 
             <!-- 从这里开始是和swagger文档生成相关 -->
-            <plugin>
+            <!--<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
@@ -264,7 +263,7 @@
                 </configuration>
             </plugin>
 
-            <!-- First, use the swagger2markup plugin to generate asciidoc -->
+            &lt;!&ndash; First, use the swagger2markup plugin to generate asciidoc &ndash;&gt;
             <plugin>
                 <groupId>io.github.swagger2markup</groupId>
                 <artifactId>swagger2markup-maven-plugin</artifactId>
@@ -317,13 +316,13 @@
                 </executions>
             </plugin>
 
-            <!-- Run the generated asciidoc through Asciidoctor to generate
-                 other documentation types, such as PDFs or HTML5 -->
+            &lt;!&ndash; Run the generated asciidoc through Asciidoctor to generate
+                 other documentation types, such as PDFs or HTML5 &ndash;&gt;
             <plugin>
                 <groupId>org.asciidoctor</groupId>
                 <artifactId>asciidoctor-maven-plugin</artifactId>
                 <version>1.5.6</version>
-                <!-- Include Asciidoctor PDF for pdf generation -->
+                &lt;!&ndash; Include Asciidoctor PDF for pdf generation &ndash;&gt;
                 <dependencies>
                     <dependency>
                         <groupId>org.asciidoctor</groupId>
@@ -336,7 +335,7 @@
                         <version>1.7.21</version>
                     </dependency>
                 </dependencies>
-                <!-- Configure generic document generation settings -->
+                &lt;!&ndash; Configure generic document generation settings &ndash;&gt;
                 <configuration>
                     <sourceDirectory>${asciidoctor.input.directory}</sourceDirectory>
                     <sourceDocumentName>index.adoc</sourceDocumentName>
@@ -351,8 +350,8 @@
                         <generated>${generated.asciidoc.directory}</generated>
                     </attributes>
                 </configuration>
-                <!-- Since each execution can only handle one backend, run
-                     separate executions for each desired output type -->
+                &lt;!&ndash; Since each execution can only handle one backend, run
+                     separate executions for each desired output type &ndash;&gt;
                 <executions>
                     <execution>
                         <id>output-html</id>
@@ -381,7 +380,7 @@
                 </executions>
             </plugin>
 
-            <!-- specify the main class for the manifest -->
+            &lt;!&ndash; specify the main class for the manifest &ndash;&gt;
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -397,7 +396,7 @@
                 </configuration>
             </plugin>
 
-            <!-- copy dependencies to the lib directory -->
+            &lt;!&ndash; copy dependencies to the lib directory &ndash;&gt;
             <plugin>
                 <artifactId>maven-dependency-plugin</artifactId>
                 <executions>
@@ -413,7 +412,7 @@
                 </executions>
             </plugin>
 
-            <!-- copy the generated documents -->
+            &lt;!&ndash; copy the generated documents &ndash;&gt;
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
                 <version>2.7</version>
@@ -437,7 +436,7 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin>-->
         </plugins>
     </build>
 </project>
