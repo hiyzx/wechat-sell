@@ -7,10 +7,8 @@ import javax.annotation.Resource;
 import java.util.concurrent.TimeUnit;
 
 /**
- * redis工具类
- * 
  * @author yezhaoxing
- * @date 2017/7/17
+ * @date 2017/11/02
  */
 @Component
 public class RedisHelper<K, V> {

@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 /**
  * @author yezhaoxing
- * @date 2017/11/01
+ * @date 2017/11/02
  */
 @Slf4j
 public class WeChatUtil {

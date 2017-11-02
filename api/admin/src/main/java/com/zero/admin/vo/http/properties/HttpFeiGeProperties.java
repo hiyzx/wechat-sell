@@ -10,7 +10,7 @@ import lombok.Data;
 /**
  * @description 需要在pom.xml中加入spring-boot-configuration-processor依赖
  * @author yezhaoxing
- * @date 2017/10/17
+ * @date 2017/11/02
  */
 @Component
 @ConfigurationProperties(prefix = "http.feige")

@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * @author yezhaoxing
- * @date : 2017/4/17
+ * @date 2017/11/02
  */
 @Configuration
 public class SessionHelper {

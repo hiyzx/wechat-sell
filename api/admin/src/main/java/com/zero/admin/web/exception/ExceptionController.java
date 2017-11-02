@@ -25,7 +25,7 @@ import java.util.List;
  * 全局异常类配置
  *
  * @author yezhaoxing
- * @date 2017/5/17
+ * @date 2017/11/02
  */
 @Controller
 @ControllerAdvice

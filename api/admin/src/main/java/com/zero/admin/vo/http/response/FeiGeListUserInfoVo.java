@@ -5,7 +5,7 @@ import lombok.Data;
 
 /**
  * @author yezhaoxing
- * @date 2017/10/17
+ * @date 2017/11/02
  */
 @Data
 @ApiModel("飞鸽返回单个用户信息vo对象")

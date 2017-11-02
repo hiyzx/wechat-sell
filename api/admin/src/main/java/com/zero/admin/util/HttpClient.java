@@ -44,7 +44,7 @@ import com.zero.common.vo.HealthCheckVo;
  * HTTP连接池
  *
  * @author yezhaoxing
- * @date 2017/7/18
+ * @date 2017/11/02
  * @see https://yq.aliyun.com/articles/294
  */
 public class HttpClient {

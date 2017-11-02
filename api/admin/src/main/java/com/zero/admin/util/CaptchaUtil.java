@@ -24,7 +24,7 @@ import static com.zero.common.constants.SystemConstants.DEFAULT_MAX_AGE;
  *
  * @description 验证码处理类--需要注意linux下是否存在字体,否则会报错
  * @author yezhaoxing
- * @date 2017/8/18
+ * @date 2017/11/02
  */
 @Configuration
 @Slf4j

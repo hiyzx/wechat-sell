@@ -21,7 +21,7 @@ import java.util.Map;
  * 健康检查的控制器
  *
  * @author yezhaoxing
- * @date : 2017/5/17
+ * @date : 2017/11/02
  */
 @RestController
 @RequestMapping("/monitor")

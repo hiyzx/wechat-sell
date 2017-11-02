@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * @author yezhaoxing
- * @date : 2017/8/17
+ * @date 2017/11/02
  */
 @SpringBootApplication
 @MapperScan(basePackages = "com.zero.common.dao")
