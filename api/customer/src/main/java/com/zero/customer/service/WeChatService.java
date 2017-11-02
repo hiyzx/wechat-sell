@@ -8,7 +8,6 @@ import com.zero.customer.util.RedisHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -36,30 +35,23 @@ public class WeChatService {
     @Resource
     private RedisHelper<String, String> redisHelper;
 
-    public String getAccessToken() {
-        String accessToken;
-        accessToken = redisHelper.get(SystemConstants.REDIS_KEY_WECHAT_ACCESS_TOKEN);
-        if (StringUtils.isEmpty(accessToken)) {
-            Map<String, String> params = new HashMap<>(5);
-            params.put("grant_type", appGrantType);
-            params.put("appid", appID);
-            params.put("secret", appSecret);
-            String resp = weChatHttpClient.get(String.format("%s/%s", CONTENT_PATH, "token"), params);
-            log.info("resp= " + resp);
-            Map<String, Object> accessTokenMap = JsonHelper.readValue(resp, TYPE_REFERENCE);
-            if (accessTokenMap.containsKey("access_token")) {
-                accessToken = accessTokenMap.get("access_token").toString();
-                if (accessTokenMap.containsKey("expires_in")) {
-                    int expiresIn = (Integer) (accessTokenMap.get("expires_in"));
-                    redisHelper.set(SystemConstants.REDIS_KEY_WECHAT_ACCESS_TOKEN, accessToken, expiresIn);
-                }
-            } else {
-                log.error("getAccessToken error：errCode={},errMsg={}", accessTokenMap.get("errcode"),
-                        accessTokenMap.get("errmsg"));
+    public void refreshAccessToken() {
+        Map<String, String> params = new HashMap<>(5);
+        params.put("grant_type", appGrantType);
+        params.put("appid", appID);
+        params.put("secret", appSecret);
+        String resp = weChatHttpClient.get(String.format("%s/%s", CONTENT_PATH, "token"), params);
+        log.info("resp= " + resp);
+        Map<String, Object> accessTokenMap = JsonHelper.readValue(resp, TYPE_REFERENCE);
+        if (accessTokenMap.containsKey("access_token")) {
+            String accessToken = accessTokenMap.get("access_token").toString();
+            if (accessTokenMap.containsKey("expires_in")) {
+                int expiresIn = (Integer) (accessTokenMap.get("expires_in"));
+                redisHelper.set(SystemConstants.REDIS_KEY_WECHAT_ACCESS_TOKEN, accessToken, expiresIn);
             }
         } else {
-            log.info("{}={} already in cache", "accessTokenKey", accessToken);
+            log.error("getAccessToken error：errCode={},errMsg={}", accessTokenMap.get("errcode"),
+                    accessTokenMap.get("errmsg"));
         }
-        return accessToken;
     }
 }

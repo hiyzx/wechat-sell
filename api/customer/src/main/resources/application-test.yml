@@ -54,11 +54,7 @@ http:
   wechat:
     scheme: https
     hostname: sz.api.weixin.qq.com
-    port: 80
-  remote:
-      scheme: https
-      hostname: 114.67.147.157
-      port: 8080
+    port: 443
 
 App:
   grantType: client_credential
@@ -72,3 +68,6 @@ jasypt:
 management:
   security:
     enabled: false
+
+Djsse:
+  enableSNIExtension: false

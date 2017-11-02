@@ -3,6 +3,7 @@ package com.zero.customer.web.controller;
 import com.zero.common.constants.SystemConstants;
 import com.zero.common.vo.ReturnVo;
 import com.zero.customer.service.WeChatService;
+import com.zero.customer.util.RedisHelper;
 import com.zero.customer.util.WeChatUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,6 +29,8 @@ public class WeChatController {
 
     @Resource
     private WeChatService weChatService;
+    @Resource
+    private RedisHelper<String, String> redisHelper;
 
     @GetMapping("/checkToken")
     @ApiOperation("微信校验token")
@@ -49,6 +52,6 @@ public class WeChatController {
     @GetMapping("/token")
     @ApiOperation("获取access_token")
     public ReturnVo<String> getAccessToken() {
-        return ReturnVo.success(weChatService.getAccessToken());
+        return ReturnVo.success(redisHelper.get(SystemConstants.REDIS_KEY_WECHAT_ACCESS_TOKEN));
     }
 }

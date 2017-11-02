@@ -1,7 +1,6 @@
 package com.zero.customer;
 
 import com.zero.customer.service.FeiGeiService;
-import com.zero.customer.util.HttpClient;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,8 +19,6 @@ public class HttpClientTest {
 
     @Resource
     private FeiGeiService feiGeUtil;
-    @Resource(name = "remoteHttpClient")
-    private HttpClient remoteHttpClient;
 
     @Test
     public void testList() {
@@ -30,7 +27,5 @@ public class HttpClientTest {
 
     @Test
     public void testSend() throws IOException {
-        String s = remoteHttpClient.get("/customer/monitor/version");
-        System.out.println(s);
     }
 }

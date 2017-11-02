@@ -71,7 +71,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <!-- 打成war包需要移除-->
+            <!-- 打成war包需要tomcat-->
             <!--<exclusions>
                 <exclusion>
                     <groupId>org.springframework.boot</groupId>

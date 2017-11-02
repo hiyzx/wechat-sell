@@ -134,33 +134,6 @@ public class HttpClient {
         return System.currentTimeMillis() - startTimeMillis;
     }
 
-    private static void trustAllHosts() {
-
-        // Create a trust manager that does not validate certificate chains
-        TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
-
-            public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-                return new java.security.cert.X509Certificate[] {};
-            }
-
-            public void checkClientTrusted(X509Certificate[] chain, String authType) {
-
-            }
-
-            public void checkServerTrusted(X509Certificate[] chain, String authType) {
-
-            }
-        } };
-        // Install the all-trusting trust manager
-        try {
-            SSLContext sc = SSLContext.getInstance("TLS");
-            sc.init(null, trustAllCerts, new java.security.SecureRandom());
-            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     public String post(String path, Map<String, String> params, Map<String, String> headers) throws IOException {
         CloseableHttpResponse response = null;
         String rtn = null;
@@ -168,7 +141,7 @@ public class HttpClient {
             URI uri = createURIBuilder(path);
             HttpPost httppost = new HttpPost(uri);
 
-            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+            List<NameValuePair> nameValuePairs = new ArrayList<>();
             for (Entry<String, String> paramEntry : params.entrySet()) {
                 nameValuePairs.add(new BasicNameValuePair(paramEntry.getKey(), paramEntry.getValue()));
             }
