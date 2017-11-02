@@ -1,0 +1,25 @@
+spring:
+  profiles:
+    active: test
+  resources:
+    add-mappings: false
+  mvc:
+    throw-exception-if-no-handler-found: true
+info:
+  app:
+    name: customer
+    version: @project.version@
+
+mybatis:
+    type-aliases-package: com.zero.common.po
+    mapper-locations: classpath:com.zero.common.dao/*.xml
+mapper:
+    mappers:
+        - com.zero.common.conf.MyMapper
+    not-empty: false
+    identity: MYSQL
+pagehelper:
+    helperDialect: mysql
+    reasonable: true
+    supportMethodsArguments: true
+    params: count=countSql

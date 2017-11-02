@@ -118,5 +118,6 @@
     <modules>
         <module>../common</module>
         <module>../customer</module>
+        <module>../admin</module>
     </modules>
 </project>
