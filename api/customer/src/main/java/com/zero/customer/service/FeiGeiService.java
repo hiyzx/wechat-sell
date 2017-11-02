@@ -1,6 +1,7 @@
-package com.zero.customer.util;
+package com.zero.customer.service;
 
 import com.zero.common.util.JsonHelper;
+import com.zero.customer.util.HttpClient;
 import com.zero.customer.vo.http.response.FeiGeListResponseVo;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +16,7 @@ import java.util.Map;
  * @date 2017/10/17
  */
 @Configuration
-public class FeiGeUtil {
+public class FeiGeiService {
 
     @Value("${feige.secret.key}")
     private String secretKey;

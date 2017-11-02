@@ -83,6 +83,7 @@
                 }
             },
             async verify() {
+                const self = this;
                 if (this.code === '' || this.code === undefined) {
                     Toast({
                         message: '短信验证码不能为空',
@@ -91,17 +92,17 @@
                     });
                     return;
                 }
-                const res = await this.$httpPost("/auth/verify.json",
+                const res = await self.$httpPost("/auth/verify.json",
                     {
-                        phone: this.phone,
-                        code: this.code,
-                        type: this.type
+                        phone: self.phone,
+                        code: self.code,
+                        type: self.type
                     }, {emulateJSON: true, credentials: true});
                 if (res.resCode === '000000') {
-                    if (this.type === '1') {
-                        this.$router.push({path: '/register', query: {phone: this.phone}})
+                    if (self.type === '1') {
+                       self.$router.push({path: '/register', query: {phone: this.phone}})
                     } else {
-                        this.$router.push({path: '/forgetPassword', query: {phone: this.phone}})
+                       self.$router.push({path: '/forgetPassword', query: {phone: this.phone}})
                     }
                 } else {
                     Toast({

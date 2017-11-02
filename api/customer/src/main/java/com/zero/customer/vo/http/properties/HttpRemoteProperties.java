@@ -1,10 +1,11 @@
 package com.zero.customer.vo.http.properties;
 
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
 
 /**
  * @description 需要在pom.xml中加入spring-boot-configuration-processor依赖
@@ -12,10 +13,10 @@ import org.springframework.stereotype.Component;
  * @date 2017/10/17
  */
 @Component
-@ConfigurationProperties(prefix = "http.feige")
+@ConfigurationProperties(prefix = "http.remote")
 @Data
 @ApiModel("http请求属性对象")
-public class HttpFeiGeProperties {
+public class HttpRemoteProperties {
 
     @ApiModelProperty("协议")
     private String scheme;

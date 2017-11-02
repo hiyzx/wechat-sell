@@ -12,4 +12,8 @@ public interface SystemConstants {
     String COOKIE_NAME = "customer_cookie";
 
     int DEFAULT_MAX_AGE = -1;
+
+    String TOKEN = "hiyzx";
+    
+    String REDIS_KEY_WECHAT_ACCESS_TOKEN = "redis_key_weChat_access_token";
 }

@@ -1,6 +1,16 @@
 package com.zero.customer.util;
 
-import com.zero.common.vo.HealthCheckVo;
+import java.io.*;
+import java.net.*;
+import java.security.cert.X509Certificate;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import javax.net.ssl.*;
+
 import org.apache.http.*;
 import org.apache.http.client.HttpRequestRetryHandler;
 import org.apache.http.client.config.RequestConfig;
@@ -24,25 +34,15 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.net.ssl.SSLException;
-import javax.net.ssl.SSLHandshakeException;
-import java.io.*;
-import java.net.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
+import com.zero.common.vo.HealthCheckVo;
 
 /**
  * HTTP连接池
- * 
+ *
  * @author yezhaoxing
  * @date 2017/7/18
  * @see https://yq.aliyun.com/articles/294
@@ -119,6 +119,46 @@ public class HttpClient {
         CloseableHttpClient httpClient = HttpClients.custom().setConnectionManager(cm)
                 .setRetryHandler(httpRequestRetryHandler).build();
         return httpClient;
+    }
+
+    /**
+     * 检查http连接的服务是否正常
+     */
+    private static long checkHttpConnection(final String hostname, final int port) throws IOException {
+        long startTimeMillis = System.currentTimeMillis();
+        Socket server = null;
+        server = new Socket();
+        InetSocketAddress address = new InetSocketAddress(hostname, port);
+        server.connect(address, 300000);// 5分钟
+        server.close();
+        return System.currentTimeMillis() - startTimeMillis;
+    }
+
+    private static void trustAllHosts() {
+
+        // Create a trust manager that does not validate certificate chains
+        TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
+
+            public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                return new java.security.cert.X509Certificate[] {};
+            }
+
+            public void checkClientTrusted(X509Certificate[] chain, String authType) {
+
+            }
+
+            public void checkServerTrusted(X509Certificate[] chain, String authType) {
+
+            }
+        } };
+        // Install the all-trusting trust manager
+        try {
+            SSLContext sc = SSLContext.getInstance("TLS");
+            sc.init(null, trustAllCerts, new java.security.SecureRandom());
+            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public String post(String path, Map<String, String> params, Map<String, String> headers) throws IOException {
@@ -321,18 +361,5 @@ public class HttpClient {
             LOG.error("hostname={} port={}", hostname, port, e);
         }
         return healthCheckVo;
-    }
-
-    /**
-     * 检查http连接的服务是否正常
-     */
-    private static long checkHttpConnection(final String hostname, final int port) throws IOException {
-        long startTimeMillis = System.currentTimeMillis();
-        Socket server = null;
-        server = new Socket();
-        InetSocketAddress address = new InetSocketAddress(hostname, port);
-        server.connect(address, 300000);// 5分钟
-        server.close();
-        return System.currentTimeMillis() - startTimeMillis;
     }
 }

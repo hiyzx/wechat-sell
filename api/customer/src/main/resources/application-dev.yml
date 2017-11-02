@@ -52,6 +52,21 @@ http:
     hostname: u.ifeige.cn
     port: 80
 
+http:
+  wechat:
+    scheme: http
+    hostname: sz.api.weixin.qq.com
+    port: 80
+  remote:
+    scheme: https
+    hostname: 114.67.147.157
+    port: 8080
+
+App:
+  grant_type: client_credential
+  ID: wx7b599c0943fb598f
+  Secret: 40cb7de2d1fcafca438600d6768d462c
+
 jasypt:
   encryptor:
     password: 123456

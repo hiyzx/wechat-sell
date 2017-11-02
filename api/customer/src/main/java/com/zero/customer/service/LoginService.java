@@ -39,6 +39,7 @@ public class LoginService {
         tmp.setPhone(phone);
         tmp.setPassword(userDto.getPassword());
         tmp.setLastLoginTime(DateHelper.getCurrentDateTime());
+        tmp.setIsDelete(false);
         userMapper.insertSelective(tmp);
         int userId = tmp.getId();// 只能用这种方式获取id
         log.info("userId={} name={} phone={} register success", userId, name, phone);
