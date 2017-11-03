@@ -43,9 +43,8 @@ public class OrderController {
     @Authorize
     @PostMapping("/add.json")
     @ApiOperation("下单")
-    public BaseReturnVo add(@RequestParam String sessionId, @RequestBody OrderDto orderDto) throws BaseException {
-        orderService.add(sessionHelper.getUserId(sessionId), orderDto);
-        return BaseReturnVo.success();
+    public ReturnVo<String> add(@RequestParam String sessionId, @RequestBody OrderDto orderDto) throws BaseException {
+        return ReturnVo.success(orderService.add(sessionHelper.getUserId(sessionId), orderDto));
     }
 
     @Authorize

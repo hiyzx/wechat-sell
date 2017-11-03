@@ -17,4 +17,9 @@ public class MessageQueue {
     public Queue userPayQueue() {
         return new ActiveMQQueue(MessageConstant.USER_PAY_QUEUE);
     }
+
+    @Bean(name = "commentProductQueue")
+    public Queue commentProductQueue() {
+        return new ActiveMQQueue(MessageConstant.COMMENT_PRODUCT_QUEUE);
+    }
 }

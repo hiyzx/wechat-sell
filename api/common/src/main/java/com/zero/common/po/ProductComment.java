@@ -22,14 +22,14 @@ public class ProductComment implements Serializable {
     @ApiModelProperty(value = "评论人id")
     private Integer userId;
 
+    @ApiModelProperty(value = "商品id")
+    private Integer productId;
+
     @ApiModelProperty(value = "分数")
     private Integer score;
 
     @ApiModelProperty(value = "内容")
     private String content;
-
-    @ApiModelProperty(value = "评论类型-1,推荐,2吐槽")
-    private Integer type;
 
     private Date createTime;
 

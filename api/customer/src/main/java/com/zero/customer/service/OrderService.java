@@ -86,8 +86,8 @@ public class OrderService {
         return pageInfo;
     }
 
-    public void add(Integer userId, OrderDto orderDto) throws BaseException {
-        // 将订单表和订单详情表写入数据库中
+    public String add(Integer userId, OrderDto orderDto) throws BaseException {
+        // 将订单表和订单详情表写入redis中
         List<OrderDetailDto> orderDetailDtos = orderDto.getOrderDetailDtos();
         String orderId = StringHelper.generateMasterKey();
         Double amount = 0D;
@@ -95,8 +95,8 @@ public class OrderService {
         Date now = DateHelper.getCurrentDateTime();
         List<OrderDetail> orderDetailList = new ArrayList<>(orderDetailDtos.size());
         for (OrderDetailDto orderDetailDto : orderDetailDtos) {
-            String productInfoUid = orderDetailDto.getProductInfoUid();
-            ProductInfo productInfo = productInfoService.getByProductUid(productInfoUid);
+            Integer productId = orderDetailDto.getProductId();
+            ProductInfo productInfo = productInfoMapper.selectByPrimaryKey(productId);
             if (productInfo == null) {
                 throw new BaseException(CustomerCodeEnum.PRODUCT_NOT_EXIST, "product is not exist");
             }
@@ -113,7 +113,6 @@ public class OrderService {
             orderDetail.setUpdateTime(now);
             orderDetail.setIsDelete(false);
             orderDetailList.add(orderDetail);
-
             totalCount += count;
             amount = NumberUtil.add(amount, NumberUtil.mul(productInfo.getPrice(), count));
         }
@@ -133,6 +132,7 @@ public class OrderService {
         log.info("{} order", orderDto.toString());
         // 将销量暂时放在缓存中,付款成功后再增加到数据库中
         redisHelper.set(wrapperRedisKey(orderId), orderDetailDtos);
+        return orderMaster.getUid();
     }
 
     public OrderVo getByOrderId(String orderId) throws BaseException {
@@ -143,7 +143,7 @@ public class OrderService {
         List<OrderDetailVo> orderDetails = this.getOrderDetailByMasterId(orderId);
         OrderVo rtn = new OrderVo();
         BeanUtils.copyProperties(orderMaster, rtn);
-        rtn.setOrderDetailDtos(orderDetails);
+        rtn.setOrderDetailVos(orderDetails);
         return rtn;
     }
 

@@ -15,10 +15,13 @@ import lombok.Data;
 public class OrderDetailVo {
 
     @ApiModelProperty("商品id")
-    private String productId;
+    private Integer productId;
 
     @ApiModelProperty("下单数量")
     private Integer productQuantity;
+
+    @ApiModelProperty(value = "商品价格")
+    private Double productPrice;
 
     @ApiModelProperty("商品名称")
     private String productName;

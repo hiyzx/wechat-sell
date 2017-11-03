@@ -1,7 +1,7 @@
 function Http(Vue) {
     if (!Http.installed) {
-      //const Host = 'http://192.168.0.118:8083/customer'
-      const Host = 'https://114.67.147.157/customer'
+      const Host = 'http://192.168.0.118:8083/customer'
+      //const Host = 'https://114.67.147.157/customer'
 
         function serialize(query) {
             let urlText = '';

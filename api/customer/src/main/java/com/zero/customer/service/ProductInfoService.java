@@ -1,11 +1,16 @@
 package com.zero.customer.service;
 
 import com.zero.common.dao.ProductCategoryMapper;
+import com.zero.common.dao.ProductCommentMapper;
 import com.zero.common.dao.ProductInfoMapper;
 import com.zero.common.po.ProductCategory;
+import com.zero.common.po.ProductComment;
 import com.zero.common.po.ProductInfo;
+import com.zero.common.util.DateHelper;
 import com.zero.common.vo.product.ProductCategoryVo;
 import com.zero.common.vo.product.ProductInfoVo;
+import com.zero.customer.vo.dto.ProductCommentDto;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Condition;
@@ -19,14 +24,17 @@ import java.util.List;
  * @date 2017/09/18
  */
 @Service
+@Slf4j
 public class ProductInfoService {
 
     @Resource
     private ProductCategoryMapper productCategoryMapper;
     @Resource
     private ProductInfoMapper productInfoMapper;
+    @Resource
+    private ProductCommentMapper productCommentMapper;
 
-    public ProductInfo getByProductUid(String productInfoUid){
+    public ProductInfo getByProductUid(String productInfoUid) {
         Condition condition = new Condition(ProductInfo.class);
         condition.createCriteria().andEqualTo("uid", productInfoUid);
         List<ProductInfo> productInfos = productInfoMapper.selectByExample(condition);
@@ -57,5 +65,17 @@ public class ProductInfoService {
             rtn.add(tmp);
         });
         return rtn;
+    }
+
+    public void comment(Integer userId, ProductCommentDto productCommentDto) {
+        ProductComment rtn = new ProductComment();
+        rtn.setUserId(userId);
+        rtn.setScore(productCommentDto.getScore());
+        rtn.setProductId(productCommentDto.getProductId());
+        rtn.setContent(productCommentDto.getContent());
+        rtn.setCreateTime(DateHelper.getCurrentDateTime());
+        rtn.setIsDelete(false);
+        productCommentMapper.insert(rtn);
+        log.info("userId={} comment productCommentDto={}", userId, productCommentDto.toString());
     }
 }

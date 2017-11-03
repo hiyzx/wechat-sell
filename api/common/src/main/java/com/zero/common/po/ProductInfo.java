@@ -19,7 +19,7 @@ public class ProductInfo implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ApiModelProperty(value = "商品uid")
+    @ApiModelProperty(value = "商品id")
     private String uid;
 
     @ApiModelProperty(value = "商品名称")
@@ -45,6 +45,12 @@ public class ProductInfo implements Serializable {
 
     @ApiModelProperty(value = "类目编号")
     private Integer categoryId;
+
+    @ApiModelProperty(value = "总的评分")
+    private Integer totalScore;
+
+    @ApiModelProperty(value = "平均分")
+    private Double averageScore;
 
     @ApiModelProperty(value = "评论数")
     private Integer commentCount;

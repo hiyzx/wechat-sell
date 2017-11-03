@@ -309,7 +309,7 @@ public class HttpClient {
         return get(path, params);
     }
 
-    URI createURIBuilder(String path, Map<String, String> params) throws URISyntaxException {
+    private URI createURIBuilder(String path, Map<String, String> params) throws URISyntaxException {
         URIBuilder builder = new URIBuilder().setScheme(scheme).setHost(hostname).setPort(port).setPath(path);
         for (Entry<String, String> entry : params.entrySet()) {
             builder.addParameter(entry.getKey(), entry.getValue());
@@ -317,7 +317,7 @@ public class HttpClient {
         return builder.build();
     }
 
-    URI createURIBuilder(String path) throws URISyntaxException {
+    private URI createURIBuilder(String path) throws URISyntaxException {
         Map<String, String> params = Collections.emptyMap();
         return createURIBuilder(path, params);
     }

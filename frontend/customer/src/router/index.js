@@ -6,6 +6,8 @@ import register from '@/components/user/register'
 import forgetPassword from '@/components/user/forgetPassword'
 import personal from '@/components/user/personal'
 import myOrder from '@/components/order/myOrder'
+import againOrder from '@/components/order/againOrder'
+import payment from '@/components/order/payment'
 import index from '@/components/index'
 
 
@@ -47,6 +49,16 @@ export default new Router({
       path: '/myOrder',
       name: 'myOrder',
       component: myOrder
+    },
+    {
+      path: '/againOrder',
+      name: 'againOrder',
+      component: againOrder
+    },
+    {
+      path: '/payment',
+      name: 'payment',
+      component: payment
     }
   ]
 })

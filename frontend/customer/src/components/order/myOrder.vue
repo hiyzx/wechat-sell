@@ -33,12 +33,14 @@
                 </div>
               </div>
             </div>
-            <div class="main_button">
+            <div class="main_button" @click="againOrder(myOrder.orderId)">
               <div class="button_one">再来一单</div>
+            </div>
+            <div class="main_button" v-if="myOrder.orderStatus == 1" @click="comment(myOrder.orderId)">
+              <div class="button_one" style="margin-right: 15px">评价</div>
             </div>
           </div>
         </div>
-
       </mt-loadmore>
     </div>
 
@@ -100,6 +102,12 @@
             self.$router.push({path: '/login'})
           }, 1000)
         }
+      },
+      againOrder(orderId) {
+        this.$router.push({path: '/againOrder', query: {orderId: orderId}});
+      },
+      comment(orderId) {
+        this.$router.push({path: '/againOrder', query: {orderId: orderId}});
       }
     }
   }

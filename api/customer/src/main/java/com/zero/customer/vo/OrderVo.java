@@ -14,9 +14,6 @@ import java.util.List;
 @ApiModel("订单vo对象")
 public class OrderVo {
 
-    @ApiModelProperty("下单人")
-    private Integer buyerId;
-
     @ApiModelProperty("姓名")
     private String buyerName;
 
@@ -29,5 +26,5 @@ public class OrderVo {
     @ApiModelProperty("订单总金额")
     private Double totalAmount;
 
-    private List<OrderDetailVo> orderDetailDtos;
+    private List<OrderDetailVo> orderDetailVos;
 }
