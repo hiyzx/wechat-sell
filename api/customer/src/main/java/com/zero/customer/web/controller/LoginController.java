@@ -110,7 +110,6 @@ public class LoginController {
             @ApiParam(value = "手机号", required = true) @RequestParam String phone,
             @ApiParam(value = "密码", required = true) @RequestParam String password) throws Exception {
         User user = loginService.login(phone, password);
-        // session放入redis中
         String cookieValue = WebHelper.getCookieValue(request, COOKIE_NAME);
         if (StringUtils.isEmpty(cookieValue)) {
             cookieValue = StringHelper.generateUUId();
