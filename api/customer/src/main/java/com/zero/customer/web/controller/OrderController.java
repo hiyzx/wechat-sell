@@ -58,7 +58,7 @@ public class OrderController {
     @Authorize
     @PostMapping("/cancel.json")
     @ApiOperation("取消某个订单")
-    public BaseReturnVo cancel(@ApiParam("订单人") @RequestParam String sessionId,
+    public BaseReturnVo cancel(@RequestParam String sessionId,
             @ApiParam("订单id") @RequestParam String orderId) throws BaseException {
         orderService.cancel(sessionHelper.getUserId(sessionId), orderId);
         return BaseReturnVo.success();
@@ -67,7 +67,7 @@ public class OrderController {
     @Authorize
     @PostMapping("/pay.json")
     @ApiOperation("支付")
-    public BaseReturnVo pay(@ApiParam("订单人") @RequestParam String sessionId,
+    public BaseReturnVo pay(@RequestParam String sessionId,
             @ApiParam("订单id") @RequestParam String orderId) throws BaseException {
         orderService.pay(sessionHelper.getUserId(sessionId), orderId);
         return BaseReturnVo.success();
