@@ -1,0 +1,8 @@
+# Created by .ignore support plugin (hsz.mobi)
+.gitignore
+.idea/
+api/admin/admin.iml
+api/common/common.iml
+api/common/target/
+api/customer/customer.iml
+api/parent/parent.iml

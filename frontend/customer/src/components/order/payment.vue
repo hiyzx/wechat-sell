@@ -35,6 +35,42 @@
             position: 'middle',
             duration: 1000
           });
+          window.setTimeout(function () {
+            self.$router.push({path: '/'})
+          }, 1000)
+        }else if (res.resCode === '403') {
+          Toast({
+            message: '未登录',
+            position: 'middle',
+            duration: 1000
+          });
+          window.setTimeout(function () {
+            self.$router.push({path: '/login'})
+          }, 1000)
+        } else {
+          Toast({
+            message: res.resDes,
+            position: 'middle',
+            duration: 1000
+          });
+        }
+      },
+      async cancelOrder() {
+        const self = this;
+        const res = await
+          this.$httpPost('/order/cancel.json', {
+            sessionId: this.sessionId,
+            orderId: this.orderId
+          }, {emulateJSON: true});
+        if (res.resCode === '000000') {
+          Toast({
+            message: '取消成功',
+            position: 'middle',
+            duration: 1000
+          });
+          window.setTimeout(function () {
+            self.$router.push({path: '/'})
+          }, 1000)
         }else if (res.resCode === '403') {
           Toast({
             message: '未登录',
