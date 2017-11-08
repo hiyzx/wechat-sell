@@ -3,7 +3,7 @@ package com.zero.customer.web.controller;
 import com.zero.common.constants.SystemConstants;
 import com.zero.common.vo.ReturnVo;
 import com.zero.customer.service.WeChatService;
-import com.zero.customer.util.RedisHelper;
+import com.zero.common.util.RedisHelper;
 import com.zero.customer.util.WeChatUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

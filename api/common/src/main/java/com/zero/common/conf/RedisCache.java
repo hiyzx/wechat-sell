@@ -1,4 +1,4 @@
-package com.zero.customer.conf;
+package com.zero.common.conf;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.cache.Cache;

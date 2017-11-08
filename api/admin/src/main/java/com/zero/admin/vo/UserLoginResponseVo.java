@@ -12,10 +12,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel("用户登录返回vo对象")
+@ApiModel("店家登录返回vo对象")
 public class UserLoginResponseVo {
 
     private String cookieValue;
 
-    private UserResponseVo user;
+    private Integer storeId;
 }

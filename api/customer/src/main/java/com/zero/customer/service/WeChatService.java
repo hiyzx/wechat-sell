@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.zero.common.constants.SystemConstants;
 import com.zero.common.util.JsonHelper;
 import com.zero.customer.util.HttpClient;
-import com.zero.customer.util.RedisHelper;
+import com.zero.common.util.RedisHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

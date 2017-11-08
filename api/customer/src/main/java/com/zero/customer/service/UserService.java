@@ -25,6 +25,7 @@ import java.util.List;
  */
 @Service
 @Slf4j
+@Transactional(rollbackFor = Exception.class)
 public class UserService {
 
     @Resource
@@ -52,7 +53,6 @@ public class UserService {
         return null;
     }
 
-    @Transactional(rollbackFor = Exception.class)
     public void check(Integer userId) throws BaseException {
         UserCheckCount userCheckCount = userCheckCountService.getByUserId(userId);
         Date now = DateHelper.getCurrentDateTime();

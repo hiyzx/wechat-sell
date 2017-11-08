@@ -3,6 +3,7 @@ package com.zero.customer;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
  * @author yezhaoxing
@@ -10,6 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @SpringBootApplication
 @MapperScan(basePackages = "com.zero.common.dao")
+@ComponentScan(basePackages = "com.zero")
 public class CustomerApplication {
 
     public static void main(String[] args) {

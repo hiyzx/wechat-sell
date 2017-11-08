@@ -16,7 +16,7 @@ import com.zero.common.util.NumberUtil;
 import com.zero.common.util.StringHelper;
 import com.zero.customer.enums.CustomerCodeEnum;
 import com.zero.customer.mq.MessageProducer;
-import com.zero.customer.util.RedisHelper;
+import com.zero.common.util.RedisHelper;
 import com.zero.customer.vo.MyOrderVo;
 import com.zero.customer.vo.OrderDetailVo;
 import com.zero.customer.vo.OrderVo;

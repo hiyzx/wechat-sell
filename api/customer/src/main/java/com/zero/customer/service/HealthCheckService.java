@@ -4,7 +4,7 @@ import com.zaxxer.hikari.HikariDataSource;
 import com.zero.common.util.DateHelper;
 import com.zero.common.vo.HealthCheckVo;
 import com.zero.customer.util.HttpClient;
-import com.zero.customer.util.RedisHelper;
+import com.zero.common.util.RedisHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;

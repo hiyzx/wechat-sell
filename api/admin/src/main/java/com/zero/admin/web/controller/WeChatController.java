@@ -1,8 +1,8 @@
 package com.zero.admin.web.controller;
 
-import com.zero.admin.util.RedisHelper;
 import com.zero.admin.util.WeChatUtil;
 import com.zero.common.constants.SystemConstants;
+import com.zero.common.util.RedisHelper;
 import com.zero.common.vo.ReturnVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

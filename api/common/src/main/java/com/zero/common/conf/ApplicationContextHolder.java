@@ -1,4 +1,4 @@
-package com.zero.customer.conf;
+package com.zero.common.conf;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;

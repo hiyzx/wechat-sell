@@ -3,7 +3,7 @@ package com.zero.customer.service;
 import com.zero.common.enums.CodeEnum;
 import com.zero.common.exception.BaseException;
 import com.zero.common.util.StringHelper;
-import com.zero.customer.util.RedisHelper;
+import com.zero.common.util.RedisHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

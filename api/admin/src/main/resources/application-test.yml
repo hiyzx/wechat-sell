@@ -12,7 +12,7 @@ spring:
           connection-test-query: select 1 from dual
           connection-timeout: 30000
           idle-timeout: 60000
-          max-lifetime: 1800000
+          max-lifetime: 30000
           maximum-pool-size: 20
           minimum-idle: 20
   redis:

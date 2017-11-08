@@ -1,5 +1,6 @@
 package com.zero.customer.util;
 
+import com.zero.common.util.RedisHelper;
 import com.zero.customer.vo.UserLoginResponseVo;
 import com.zero.customer.vo.UserResponseVo;
 import org.slf4j.Logger;
@@ -60,6 +61,6 @@ public class SessionHelper {
     }
 
     private String sessionIdWrapper(String sessionId) {
-        return String.format("login_%s", sessionId);
+        return String.format("customer_login_%s", sessionId);
     }
 }
