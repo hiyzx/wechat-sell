@@ -2,10 +2,11 @@ package com.zero.customer.conf;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.cache.Cache;
-import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.util.CollectionUtils;
 
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -76,10 +77,10 @@ public class RedisCache implements Cache {
     @Override
     public void clear() {
         RedisTemplate<String, Object> redisTemplate = getRedisTemplate();
-        redisTemplate.execute((RedisCallback) connection -> {
-            connection.flushDb();
-            return null;
-        });
+        Set<String> keys = redisTemplate.keys("*:" + this.id + "*");
+        if (!CollectionUtils.isEmpty(keys)) {
+            redisTemplate.delete(keys);
+        }
         log.debug("Clear all the cached query result from redis");
     }
 
