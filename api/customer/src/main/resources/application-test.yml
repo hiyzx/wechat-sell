@@ -32,6 +32,10 @@ spring:
       password: admin
       packages:
         trust-all: true
+  http:
+    multipart:
+      max-file-size: 20mb
+      max-request-size: 20mb
 
 project:
   version: @project.version@
