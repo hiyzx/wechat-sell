@@ -174,7 +174,7 @@ public class HttpClient {
     }
 
     public String post(String path, Map<String, String> params) throws IOException {
-        System.setProperty ("jsse.enableSNIExtension", "false");
+        System.setProperty("jsse.enableSNIExtension", "false");
         Map<String, String> headers = Collections.emptyMap();
         return post(path, params, headers);
     }
@@ -242,7 +242,7 @@ public class HttpClient {
     }
 
     public String get(String path, Map<String, String> params) {
-        System.setProperty ("jsse.enableSNIExtension", "false");
+        System.setProperty("jsse.enableSNIExtension", "false");
         CloseableHttpResponse response = null;
         String rtn = null;
         try {
@@ -304,6 +304,40 @@ public class HttpClient {
         return null;
     }
 
+    public void writeFile(String path, String filePath) {
+        CloseableHttpResponse response = null;
+        File file = new File(filePath);
+        try {
+            URI uri = createURIBuilder(path);
+            HttpGet httpget = new HttpGet(uri);
+            httpget.setConfig(requestConfig);
+            long startTime = System.currentTimeMillis();
+            response = httpClient.execute(httpget, HttpClientContext.create());
+            LOG.info("请求第三方耗时:{}", System.currentTimeMillis() - startTime);// 请求接口的时间
+            HttpEntity entity = response.getEntity();
+            if (entity != null) {
+                InputStream instream = entity.getContent();
+                FileOutputStream os = new FileOutputStream(file);
+                int temp = 0;
+                while ((temp = instream.read()) != -1) {
+                    os.write(temp);
+                }
+                os.flush();
+                os.close();
+            }
+        } catch (Exception e) {
+            LOG.error(e.getMessage());
+        } finally {
+            try {
+                if (response != null) {
+                    response.close();
+                }
+            } catch (IOException e) {
+                LOG.error(e.getMessage(), e);
+            }
+        }
+    }
+
     public String get(String path) {
         Map<String, String> params = Collections.emptyMap();
         return get(path, params);
@@ -336,5 +370,62 @@ public class HttpClient {
             LOG.error("hostname={} port={}", hostname, port, e);
         }
         return healthCheckVo;
+    }
+
+    public void download(String remoteUrl, String localFileName) {
+        FileOutputStream out = null;
+        InputStream in = null;
+
+        try {
+            URL url = new URL(remoteUrl);
+            URLConnection urlConnection = url.openConnection();
+            HttpURLConnection httpURLConnection = (HttpURLConnection) urlConnection;
+
+            httpURLConnection.setDoOutput(true);
+            httpURLConnection.setDoInput(true);
+            httpURLConnection.setUseCaches(false);
+            httpURLConnection.setRequestProperty("Content-type", "application/x-java-serialized-object");
+            httpURLConnection.setRequestMethod("GET");
+            httpURLConnection.setRequestProperty("connection", "Keep-Alive");
+            httpURLConnection.setRequestProperty("Charsert", "UTF-8");
+            httpURLConnection.setConnectTimeout(60000);
+            httpURLConnection.setReadTimeout(60000);
+            httpURLConnection.connect();
+
+            in = httpURLConnection.getInputStream();// send request to
+            File file = new File(localFileName);
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+
+            out = new FileOutputStream(file);
+            byte[] buffer = new byte[4096 * 1024 * 5];
+            int readLength = 0;
+            while ((readLength = in.read(buffer)) > 0) {
+                byte[] bytes = new byte[readLength];
+                System.arraycopy(buffer, 0, bytes, 0, readLength);
+                out.write(bytes);
+            }
+
+            out.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (in != null) {
+                    in.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if (out != null) {
+                    out.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

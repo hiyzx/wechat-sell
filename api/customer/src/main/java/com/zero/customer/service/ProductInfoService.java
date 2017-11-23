@@ -36,6 +36,7 @@ public class ProductInfoService {
 
     public List<ProductCategoryVo> listCategory() {
         Condition condition = new Condition(ProductCategory.class);
+        condition.createCriteria().andEqualTo("isDelete", false);
         condition.orderBy("show_index");
         List<ProductCategory> productCategories = productCategoryMapper.selectByExample(condition);
         List<ProductCategoryVo> rtn = new ArrayList<>(productCategories.size());

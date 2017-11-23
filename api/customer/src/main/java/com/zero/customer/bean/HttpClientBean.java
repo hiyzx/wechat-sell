@@ -1,6 +1,7 @@
 package com.zero.customer.bean;
 
 import com.zero.customer.util.HttpClient;
+import com.zero.customer.vo.http.properties.HttpAliyunProperties;
 import com.zero.customer.vo.http.properties.HttpFeiGeProperties;
 import com.zero.customer.vo.http.properties.HttpWeChatProperties;
 import lombok.Data;
@@ -21,6 +22,8 @@ public class HttpClientBean {
     private HttpFeiGeProperties httpFeiGeProperties;
     @Resource
     private HttpWeChatProperties httpWeChatProperties;
+    @Resource
+    private HttpAliyunProperties httpAliyunProperties;
 
     @Bean("feiGeHttpClient")
     public HttpClient feiGeHttpClient() {
@@ -32,5 +35,11 @@ public class HttpClientBean {
     public HttpClient weChatHttpClient() {
         return new HttpClient(httpWeChatProperties.getScheme(), httpWeChatProperties.getHostname(),
                 Integer.valueOf(httpWeChatProperties.getPort()));
+    }
+
+    @Bean("aliyunHttpClient")
+    public HttpClient aliyunHttpClient() {
+        return new HttpClient(httpAliyunProperties.getScheme(), httpAliyunProperties.getHostname(),
+                Integer.valueOf(httpAliyunProperties.getPort()));
     }
 }

@@ -53,8 +53,6 @@ public class OrderService {
     private RedisHelper<String, List<OrderDetailDto>> redisHelper;
     @Resource
     private MessageProducer messageProducer;
-    @Resource
-    private ProductInfoService productInfoService;
 
     public PageInfo<MyOrderVo> list(Integer userId, Integer page, Integer pageSize) {
         Condition masterCondition = new Condition(OrderMaster.class);

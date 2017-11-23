@@ -4,7 +4,7 @@ import com.zero.common.dao.ProductInfoMapper;
 import com.zero.common.dao.ext.ProductInfoExtMapper;
 import com.zero.common.po.ProductInfo;
 import com.zero.common.util.NumberUtil;
-import com.zero.customer.service.ProductInfoService;
+import com.zero.customer.service.FeiGeiService;
 import com.zero.customer.vo.dto.OrderDetailDto;
 import com.zero.customer.vo.message.CommentProductMessage;
 import com.zero.customer.vo.message.UserPayMessage;
@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import javax.jms.JMSException;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -27,12 +28,13 @@ public class MessageConsumer {
     @Resource
     private ProductInfoExtMapper productInfoExtMapper;
     @Resource
-    private ProductInfoService productInfoService;
-    @Resource
     private ProductInfoMapper productInfoMapper;
+    @Resource
+    private FeiGeiService feiGeiService;
 
     @JmsListener(destination = MessageConstant.USER_PAY_QUEUE)
-    public void userPayMessageConsume(UserPayMessage userPayMessage) throws JMSException {
+    public void userPayMessageConsume(UserPayMessage userPayMessage) throws JMSException, IOException {
+        feiGeiService.sendMsgAlone(284, "notice", "新的订单", "有用户下单了!", "");
         int userId = userPayMessage.getUserId();
         List<OrderDetailDto> orderDetailDtos = userPayMessage.getOrderDetailDtos();
         orderDetailDtos.forEach(orderDetailDto -> {

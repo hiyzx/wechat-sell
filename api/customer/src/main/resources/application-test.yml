@@ -59,6 +59,10 @@ http:
     scheme: https
     hostname: sz.api.weixin.qq.com
     port: 443
+  aliyun:
+      scheme: http
+      hostname: yqyd-res-document.oss-cn-hangzhou.aliyuncs.com
+      port: 80
 
 App:
   grantType: client_credential
