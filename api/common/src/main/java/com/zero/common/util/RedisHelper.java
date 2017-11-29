@@ -1,9 +1,11 @@
 package com.zero.common.util;
 
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -27,6 +29,26 @@ public class RedisHelper<K, V> {
         this.expire(key, expireTime);
     }
 
+    public void zSet(K key, V value, Integer score) {
+        redisTemplate.opsForZSet().add(key, value, score);
+    }
+
+    public void zSet(K key, Set<ZSetOperations.TypedTuple<V>> var2) {
+        redisTemplate.opsForZSet().add(key, var2);
+    }
+
+    public Double zGet(K key, V value) {
+        return redisTemplate.opsForZSet().score(key, value);
+    }
+
+    public void zIncrease(K key, V value, Integer score) {
+        redisTemplate.opsForZSet().incrementScore(key, value, score);
+    }
+
+    public Long zRank(K key, V value) {
+        return redisTemplate.opsForZSet().reverseRank(key, value);
+    }
+
     public void expire(K key, long expireTime) {
         redisTemplate.expire(key, expireTime, TimeUnit.SECONDS);
     }
@@ -46,4 +68,5 @@ public class RedisHelper<K, V> {
     public Long size() {
         return redisTemplate.getConnectionFactory().getConnection().dbSize();
     }
+
 }
