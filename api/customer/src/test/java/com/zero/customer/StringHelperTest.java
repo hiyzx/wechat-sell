@@ -1,6 +1,7 @@
 package com.zero.customer;
 
 import com.zero.common.util.JsonHelper;
+import com.zero.customer.util.SensitiveWordFilter;
 import com.zero.customer.vo.dto.MessageBody;
 import com.zero.customer.vo.dto.NotificationDto;
 import eu.medsea.mimeutil.MimeUtil;
@@ -53,5 +54,11 @@ public class StringHelperTest {
         System.out.println(mimeTypes);
 
         System.out.println(MimeUtil.getMimeTypes(new File("E:\\test.docx")));
+    }
+
+    @Test
+    public void testSensitiveWordFilter() {
+        System.out.println(SensitiveWordFilter.doReplaceCharacterWithStar("操你妈傻逼"));
+
     }
 }
