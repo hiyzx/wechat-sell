@@ -58,7 +58,6 @@ public class StringHelperTest {
 
     @Test
     public void testSensitiveWordFilter() {
-        System.out.println(SensitiveWordFilter.doReplaceCharacterWithStar("操你妈傻逼"));
-
+        System.out.println(SensitiveWordFilter.doReplaceCharacterWithStar("垃圾"));
     }
 }

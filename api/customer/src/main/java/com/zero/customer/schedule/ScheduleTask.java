@@ -18,7 +18,7 @@ public class ScheduleTask {
     @Resource
     private WeChatService weChatService;
 
-    @Scheduled(fixedRate = 1000 * 60 * 90)
+    @Scheduled(cron = "0 0 0 * * ?")
     public void refreshAccessToken() {
         // weChatService.refreshAccessToken();
         log.info("refresh access token success");

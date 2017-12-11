@@ -1,7 +1,6 @@
 package com.zero.customer.util;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -18,10 +17,8 @@ import java.util.regex.Pattern;
  * 敏感词过滤
  */
 @Component
+@Slf4j
 public class SensitiveWordFilter {
-
-    // 日志
-    private static final Logger LOGGER = LoggerFactory.getLogger(SensitiveWordFilter.class);
 
     private static Pattern pattern = null;
 
@@ -51,10 +48,10 @@ public class SensitiveWordFilter {
                 // pattern = Pattern.compile(new String(patternBuf.toString()
                 // .getBytes("ISO-8859-1"), "gb2312"));
             } else {
-                LOGGER.info("敏感词 job : sensitivewords.properties 文件没有找到！");
+                log.info("敏感词 job : sensitivewords.properties 文件没有找到！");
             }
         } catch (IOException ioEx) {
-            LOGGER.error("sensitivewords.properties：敏感词初始化异常...", ioEx);
+            log.error("sensitivewords.properties：敏感词初始化异常...", ioEx);
         }
     }
 
@@ -130,7 +127,7 @@ public class SensitiveWordFilter {
     /**
      * 用特殊符号，替代敏感字符
      */
-    public static String doReplaceCharacter(String str, String reg) {
+    private static String doReplaceCharacter(String str, String reg) {
         if (pattern != null) {
             Matcher m = pattern.matcher(str);
             str = m.replaceAll(reg);
