@@ -2,6 +2,7 @@ package com.zero.admin.bean;
 
 import com.zero.admin.util.HttpClient;
 import com.zero.admin.vo.http.properties.HttpFeiGeProperties;
+import com.zero.admin.vo.http.properties.HttpJuHeProperties;
 import com.zero.admin.vo.http.properties.HttpWeChatProperties;
 import lombok.Data;
 import org.springframework.context.annotation.Bean;
@@ -21,6 +22,8 @@ public class HttpClientBean {
     private HttpFeiGeProperties httpFeiGeProperties;
     @Resource
     private HttpWeChatProperties httpWeChatProperties;
+    @Resource
+    private HttpJuHeProperties httpJuHeProperties;
 
     @Bean("feiGeHttpClient")
     public HttpClient feiGeHttpClient() {
@@ -32,5 +35,11 @@ public class HttpClientBean {
     public HttpClient weChatHttpClient() {
         return new HttpClient(httpWeChatProperties.getScheme(), httpWeChatProperties.getHostname(),
                 Integer.valueOf(httpWeChatProperties.getPort()));
+    }
+
+    @Bean("juHeHttpClient")
+    public HttpClient juHeHttpClient() {
+        return new HttpClient(httpJuHeProperties.getScheme(), httpJuHeProperties.getHostname(),
+                Integer.valueOf(httpJuHeProperties.getPort()));
     }
 }

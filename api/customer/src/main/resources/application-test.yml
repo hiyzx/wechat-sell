@@ -36,7 +36,6 @@ spring:
     multipart:
       max-file-size: 20mb
       max-request-size: 20mb
-
 project:
   version: @project.version@
   buildTime: @project.build.time@

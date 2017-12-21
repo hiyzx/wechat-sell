@@ -50,7 +50,7 @@ public class ProductInfoService {
 
     public List<ProductInfoVo> listByCategory(Integer categoryId) {
         Condition condition = new Condition(ProductInfo.class);
-        condition.createCriteria().andEqualTo("categoryId", categoryId);
+        condition.createCriteria().andEqualTo("categoryId", categoryId).andEqualTo("isDelete", false);
         List<ProductInfo> productInfos = productInfoMapper.selectByExample(condition);
         List<ProductInfoVo> rtn = new ArrayList<>(productInfos.size());
         productInfos.forEach(productInfo -> {

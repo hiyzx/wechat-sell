@@ -52,9 +52,13 @@ http:
     hostname: u.ifeige.cn
     port: 80
   wechat:
-    scheme: https
+    scheme: http
     hostname: sz.api.weixin.qq.com
     port: 443
+  juhe:
+    scheme: http
+    hostname: apis.juhe.cn
+    port: 80
 
 App:
   grantType: client_credential
