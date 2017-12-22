@@ -72,8 +72,3 @@ jasypt:
 management:
   security:
     enabled: false
-elasticsearch:
-  ip: 127.0.0.1
-  port: 9300
-  cluster.name: elasticsearch
-  pool: 10

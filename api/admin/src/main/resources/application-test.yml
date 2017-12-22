@@ -32,6 +32,12 @@ spring:
       password: admin
       packages:
         trust-all: true
+  data:
+      elasticsearch:
+        cluster-name: zero-es
+        cluster-nodes: localhost:9300
+        repositories:
+            enabled: true
 
 project:
   version: @project.version@
