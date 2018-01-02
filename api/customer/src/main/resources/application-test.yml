@@ -1,5 +1,5 @@
 server:
-  port: 8083
+  port: 8080
   context-path: /customer
 spring:
   datasource:
@@ -32,12 +32,12 @@ spring:
       password: admin
       packages:
         trust-all: true
-  data:
-      elasticsearch:
-        cluster-name: zero-es
-        cluster-nodes: 127.0.0.1:9300
-        repositories:
-            enabled: true
+ # data:
+  #    elasticsearch:
+   #     cluster-name: zero-es
+    #    cluster-nodes: 127.0.0.1:9300
+     #   repositories:
+     #       enabled: true
   http:
     multipart:
       max-file-size: 20mb

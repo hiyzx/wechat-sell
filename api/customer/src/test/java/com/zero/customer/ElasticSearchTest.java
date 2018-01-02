@@ -1,20 +1,12 @@
 package com.zero.customer;
 
-import com.github.pagehelper.PageHelper;
 import com.zero.common.dao.ProductInfoMapper;
-import com.zero.common.po.ProductInfo;
-import com.zero.common.vo.dto.ProductInfoEsDto;
 import com.zero.customer.es.ProductInfoRepository;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author yezhaoxing
@@ -29,7 +21,7 @@ public class ElasticSearchTest {
     @Resource
     private ProductInfoMapper productInfoMapper;
 
-    @Test
+    /*@Test
     public void testInit() {
         PageHelper.startPage(2, 30, false);
         List<ProductInfo> productInfos = productInfoMapper.selectAll();
@@ -46,5 +38,5 @@ public class ElasticSearchTest {
         Page<ProductInfoEsDto> productInfos = productInfoRepository.findByNameLikeOrInfoLikeOrDescriptionLike("青少年",
                 "青少年", "青少年", new PageRequest(1, 5));
         System.out.println(123);
-    }
+    }*/
 }

@@ -11,12 +11,9 @@ import com.zero.common.exception.BaseException;
 import com.zero.common.po.OrderDetail;
 import com.zero.common.po.OrderMaster;
 import com.zero.common.po.ProductInfo;
-import com.zero.common.util.DateHelper;
-import com.zero.common.util.NumberUtil;
-import com.zero.common.util.StringHelper;
+import com.zero.common.util.*;
 import com.zero.customer.enums.CustomerCodeEnum;
 import com.zero.customer.mq.MessageProducer;
-import com.zero.common.util.RedisHelper;
 import com.zero.customer.vo.MyOrderVo;
 import com.zero.customer.vo.OrderDetailVo;
 import com.zero.customer.vo.OrderVo;
@@ -60,7 +57,6 @@ public class OrderService {
         masterCondition.orderBy("createTime").desc();
         PageHelper.startPage(page, pageSize);
         List<OrderMaster> orderMasters = orderMasterMapper.selectByExample(masterCondition);
-        PageInfo<OrderMaster> tmpPageInfo = new PageInfo<>(orderMasters);
         List<MyOrderVo> myOrderVos = new ArrayList<>(orderMasters.size());
         for (OrderMaster orderMaster : orderMasters) {
             MyOrderVo myOrderVo = new MyOrderVo();
@@ -79,7 +75,7 @@ public class OrderService {
             myOrderVos.add(myOrderVo);
         }
         PageInfo<MyOrderVo> pageInfo = new PageInfo<>();
-        BeanUtils.copyProperties(tmpPageInfo, pageInfo);
+        BeanUtils.copyProperties(new PageInfo<>(orderMasters), pageInfo);
         pageInfo.setList(myOrderVos);
         return pageInfo;
     }

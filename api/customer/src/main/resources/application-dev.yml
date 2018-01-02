@@ -61,10 +61,10 @@ http:
     scheme: http
     hostname: sz.api.weixin.qq.com
     port: 80
-  remote:
-    scheme: https
-    hostname: 114.67.147.157
-    port: 8080
+  aliyun:
+      scheme: http
+      hostname: yqyd-res-document.oss-cn-hangzhou.aliyuncs.com
+      port: 80
 
 App:
   grant_type: client_credential

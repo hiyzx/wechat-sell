@@ -1,7 +1,9 @@
 package com.zero.common.util;
 
+import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
+import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -69,4 +71,16 @@ public class RedisHelper<K, V> {
         return redisTemplate.getConnectionFactory().getConnection().dbSize();
     }
 
+    // 可以防止缓存击穿
+    public Boolean setNx(final K key, final V value, Long expireTime) {
+        return redisTemplate.execute((RedisConnection redisConnection) -> {
+            RedisSerializer<K> keySerializer = (RedisSerializer<K>) redisTemplate.getKeySerializer();
+            RedisSerializer<V> valueSerializer = (RedisSerializer<V>) redisTemplate.getValueSerializer();
+            boolean flag = redisConnection.setNX(keySerializer.serialize(key), valueSerializer.serialize(value));
+            if (expireTime > 0 && flag) {
+                redisTemplate.expire(key, expireTime, TimeUnit.SECONDS);
+            }
+            return flag;
+        });
+    }
 }
