@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : jd
-Source Server Version : 50719
-Source Host           : www.hiyzx.cn:3306
+Source Server         : aliyun
+Source Server Version : 50720
+Source Host           : 120.78.210.235:3306
 Source Database       : takeaway
 
 Target Server Type    : MYSQL
-Target Server Version : 50719
+Target Server Version : 50720
 File Encoding         : 65001
 
-Date: 2017-10-21 11:17:11
+Date: 2018-01-04 17:11:47
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -67,7 +67,7 @@ CREATE TABLE `product_category` (
   `is_delete` tinyint(4) DEFAULT NULL COMMENT '是否删除',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uqe_category_type` (`show_index`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='商品类目表';
+) ENGINE=InnoDB AUTO_INCREMENT=326 DEFAULT CHARSET=utf8 COMMENT='商品类目表';
 
 -- ----------------------------
 -- Table structure for product_comment
@@ -91,13 +91,17 @@ CREATE TABLE `product_comment` (
 DROP TABLE IF EXISTS `product_info`;
 CREATE TABLE `product_info` (
   `id` varchar(32) NOT NULL COMMENT '商品id',
+  `uid` varchar(40) DEFAULT NULL,
   `name` varchar(64) NOT NULL COMMENT '商品名称',
   `price` double(8,2) DEFAULT NULL COMMENT '单价',
   `sell_count` int(11) NOT NULL COMMENT '库存',
   `description` varchar(64) DEFAULT NULL COMMENT '描述',
+  `info` varchar(64) DEFAULT NULL COMMENT '简介',
   `icon` varchar(128) DEFAULT NULL COMMENT '小图',
   `image` varchar(128) DEFAULT NULL COMMENT '图片',
   `category_id` int(11) NOT NULL COMMENT '类目编号',
+  `total_score` int(11) DEFAULT '0',
+  `average_score` double(11,2) DEFAULT NULL,
   `comment_count` int(11) DEFAULT NULL COMMENT '评论数',
   `create_time` datetime NOT NULL COMMENT '创建时间',
   `update_time` datetime NOT NULL COMMENT '修改时间',
@@ -125,7 +129,7 @@ CREATE TABLE `store` (
   `join_time` datetime NOT NULL COMMENT '加入时间',
   `is_delete` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for store_notice
@@ -179,7 +183,7 @@ CREATE TABLE `user_point` (
   `user_id` int(11) DEFAULT NULL COMMENT '用户id',
   `point` int(11) DEFAULT NULL COMMENT '积分',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for user_point_record
@@ -192,4 +196,4 @@ CREATE TABLE `user_point_record` (
   `gain_point` int(11) DEFAULT NULL COMMENT '获得的积分',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;

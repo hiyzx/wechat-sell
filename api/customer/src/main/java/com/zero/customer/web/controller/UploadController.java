@@ -8,6 +8,9 @@ import com.zero.customer.vo.dto.MessageBody;
 import com.zero.customer.vo.dto.NotificationDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import it.sauronsoftware.jave.Encoder;
+import it.sauronsoftware.jave.EncoderException;
+import it.sauronsoftware.jave.MultimediaInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -33,8 +37,15 @@ public class UploadController {
 
     @PostMapping("/upload.json")
     @ApiOperation("上传")
-    public BaseReturnVo upload(MultipartFile file) throws IOException {
-        documentUtil.createDocument(file);
+    public BaseReturnVo upload(MultipartFile file) throws IOException, EncoderException {
+        // documentUtil.createDocument(file);
+       /* CommonsMultipartFile cf= (CommonsMultipartFile)file;
+        DiskFileItem fileItem = (DiskFileItem)cf.getFileItem();
+        File source = fileItem.getStoreLocation();*/
+        File source = new File("E:\\望庐山瀑布.mp3");
+        Encoder encoder = new Encoder();
+        MultimediaInfo m = encoder.getInfo(source);
+        long ls = m.getDuration();
         return BaseReturnVo.success();
     }
 

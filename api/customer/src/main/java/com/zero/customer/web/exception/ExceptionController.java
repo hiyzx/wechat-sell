@@ -66,7 +66,6 @@ public class ExceptionController {
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ModelAndView resolveException(MethodArgumentNotValidException e) {
-
         BindingResult bindingResult = e.getBindingResult();
         List<FieldError> fieldErrors = bindingResult.getFieldErrors();
         StringBuilder sb = new StringBuilder();
