@@ -50,6 +50,9 @@ project:
 logging:
   level:
     com.zero: debug
+    org.springframework:
+          data: DEBUG
+          security: DEBUG
 
 feige:
   secret:

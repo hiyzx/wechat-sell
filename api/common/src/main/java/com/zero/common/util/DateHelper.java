@@ -1,13 +1,12 @@
 package com.zero.common.util;
 
-
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
- * @description  时间的工具类
+ * @description 时间的工具类
  * @author yezhaoxing
  * @date 2017/5/11
  */
@@ -236,7 +235,15 @@ public final class DateHelper {
         return isSameMonth && cal1.get(Calendar.DAY_OF_MONTH) == cal2.get(Calendar.DAY_OF_MONTH);
     }
 
+    public static int secondsBetween(Date smdate, Date bdate) {
+        return commonBetween(smdate, bdate, 1000);
+    }
+
     public static int daysBetween(Date smdate, Date bdate) {
+        return commonBetween(smdate, bdate, 1000 * 3600 * 24);
+    }
+
+    public static int commonBetween(Date smdate, Date bdate, int betweenTime) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try {
             smdate = sdf.parse(sdf.format(smdate));
@@ -249,7 +256,7 @@ public final class DateHelper {
         long time1 = cal.getTimeInMillis();
         cal.setTime(bdate);
         long time2 = cal.getTimeInMillis();
-        long betweenDays = (time2 - time1) / (1000 * 3600 * 24);
+        long betweenDays = (time2 - time1) / betweenTime;
 
         return Integer.parseInt(String.valueOf(betweenDays));
     }

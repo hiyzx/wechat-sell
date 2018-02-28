@@ -1,8 +1,9 @@
 package com.zero.admin.web.interceptor;
 
-import com.zero.admin.util.SessionHelper;
+import com.zero.admin.util.JwtTokenUtil;
 import com.zero.common.enums.CodeEnum;
 import com.zero.common.exception.BaseException;
+import com.zero.common.util.DateHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -11,9 +12,8 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
-import javax.annotation.Resource;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -26,9 +26,6 @@ import java.util.Map;
 @Slf4j
 public class AuthorityInterceptor {
 
-    @Resource
-    private SessionHelper sessionHelper;
-
     @Pointcut(value = "@annotation(com.zero.admin.annotation.Authorize) ")
     private void pointCut() {
     }
@@ -37,12 +34,11 @@ public class AuthorityInterceptor {
     public Object preHandle(ProceedingJoinPoint joinPoint) throws Throwable {
         Map<String, Object> argMap = this.getArgsMap(joinPoint);
         String sessionId = (String) argMap.get("sessionId");
-        if (StringUtils.hasText(sessionId) && sessionHelper.getUserId(sessionId) != null) {
-            sessionHelper.heartBeat(sessionId);
-            return joinPoint.proceed();
-        } else {
-            throw new BaseException(CodeEnum.NOT_LOGIN, "未登录");
+        Date expiration = JwtTokenUtil.validateToken(sessionId);
+        if (DateHelper.secondsBetween(new Date(), expiration) < 60 * 10) {
+            throw new BaseException(CodeEnum.TOKEN_SOON_EXPIRE, "token expire < 10 minutes");
         }
+        return joinPoint.proceed();
     }
 
     private Map<String, Object> getArgsMap(JoinPoint pjp) {

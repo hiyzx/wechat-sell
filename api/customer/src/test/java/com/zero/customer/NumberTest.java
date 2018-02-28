@@ -1,9 +1,13 @@
 package com.zero.customer;
 
+import com.zero.customer.util.JwtTokenUtil;
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 /**
  * @author yezhaoxing
@@ -60,5 +64,11 @@ public class NumberTest {
         }
         print(rtn);
         return rtn;
+    }
+
+    @Test
+    public void testString() throws Exception {
+        Map<String, Object> map = JwtTokenUtil.parseMaps("eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJjdXN0b21lciIsInN1YiI6IntcInBob25lXCI6XCIxODg1MDM0MTM1N1wiLFwibmFtZVwiOlwiemVyb1wiLFwidXNlcklkXCI6MX0iLCJpYXQiOjE1MTk3OTg0OTcsImV4cCI6MTUxOTgwNTY5N30.YUiU8qIvCU_QUGgCBmI53Q_3G_HjWYXASDUJhSAmjqA");
+        System.out.println(123);
     }
 }

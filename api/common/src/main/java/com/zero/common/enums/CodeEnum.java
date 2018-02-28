@@ -40,6 +40,8 @@ public enum CodeEnum implements StringEnum {
      */
     VALID_FAIL("100009"),
 
+    TOKEN_SOON_EXPIRE("100010"),
+
     SUCCESS("000000");
 
     private String codeEnum;

@@ -25,7 +25,7 @@ public class StoreController {
 
     @GetMapping("/info.json")
     @ApiOperation("查询商家列表")
-    private ReturnVo<StoreInfoVo> getStoreInfo() {
+    public ReturnVo<StoreInfoVo> getStoreInfo() {
         return ReturnVo.success(storeService.getStoreInfo());
     }
 }

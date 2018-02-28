@@ -14,6 +14,10 @@ public interface SystemConstants {
     int DEFAULT_MAX_AGE = -1;
 
     String TOKEN = "hiyzx";
-    
+
     String REDIS_KEY_WECHAT_ACCESS_TOKEN = "redis_key_weChat_access_token";
+
+    String JWT_SECRET = "7786df7fc3a34e26a61c034d5ec8245d";
+
+    int JWT_TTL_MILLIS = 7200 * 1000;
 }

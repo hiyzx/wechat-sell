@@ -1,7 +1,7 @@
 package com.zero.admin.web.interceptor;
 
 import com.zero.admin.util.IpUtil;
-import com.zero.admin.util.SessionHelper;
+import com.zero.admin.util.JwtTokenUtil;
 import com.zero.common.exception.BaseException;
 import com.zero.common.util.JsonHelper;
 import lombok.extern.slf4j.Slf4j;
@@ -27,8 +27,6 @@ import java.util.Map;
 public class LoggerInterceptor {
     @Resource
     private HttpServletRequest request;
-    @Resource
-    private SessionHelper sessionHelper;
 
     // http://stackoverflow.com/questions/29653664/how-to-correctly-use-spring-aop-to-select-the-execution-of-a-method-annotated-wi
     @Pointcut("execution(public * com.zero.admin.web.controller.*.*(..))")
@@ -78,7 +76,7 @@ public class LoggerInterceptor {
         if (StringUtils.hasText(sessionId)) {
             sb.append(", [sessionId=");
             sb.append(sessionId);
-            sb.append(", userId=").append(sessionHelper.getUserId(sessionId));
+            sb.append(", userId=").append(JwtTokenUtil.parseStoreId(sessionId));
             sb.append("]");
         }
         return sb;

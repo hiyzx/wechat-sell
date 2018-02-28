@@ -3,7 +3,7 @@ package com.zero.customer.web.interceptor;
 import com.zero.common.exception.BaseException;
 import com.zero.common.util.JsonHelper;
 import com.zero.customer.util.IpUtil;
-import com.zero.customer.util.SessionHelper;
+import com.zero.customer.util.JwtTokenUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -27,12 +27,11 @@ import java.util.Map;
 public class LoggerInterceptor {
     @Resource
     private HttpServletRequest request;
-    @Resource
-    private SessionHelper sessionHelper;
 
     // http://stackoverflow.com/questions/29653664/how-to-correctly-use-spring-aop-to-select-the-execution-of-a-method-annotated-wi
     @Pointcut("execution(public * com.zero.customer.web.controller.*.*(..))")
-    // @Pointcut("within(@org.springframework.stereotype.Controller *) && @annotation(org.springframework.web.bind.annotation.RequestMapping)")
+    // @Pointcut("within(@org.springframework.stereotype.Controller *) &&
+    // @annotation(org.springframework.web.bind.annotation.RequestMapping)")
     private void logController() {
     };
 
@@ -78,7 +77,7 @@ public class LoggerInterceptor {
         if (StringUtils.hasText(sessionId)) {
             sb.append(", [sessionId=");
             sb.append(sessionId);
-            sb.append(", userId=").append(sessionHelper.getUserId(sessionId));
+            sb.append(", userId=").append(JwtTokenUtil.parseUserId(sessionId));
             sb.append("]");
         }
         return sb;

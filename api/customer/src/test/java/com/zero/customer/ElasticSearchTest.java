@@ -1,7 +1,6 @@
 package com.zero.customer;
 
 import com.zero.common.dao.ProductInfoMapper;
-import com.zero.customer.es.ProductInfoRepository;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -16,8 +15,8 @@ import javax.annotation.Resource;
 @RunWith(SpringJUnit4ClassRunner.class)
 public class ElasticSearchTest {
 
-    @Resource
-    private ProductInfoRepository productInfoRepository;
+    // @Resource
+    // private ProductInfoRepository productInfoRepository;
     @Resource
     private ProductInfoMapper productInfoMapper;
 

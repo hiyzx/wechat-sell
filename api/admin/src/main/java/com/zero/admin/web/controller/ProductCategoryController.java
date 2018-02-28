@@ -2,7 +2,7 @@ package com.zero.admin.web.controller;
 
 import com.zero.admin.annotation.Authorize;
 import com.zero.admin.service.ProductCategoryService;
-import com.zero.admin.util.SessionHelper;
+import com.zero.admin.util.JwtTokenUtil;
 import com.zero.common.vo.BaseReturnVo;
 import com.zero.common.vo.ReturnVo;
 import com.zero.common.vo.product.ProductCategoryVo;
@@ -25,8 +25,6 @@ public class ProductCategoryController {
 
     @Resource
     private ProductCategoryService productCategoryService;
-    @Resource
-    private SessionHelper sessionHelper;
 
     @Authorize
     @GetMapping("/list.json")
@@ -39,8 +37,8 @@ public class ProductCategoryController {
     @PostMapping("/add.json")
     @ApiOperation("添加分类")
     public BaseReturnVo add(@RequestParam String sessionId,
-            @ApiParam(value = "名称", required = true) @RequestParam String categoryName) {
-        Integer userId = sessionHelper.getUserId(sessionId);
+            @ApiParam(value = "名称", required = true) @RequestParam String categoryName) throws Exception {
+        Integer userId = JwtTokenUtil.parseStoreId(sessionId);
         productCategoryService.add(userId, categoryName);
         return BaseReturnVo.success();
     }
@@ -50,8 +48,8 @@ public class ProductCategoryController {
     @ApiOperation("编辑分类")
     public BaseReturnVo edit(@RequestParam String sessionId,
             @ApiParam(value = "分类id", required = true) @RequestParam Integer categoryId,
-            @ApiParam(value = "名称", required = true) @RequestParam String categoryName) {
-        Integer userId = sessionHelper.getUserId(sessionId);
+            @ApiParam(value = "名称", required = true) @RequestParam String categoryName) throws Exception {
+        Integer userId = JwtTokenUtil.parseStoreId(sessionId);
         productCategoryService.edit(userId, categoryId, categoryName);
         return BaseReturnVo.success();
     }
@@ -60,8 +58,8 @@ public class ProductCategoryController {
     @PostMapping("/delete.json")
     @ApiOperation("删除分类")
     public BaseReturnVo delete(@RequestParam String sessionId,
-            @ApiParam(value = "分类id", required = true) @RequestParam Integer categoryId) {
-        Integer userId = sessionHelper.getUserId(sessionId);
+            @ApiParam(value = "分类id", required = true) @RequestParam Integer categoryId) throws Exception {
+        Integer userId = JwtTokenUtil.parseStoreId(sessionId);
         productCategoryService.delete(userId, categoryId);
         return BaseReturnVo.success();
     }

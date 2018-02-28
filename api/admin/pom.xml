@@ -106,6 +106,11 @@
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+        </dependency>
+
         <!--数据库加密配置-->
         <dependency>
             <groupId>com.github.ulisesbocchio</groupId>
