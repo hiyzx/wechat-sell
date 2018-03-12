@@ -1,38 +1,49 @@
 # takeaway
-write a complete system for learning  spring boot?
+基于spring-boot开发的系统，分为用户端和管理端。 
+### 模块介绍:
+``` lua
+takeaway
+├── api
+|    ├── parent -- 父类pom.xml及各版本对应的sql语句。
+|    ├── common -- 集成Mybatis框架公共模块，包括公共配置、MybatisGenerator扩展插件、工具类等。
+|    ├── customer -- 用户相关controller和service,使用json web token+注解做权限校验,swagger在线文档等
+|    └── admin -- 后台管理相关controller和service
+├── frontend
+    ├── customer -- 前端h5页面(使用vue)
+    └── admin -- 后端pc页面(未开发)
+```
 
-### Environment
+#### 开发环境
+- Jdk1.8
+- Mysql5.7
+- Redis
+- ActiveMQ
 
-| env   | version |    
-| :---:  | :---:  | 
-| jdk   | 1.8    | 
-| MySQL | 5.7.19 | 
-| redis | 2.8    | 
+### 启动应用
 
-### Q&A
-Q1 How to start?
-1. This is a front-ent separation project.
-2. This is a maven polymerization project.
-   api has four module that include parent , customer, admin and common
-   1. parent -> sql
-   2. customer -> controller and service
-   3. admin -> controller and service
-   4. common -> common code and mapper , po 
-3. frontend has two module that include customer and admin.
+1. 后端
+   1. 新建数据库takeaway,执行parent下sql语句
+   2. 修改application-dev.yml下各个开发工具的用户名和密码
+   3. maven编译安装parent下各模块
+   4. 分别执行CustomerApplication.java和AdminApplication.java下的main方法
+   5. 使用HealthCheckController下的接口校验版本及第三方服务正常与否
+2. 前端
+    1. 修改http.js中接口地址
+    2. 使用命令行,进入customer目录
+    3. 执行vue命令:npm install / npm run dev
 
-Q2 What technologies are use in the project?  
-1. spring-boot + mybatis + maven
+### 在线小工具
 
-Q3 How to run the project?   
-1. init the sql that under the dir parent/sql/takeaway.sql
-2. install the parent pom
-3. run the main method of com.zero.customer.CustomerApplication
-4. Open the chrome,and enter localhost:8081/customer/swagger-ui.html
+- [在线Cron表达式生成器](http://cron.qqe2.com/ "在线Cron表达式生成器")
 
-Q4 How to package the project to war if you use spring-boot?
-1. pom.xml
-    1. set the property packaging war 
-    2. remove tomcat jar whick in the spring-boot-starter-web
-    3. add class SpringBootStartApplication ,implements SpringBootServletInitializer 
-        and override the method configure;(notice:the param builder.sources would quote your application.java)
-    4. use command clean package
+- [在线工具箱](http://tool.lu/ "在线工具 - 程序员的工具箱")
+
+- [json在线解析](http://www.json.cn/) 
+    
+
+#### spring-boot生成war包
+1. 设置pom的属性为war 
+2. 移除spring-boot-starter-web中的内置tomcat
+3. 添加实现了SpringBootServletInitializer的类ServletInitializer并且
+override方法configure;
+4. 使用maven的打包命令
