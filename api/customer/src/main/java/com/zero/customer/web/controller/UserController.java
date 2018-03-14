@@ -3,6 +3,7 @@ package com.zero.customer.web.controller;
 import com.zero.common.vo.BaseReturnVo;
 import com.zero.common.vo.ReturnVo;
 import com.zero.customer.annotation.Authorize;
+import com.zero.customer.annotation.SecurityTag;
 import com.zero.customer.service.UserService;
 import com.zero.customer.util.JwtTokenUtil;
 import com.zero.customer.vo.CheckRecordVo;
@@ -26,18 +27,21 @@ public class UserController {
 
     @Authorize
     @PostMapping(value = "/check.json")
+    @SecurityTag
     @ApiOperation("签到")
-    public BaseReturnVo check(@RequestParam String sessionId) throws Exception {
+    public BaseReturnVo check(@RequestParam String sessionId, @RequestParam Long timestamp,
+            @RequestParam String authorization) throws Exception {
         userService.check(JwtTokenUtil.parseUserId(sessionId));
         return BaseReturnVo.success();
     }
 
     @Authorize
     @GetMapping(value = "/queryCheckRecord.json")
+    @SecurityTag
     @ApiOperation("查看签到记录")
-    public ReturnVo<CheckRecordVo> queryCheckRecord(@RequestParam String sessionId) throws Exception {
+    public ReturnVo<CheckRecordVo> queryCheckRecord(@RequestParam String sessionId, @RequestParam Long timestamp,
+            @RequestParam String authorization) throws Exception {
         return ReturnVo.success(userService.queryCheckRecord(JwtTokenUtil.parseUserId(sessionId)));
     }
-
 
 }

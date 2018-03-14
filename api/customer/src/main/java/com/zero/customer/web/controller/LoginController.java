@@ -5,6 +5,7 @@ import com.zero.common.exception.BaseException;
 import com.zero.common.po.User;
 import com.zero.common.vo.BaseReturnVo;
 import com.zero.common.vo.ReturnVo;
+import com.zero.customer.annotation.SecurityTag;
 import com.zero.customer.enums.CustomerCodeEnum;
 import com.zero.customer.service.LoginService;
 import com.zero.customer.service.MessageService;
@@ -48,9 +49,10 @@ public class LoginController {
     }
 
     @PostMapping(value = "/sendMsg.json")
+    @SecurityTag
     @ApiOperation("发送短信")
-    public BaseReturnVo sendMsg(HttpServletRequest request,
-            @ApiParam(value = "手机号", required = true) @RequestParam String phone,
+    public BaseReturnVo sendMsg(HttpServletRequest request, @RequestParam Long timestamp,
+            @RequestParam String authorization, @ApiParam(value = "手机号", required = true) @RequestParam String phone,
             @ApiParam(value = "短信类型-1:注册,2:忘记密码", required = true) @RequestParam Integer type,
             @ApiParam(value = "图形验证码", required = true) @RequestParam String userInputCaptcha)
             throws BaseException, IOException {
@@ -62,8 +64,10 @@ public class LoginController {
     }
 
     @PostMapping(value = "/verify.json")
+    @SecurityTag
     @ApiOperation("校验短信验证码")
-    public BaseReturnVo verify(@ApiParam(value = "手机号", required = true) @RequestParam String phone,
+    public BaseReturnVo verify(@RequestParam Long timestamp, @RequestParam String authorization,
+            @ApiParam(value = "手机号", required = true) @RequestParam String phone,
             @ApiParam(value = "短信类型-1:注册,2:忘记密码", required = true) @RequestParam Integer type,
             @ApiParam(value = "图形验证码", required = true) @RequestParam String code) throws BaseException {
         messageService.validMsg(phone, type, code);
@@ -71,8 +75,10 @@ public class LoginController {
     }
 
     @PostMapping(value = "/restPassword.json")
+    @SecurityTag
     @ApiOperation("重置密码")
-    public BaseReturnVo restPassword(@ApiParam(value = "手机号", required = true) @RequestParam String phone,
+    public BaseReturnVo restPassword(@RequestParam Long timestamp, @RequestParam String authorization,
+            @ApiParam(value = "手机号", required = true) @RequestParam String phone,
             @ApiParam(value = "密码1", required = true) @RequestParam String password1,
             @ApiParam(value = "密码2", required = true) @RequestParam String password2) throws BaseException {
         loginService.restPassword(phone, password1, password2);
@@ -80,17 +86,20 @@ public class LoginController {
     }
 
     @PostMapping(value = "/register.json")
+    @SecurityTag
     @ApiOperation("注册")
     public ReturnVo<User> register(HttpServletRequest request, HttpServletResponse response,
-            @RequestBody @Valid UserDto userDto) throws Exception {
+            @RequestParam Long timestamp, @RequestParam String authorization, @RequestBody @Valid UserDto userDto)
+            throws Exception {
         User user = loginService.register(userDto);
         return ReturnVo.success(user);
     }
 
     @PostMapping(value = "/login.json")
+    @SecurityTag
     @ApiOperation("登陆")
-    public ReturnVo<UserLoginResponseVo> login(HttpServletRequest request,
-            @ApiParam(value = "手机号", required = true) @RequestParam String phone,
+    public ReturnVo<UserLoginResponseVo> login(HttpServletRequest request, @RequestParam Long timestamp,
+            @RequestParam String authorization, @ApiParam(value = "手机号", required = true) @RequestParam String phone,
             @ApiParam(value = "密码", required = true) @RequestParam String password) throws Exception {
         User user = loginService.login(phone, password);
         UserResponseVo userResponseVo = new UserResponseVo();
@@ -101,8 +110,10 @@ public class LoginController {
     }
 
     @PostMapping(value = "/refreshToken.json")
+    @SecurityTag
     @ApiOperation("心跳")
-    public ReturnVo<String> refreshToken(@RequestParam String sessionId) throws Exception {
+    public ReturnVo<String> refreshToken(@RequestParam String sessionId, @RequestParam Long timestamp,
+            @RequestParam String authorization) throws Exception {
         JwtTokenUtil.validateToken(sessionId);
         return ReturnVo.success(JwtTokenUtil.refreshToken(sessionId));
     }

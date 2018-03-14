@@ -42,6 +42,12 @@ public enum CodeEnum implements StringEnum {
 
     TOKEN_SOON_EXPIRE("100010"),
 
+    REQUEST_TIME_OUT("100011"),
+
+    AUTHORIZATION_FAIL("100012"),
+
+    REQUEST_REPEAT("100013"),
+
     SUCCESS("000000");
 
     private String codeEnum;

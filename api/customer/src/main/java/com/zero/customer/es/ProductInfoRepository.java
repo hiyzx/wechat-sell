@@ -1,3 +1,4 @@
+/*
 package com.zero.customer.es;
 
 import org.springframework.data.domain.Page;
@@ -10,4 +11,4 @@ public interface ProductInfoRepository extends ElasticsearchRepository<ProductIn
 
     Page<ProductInfoEsDto> findByNameLikeOrInfoLikeOrDescriptionLike(String name, String info, String desc,
             Pageable pageable);
-}
+}*/

@@ -1,5 +1,6 @@
 package com.zero.customer;
 
+import com.zero.common.util.MD5Helper;
 import com.zero.customer.util.JwtTokenUtil;
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -68,7 +69,15 @@ public class NumberTest {
 
     @Test
     public void testString() throws Exception {
-        Map<String, Object> map = JwtTokenUtil.parseMaps("eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJjdXN0b21lciIsInN1YiI6IntcInBob25lXCI6XCIxODg1MDM0MTM1N1wiLFwibmFtZVwiOlwiemVyb1wiLFwidXNlcklkXCI6MX0iLCJpYXQiOjE1MTk3OTg0OTcsImV4cCI6MTUxOTgwNTY5N30.YUiU8qIvCU_QUGgCBmI53Q_3G_HjWYXASDUJhSAmjqA");
+        Map<String, Object> map = JwtTokenUtil.parseMaps(
+                "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJjdXN0b21lciIsInN1YiI6IntcInBob25lXCI6XCIxODg1MDM0MTM1N1wiLFwibmFtZVwiOlwiemVyb1wiLFwidXNlcklkXCI6MX0iLCJpYXQiOjE1MTk3OTg0OTcsImV4cCI6MTUxOTgwNTY5N30.YUiU8qIvCU_QUGgCBmI53Q_3G_HjWYXASDUJhSAmjqA");
         System.out.println(123);
+    }
+
+    @Test
+    public void testTime() {
+        long x = System.currentTimeMillis();
+        System.out.println(x);
+        System.out.println(MD5Helper.MD5Encode(String.valueOf(x)));
     }
 }
