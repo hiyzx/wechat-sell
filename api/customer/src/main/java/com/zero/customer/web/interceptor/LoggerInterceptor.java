@@ -6,10 +6,9 @@ import com.zero.customer.util.IpUtil;
 import com.zero.customer.util.JwtTokenUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.AfterThrowing;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.*;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -28,12 +27,28 @@ public class LoggerInterceptor {
     @Resource
     private HttpServletRequest request;
 
-    // http://stackoverflow.com/questions/29653664/how-to-correctly-use-spring-aop-to-select-the-execution-of-a-method-annotated-wi
     @Pointcut("execution(public * com.zero.customer.web.controller.*.*(..))")
-    // @Pointcut("within(@org.springframework.stereotype.Controller *) &&
-    // @annotation(org.springframework.web.bind.annotation.RequestMapping)")
     private void logController() {
-    };
+    }
+
+    @Around(value = "logController()")
+    public Object timeLog(ProceedingJoinPoint joinPoint) {
+        Object obj = null;
+        Object[] args = joinPoint.getArgs();
+        long startTime = System.currentTimeMillis();
+        try {
+            obj = joinPoint.proceed(args);
+        } catch (Throwable e) {
+            log.error("统计某方法执行耗时环绕通知出错", e);
+        }
+        long endTime = System.currentTimeMillis();
+        // 获取执行的方法名
+        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+        String methodName = signature.getDeclaringTypeName() + "." + signature.getName();
+        // 打印耗时的信息
+        log.info("request {} cost time {}", methodName, (endTime - startTime));
+        return obj;
+    }
 
     @AfterReturning(value = "logController()", returning = "returnValue")
     public void afterReturning(JoinPoint joinPoint, Object returnValue) {

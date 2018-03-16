@@ -6,9 +6,8 @@ import com.zero.common.util.MD5Helper;
 import com.zero.common.util.RedisHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
@@ -34,8 +33,8 @@ public class SecurityInterceptor {
     private void webController() {
     }
 
-    @Around(value = "webController()")
-    public Object preHandle(ProceedingJoinPoint joinPoint) throws Throwable {
+    @Before(value = "webController()")
+    public void preHandle(JoinPoint joinPoint) throws Throwable {
         Map<String, Object> argMap = this.getArgsMap(joinPoint);
         Long expireTime = 1000 * 60 * 2L;
         Long timestamp = (Long) argMap.get("timestamp");
@@ -52,8 +51,6 @@ public class SecurityInterceptor {
         } else {
             throw new BaseException(CodeEnum.REQUEST_TIME_OUT, "request time out");
         }
-
-        return joinPoint.proceed();
     }
 
     private Map<String, Object> getArgsMap(JoinPoint pjp) {
