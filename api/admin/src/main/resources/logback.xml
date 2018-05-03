@@ -2,7 +2,7 @@
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
 
     <!-- 定义日志文件 输入位置 -->
-    <property name="log_dir" value="api/customer/log/" />
+    <property name="log_dir" value="api/admin/log/" />
     <!-- 日志最大的历史 30天 -->
     <property name="maxHistory" value="10"/>
 

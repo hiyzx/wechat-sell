@@ -16,14 +16,14 @@
     <properties>
         <java.version>1.8</java.version>
 
-        <!--<swagger2markup.version>1.2.0</swagger2markup.version>
+        <swagger2markup.version>1.2.0</swagger2markup.version>
         <asciidoctor.input.directory>${project.basedir}/src/docs/asciidoc</asciidoctor.input.directory>
         <swagger.output.dir>${project.build.directory}/swagger</swagger.output.dir>
         <swagger.snippetOutput.dir>${project.build.directory}/asciidoc/snippets</swagger.snippetOutput.dir>
         <generated.asciidoc.directory>${project.build.directory}/asciidoc/generated</generated.asciidoc.directory>
         <asciidoctor.html.output.directory>${project.build.directory}/asciidoc/html</asciidoctor.html.output.directory>
         <asciidoctor.pdf.output.directory>${project.build.directory}/asciidoc/pdf</asciidoctor.pdf.output.directory>
-        <swagger.input>${swagger.output.dir}/swagger.json</swagger.input>-->
+        <swagger.input>${swagger.output.dir}/swagger.json</swagger.input>
     </properties>
 
     <pluginRepositories>
@@ -191,13 +191,6 @@
             <artifactId>spring-boot-starter-activemq</artifactId>
         </dependency>
 
-        <!-- 百度文档服务api -->
-        <dependency>
-            <groupId>com.baidubce</groupId>
-            <artifactId>bce-java-sdk</artifactId>
-            <version>0.10.22</version>
-        </dependency>
-
         <dependency>
             <groupId>com.github.binarywang</groupId>
             <artifactId>java-emoji-converter</artifactId>
@@ -205,7 +198,7 @@
         </dependency>
 
         <!-- 从这里开始是和swagger文档生成相关jar包 -->
-        <!--<dependency>
+        <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-staticdocs</artifactId>
             <version>2.4.0</version>
@@ -231,7 +224,7 @@
             <artifactId>swagger2markup-spring-restdocs-ext</artifactId>
             <version>${swagger2markup.version}</version>
             <scope>test</scope>
-        </dependency>-->
+        </dependency>
 
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
@@ -311,7 +304,7 @@
             </plugin>
 
             <!-- 从这里开始是和swagger文档生成相关 -->
-            <!--<plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
@@ -323,7 +316,7 @@
                 </configuration>
             </plugin>
 
-            &lt;!&ndash; First, use the swagger2markup plugin to generate asciidoc &ndash;&gt;
+            <!-- First, use the swagger2markup plugin to generate asciidoc -->
             <plugin>
                 <groupId>io.github.swagger2markup</groupId>
                 <artifactId>swagger2markup-maven-plugin</artifactId>
@@ -376,13 +369,13 @@
                 </executions>
             </plugin>
 
-            &lt;!&ndash; Run the generated asciidoc through Asciidoctor to generate
-                 other documentation types, such as PDFs or HTML5 &ndash;&gt;
+            <!-- Run the generated asciidoc through Asciidoctor to generate
+                 other documentation types, such as PDFs or HTML5 -->
             <plugin>
                 <groupId>org.asciidoctor</groupId>
                 <artifactId>asciidoctor-maven-plugin</artifactId>
                 <version>1.5.6</version>
-                &lt;!&ndash; Include Asciidoctor PDF for pdf generation &ndash;&gt;
+                <!-- Include Asciidoctor PDF for pdf generation -->
                 <dependencies>
                     <dependency>
                         <groupId>org.asciidoctor</groupId>
@@ -395,7 +388,7 @@
                         <version>1.7.21</version>
                     </dependency>
                 </dependencies>
-                &lt;!&ndash; Configure generic document generation settings &ndash;&gt;
+                <!-- Configure generic document generation settings -->
                 <configuration>
                     <sourceDirectory>${asciidoctor.input.directory}</sourceDirectory>
                     <sourceDocumentName>index.adoc</sourceDocumentName>
@@ -410,8 +403,8 @@
                         <generated>${generated.asciidoc.directory}</generated>
                     </attributes>
                 </configuration>
-                &lt;!&ndash; Since each execution can only handle one backend, run
-                     separate executions for each desired output type &ndash;&gt;
+                <!-- Since each execution can only handle one backend, run
+                     separate executions for each desired output type -->
                 <executions>
                     <execution>
                         <id>output-html</id>
@@ -440,7 +433,7 @@
                 </executions>
             </plugin>
 
-            &lt;!&ndash; specify the main class for the manifest &ndash;&gt;
+            <!-- specify the main class for the manifest -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -456,23 +449,7 @@
                 </configuration>
             </plugin>
 
-            &lt;!&ndash; copy dependencies to the lib directory &ndash;&gt;
-            <plugin>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>copy-dependencies</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-            &lt;!&ndash; copy the generated documents &ndash;&gt;
+            <!-- copy the generated documents -->
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
                 <version>2.7</version>
@@ -496,7 +473,7 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>-->
+            </plugin>
         </plugins>
     </build>
 </project>
