@@ -20,7 +20,7 @@ public class ScheduleTask {
 
     @Scheduled(cron = "0 0 0 * * ?")
     public void refreshAccessToken() {
-        // weChatService.refreshAccessToken();
+        weChatService.refreshAccessToken();
         log.info("refresh access token success");
     }
 }

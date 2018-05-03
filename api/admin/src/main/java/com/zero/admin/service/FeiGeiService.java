@@ -24,7 +24,7 @@ public class FeiGeiService {
     private HttpClient feiGeHttpClient;
 
     public FeiGeListResponseVo list() {
-        Map<String, String> params = new HashMap<>();
+        Map<String, String> params = new HashMap<>(5);
         params.put("secret", secretKey);
         String jsonStr = feiGeHttpClient.get("/api/userlist", params);
         return JsonHelper.readValue(jsonStr, FeiGeListResponseVo.class);
@@ -32,7 +32,7 @@ public class FeiGeiService {
 
     public void sendMsgAlone(Integer uid, String msgTemplateKey, String title, String content, String remark)
             throws IOException {
-        Map<String, String> params = new HashMap<>();
+        Map<String, String> params = new HashMap<>(5);
         params.put("secret", secretKey);
         params.put("uid", String.valueOf(uid));
         params.put("key", msgTemplateKey);

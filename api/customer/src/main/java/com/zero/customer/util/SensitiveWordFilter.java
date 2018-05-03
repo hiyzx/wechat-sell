@@ -42,11 +42,7 @@ public class SensitiveWordFilter {
                 patternBuf.deleteCharAt(patternBuf.length() - 1);
                 patternBuf.append(")");
 
-                // unix换成UTF-8
                 pattern = Pattern.compile(patternBuf.toString());
-                // win下换成gb2312
-                // pattern = Pattern.compile(new String(patternBuf.toString()
-                // .getBytes("ISO-8859-1"), "gb2312"));
             } else {
                 log.info("敏感词 job : sensitivewords.properties 文件没有找到！");
             }

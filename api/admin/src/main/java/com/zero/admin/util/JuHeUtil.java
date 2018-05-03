@@ -21,7 +21,7 @@ import java.util.*;
 @Slf4j
 public class JuHeUtil {
 
-    private static final String key = "847f56f18414a491a571540757c514b5";
+    private static final String KEY = "847f56f18414a491a571540757c514b5";
 
     @Resource
     private HttpClient juHeHttpClient;
@@ -31,8 +31,8 @@ public class JuHeUtil {
     public List<ProductCategory> getCategories() {
         TypeReference<JuHeReturnVo<List<JuHeParentCategoryResponseVo>>> TYPE_REFERENCE = new TypeReference<JuHeReturnVo<List<JuHeParentCategoryResponseVo>>>() {
         };
-        Map<String, String> params = new HashMap<>();
-        params.put("key", key);
+        Map<String, String> params = new HashMap<>(5);
+        params.put("key", KEY);
         String response = juHeHttpClient.get("/cook/category", params);
         JuHeReturnVo<List<JuHeParentCategoryResponseVo>> returnVo = JsonHelper.readValue(response, TYPE_REFERENCE);
         List<JuHeParentCategoryResponseVo> result = returnVo.getResult();
@@ -60,8 +60,8 @@ public class JuHeUtil {
         TypeReference<JuHeReturnVo<JuHeProductDateResponseVo>> TYPE_REFERENCE = new TypeReference<JuHeReturnVo<JuHeProductDateResponseVo>>() {
         };
         ProductCategory productCategory = productCategoryMapper.selectByPrimaryKey(categoryId);
-        Map<String, String> params = new HashMap<>();
-        params.put("key", key);
+        Map<String, String> params = new HashMap<>(5);
+        params.put("key", KEY);
         params.put("menu", productCategory.getName());
         String response = juHeHttpClient.get("/cook/query.php", params);
         JuHeReturnVo<JuHeProductDateResponseVo> returnVo = JsonHelper.readValue(response, TYPE_REFERENCE);

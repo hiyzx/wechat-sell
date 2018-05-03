@@ -1,6 +1,7 @@
 package com.zero.admin.web.interceptor;
 
 import com.zero.admin.util.JwtTokenUtil;
+import com.zero.common.constants.SystemConstants;
 import com.zero.common.enums.CodeEnum;
 import com.zero.common.exception.BaseException;
 import com.zero.common.util.DateHelper;
@@ -35,7 +36,7 @@ public class AuthorityInterceptor {
         Map<String, Object> argMap = this.getArgsMap(joinPoint);
         String sessionId = (String) argMap.get("sessionId");
         Date expiration = JwtTokenUtil.validateToken(sessionId);
-        if (DateHelper.secondsBetween(new Date(), expiration) < 60 * 10) {
+        if (DateHelper.secondsBetween(new Date(), expiration) < SystemConstants.TOKEN_EXPIRE_AFTER) {
             throw new BaseException(CodeEnum.TOKEN_SOON_EXPIRE, "token expire < 10 minutes");
         }
         return joinPoint.proceed();

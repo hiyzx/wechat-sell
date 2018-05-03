@@ -1,14 +1,12 @@
 package com.zero.customer.web.controller;
 
 import com.zero.common.vo.HealthCheckVo;
-import com.zero.customer.annotation.SecurityTag;
 import com.zero.customer.service.HealthCheckService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -46,8 +44,7 @@ public class HealthCheckController {
 
     @GetMapping(value = "version")
     @ApiOperation(value = "查看版本信息")
-    @SecurityTag
-    public Map<String, String> version(@RequestParam Long timestamp, @RequestParam String authorization)
+    public Map<String, String> version()
             throws ParseException {
         Map<String, String> map = new LinkedHashMap<>();
         map.put("env", env);
@@ -58,8 +55,7 @@ public class HealthCheckController {
 
     @GetMapping(value = "/healthCheck")
     @ApiOperation(value = "检查DB,第三方服务等是否能正常连接")
-    @SecurityTag
-    public List<HealthCheckVo> healthCheck(@RequestParam Long timestamp, @RequestParam String authorization) {
+    public List<HealthCheckVo> healthCheck() {
         return healthCheckService.healthCheck();
     }
 }

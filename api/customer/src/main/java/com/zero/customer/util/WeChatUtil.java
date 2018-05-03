@@ -31,7 +31,7 @@ public class WeChatUtil {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-1");
             digest.update(decript.getBytes());
-            byte messageDigest[] = digest.digest();
+            byte[] messageDigest = digest.digest();
             // Create Hex String
             StringBuilder hexString = new StringBuilder();
             // 字节数组转换为 十六进制 数

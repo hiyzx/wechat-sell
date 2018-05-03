@@ -20,4 +20,6 @@ public interface SystemConstants {
     String JWT_SECRET = "7786df7fc3a34e26a61c034d5ec8245d";
 
     int JWT_TTL_MILLIS = 7200 * 1000;
+
+    int TOKEN_EXPIRE_AFTER = 10 * 60;
 }

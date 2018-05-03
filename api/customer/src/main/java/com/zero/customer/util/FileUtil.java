@@ -96,8 +96,8 @@ public class FileUtil {
                  * 如果是目录的话这里是不采取操作的， 至于目录的打包正在研究中
                  */
                 if (inputFile.isFile()) {
-                    FileInputStream IN = new FileInputStream(inputFile);
-                    BufferedInputStream bins = new BufferedInputStream(IN, 512);
+                    FileInputStream in = new FileInputStream(inputFile);
+                    BufferedInputStream bins = new BufferedInputStream(in, 512);
                     // org.apache.tools.zip.ZipEntry
                     ZipEntry entry = new ZipEntry(inputFile.getName());
                     ouputStream.putNextEntry(entry);
@@ -109,7 +109,7 @@ public class FileUtil {
                     }
                     // 关闭创建的流对象
                     bins.close();
-                    IN.close();
+                    in.close();
                 } else {
                     try {
                         File[] files = inputFile.listFiles();
