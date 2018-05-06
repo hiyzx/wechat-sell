@@ -10,7 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
  * @date : 2017/8/17
  */
 @SpringBootApplication
-@MapperScan(basePackages = "com.zero.common.dao")
+@MapperScan(basePackages = "com.zero.*.dao")
 @ComponentScan(basePackages = "com.zero")
 public class CustomerApplication {
 

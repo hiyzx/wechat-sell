@@ -1,9 +1,9 @@
 package com.zero.admin.service;
 
-import com.zero.common.dao.StoreMapper;
 import com.zero.common.enums.CodeEnum;
 import com.zero.common.exception.BaseException;
-import com.zero.common.po.Store;
+import com.zero.product.dao.StoreMapper;
+import com.zero.product.po.Store;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Condition;

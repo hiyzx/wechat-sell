@@ -2,7 +2,6 @@ package com.zero.customer.web.controller;
 
 import com.zero.common.constants.SystemConstants;
 import com.zero.common.exception.BaseException;
-import com.zero.common.po.User;
 import com.zero.common.vo.BaseReturnVo;
 import com.zero.common.vo.ReturnVo;
 import com.zero.customer.annotation.SecurityTag;
@@ -14,6 +13,7 @@ import com.zero.customer.util.JwtTokenUtil;
 import com.zero.customer.vo.UserLoginResponseVo;
 import com.zero.customer.vo.UserResponseVo;
 import com.zero.customer.vo.dto.UserDto;
+import com.zero.user.po.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

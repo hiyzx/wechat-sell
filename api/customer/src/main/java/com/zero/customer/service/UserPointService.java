@@ -1,11 +1,11 @@
 package com.zero.customer.service;
 
-import com.zero.common.dao.UserPointMapper;
-import com.zero.common.dao.UserPointRecordMapper;
-import com.zero.common.dao.ext.UserPointExtMapper;
-import com.zero.common.po.UserPoint;
-import com.zero.common.po.UserPointRecord;
 import com.zero.common.util.DateHelper;
+import com.zero.user.dao.UserPointMapper;
+import com.zero.user.dao.UserPointRecordMapper;
+import com.zero.user.dao.ext.UserPointExtMapper;
+import com.zero.user.po.UserPoint;
+import com.zero.user.po.UserPointRecord;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

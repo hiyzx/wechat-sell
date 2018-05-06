@@ -1,9 +1,9 @@
 package com.zero.admin.service;
 
-import com.zero.common.dao.ProductCategoryMapper;
-import com.zero.common.po.ProductCategory;
 import com.zero.common.util.DateHelper;
 import com.zero.common.vo.product.ProductCategoryVo;
+import com.zero.product.dao.ProductCategoryMapper;
+import com.zero.product.po.ProductCategory;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.BeanUtils;

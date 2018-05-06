@@ -2,11 +2,11 @@ package com.zero.admin.util;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.zero.admin.vo.http.response.*;
-import com.zero.common.dao.ProductCategoryMapper;
-import com.zero.common.po.ProductCategory;
-import com.zero.common.po.ProductInfo;
 import com.zero.common.util.JsonHelper;
 import com.zero.common.util.StringHelper;
+import com.zero.product.dao.ProductCategoryMapper;
+import com.zero.product.po.ProductCategory;
+import com.zero.product.po.ProductInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 

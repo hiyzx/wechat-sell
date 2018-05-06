@@ -1,8 +1,8 @@
 package com.zero.admin;
 
 import com.zero.admin.util.JuHeUtil;
-import com.zero.common.dao.ProductCategoryMapper;
-import com.zero.common.dao.ProductInfoMapper;
+import com.zero.product.dao.ProductCategoryMapper;
+import com.zero.product.dao.ProductInfoMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;

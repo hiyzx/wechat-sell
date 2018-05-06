@@ -1,15 +1,15 @@
 package com.zero.customer.service;
 
 import com.zero.common.constants.PointConstant;
-import com.zero.common.dao.UserCheckCountMapper;
-import com.zero.common.dao.UserMapper;
 import com.zero.common.exception.BaseException;
-import com.zero.common.po.User;
-import com.zero.common.po.UserCheckCount;
 import com.zero.common.util.DateHelper;
 import com.zero.common.util.NumberUtil;
 import com.zero.customer.enums.CustomerCodeEnum;
 import com.zero.customer.vo.CheckRecordVo;
+import com.zero.user.dao.UserCheckCountMapper;
+import com.zero.user.dao.UserMapper;
+import com.zero.user.po.User;
+import com.zero.user.po.UserCheckCount;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -69,12 +69,6 @@
                 <version>1.1.1</version>
             </dependency>
 
-            <dependency>
-                <groupId>com.sun.jna</groupId>
-                <artifactId>jna</artifactId>
-                <version>3.0.9</version>
-            </dependency>
-
             <!-- Swagger -->
             <dependency>
                 <groupId>io.springfox</groupId>
@@ -130,5 +124,6 @@
         <module>../common</module>
         <module>../customer</module>
         <module>../admin</module>
+        <module>user-service</module>
     </modules>
 </project>

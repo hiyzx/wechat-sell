@@ -1,13 +1,13 @@
 package com.zero.customer.mq;
 
-import com.zero.common.dao.ProductInfoMapper;
-import com.zero.common.dao.ext.ProductInfoExtMapper;
-import com.zero.common.po.ProductInfo;
 import com.zero.common.util.NumberUtil;
 import com.zero.customer.service.FeiGeiService;
 import com.zero.customer.vo.dto.OrderDetailDto;
 import com.zero.customer.vo.message.CommentProductMessage;
 import com.zero.customer.vo.message.UserPayMessage;
+import com.zero.product.dao.ProductInfoMapper;
+import com.zero.product.dao.ext.ProductInfoExtMapper;
+import com.zero.product.po.ProductInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;

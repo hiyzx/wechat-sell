@@ -54,7 +54,13 @@
         <!-- common -->
         <dependency>
             <groupId>com.zero</groupId>
-            <artifactId>common</artifactId>
+            <artifactId>user-service</artifactId>
+            <version>DEVELOP-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.zero</groupId>
+            <artifactId>product-service</artifactId>
             <version>DEVELOP-SNAPSHOT</version>
         </dependency>
 

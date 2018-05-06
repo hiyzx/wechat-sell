@@ -1,10 +1,10 @@
 package com.zero.admin.service;
 
-import com.zero.common.dao.ProductCategoryMapper;
-import com.zero.common.dao.ProductCommentMapper;
-import com.zero.common.dao.ProductInfoMapper;
-import com.zero.common.po.ProductInfo;
 import com.zero.common.vo.product.ProductInfoVo;
+import com.zero.product.dao.ProductCategoryMapper;
+import com.zero.product.dao.ProductCommentMapper;
+import com.zero.product.dao.ProductInfoMapper;
+import com.zero.product.po.ProductInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;

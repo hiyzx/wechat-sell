@@ -1,15 +1,15 @@
 package com.zero.customer.service;
 
-import com.zero.common.dao.ProductCategoryMapper;
-import com.zero.common.dao.ProductCommentMapper;
-import com.zero.common.dao.ProductInfoMapper;
-import com.zero.common.po.ProductCategory;
-import com.zero.common.po.ProductComment;
-import com.zero.common.po.ProductInfo;
 import com.zero.common.util.DateHelper;
 import com.zero.common.vo.product.ProductCategoryVo;
 import com.zero.common.vo.product.ProductInfoVo;
 import com.zero.customer.vo.dto.ProductCommentDto;
+import com.zero.product.dao.ProductCategoryMapper;
+import com.zero.product.dao.ProductCommentMapper;
+import com.zero.product.dao.ProductInfoMapper;
+import com.zero.product.po.ProductCategory;
+import com.zero.product.po.ProductComment;
+import com.zero.product.po.ProductInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;

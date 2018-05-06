@@ -1,7 +1,7 @@
 package com.zero.customer.service;
 
-import com.zero.common.dao.UserCheckCountMapper;
-import com.zero.common.po.UserCheckCount;
+import com.zero.user.dao.UserCheckCountMapper;
+import com.zero.user.po.UserCheckCount;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
