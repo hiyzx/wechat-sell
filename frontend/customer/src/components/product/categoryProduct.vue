@@ -1,3 +1,4 @@
+<!--suppress ALL -->
 <template>
   <div>
     <mt-navbar v-model="top_selected">
@@ -43,6 +44,7 @@
 </template>
 <script>
   import {Tabbar, TabItem} from 'mint-ui';
+  import md5 from 'js-md5';
 
   export default {
     name: 'category-product',
@@ -63,18 +65,28 @@
         this.getProductInfos();
       },
       async listCategory() {
-        const res = await this.$httpGet("/product/listCategory.json", {}, {credentials: true, emulateJSON: true});
+        const timestamp = Date.parse(new Date());
+        const authorization = md5(timestamp + "");
+        const res = await this.$httpGet("/product/listCategory.json", {
+          timestamp : timestamp,
+          authorization : authorization
+        }, {credentials: true, emulateJSON: true});
         this.categories = res.data;
         this.category_selected = this.categories[0].id;
         this.getProductInfos();
-      },
-      async getProductInfos() {
-        const res = await this.$httpGet("/product/listByCategory.json", {
-          categoryId: this.category_selected
-        }, {credentials: true, emulateJSON: true});
-        this.productInfos = res.data;
-      }
-    }
+  },
+  async getProductInfos() {
+    const timestamp = Date.parse(new Date());
+    const authorization = md5(timestamp + "");
+    console.log("123")
+    const res = await this.$httpGet("/product/listByCategory.json", {
+      categoryId: this.category_selected,
+      timestamp : timestamp,
+      authorization : authorization
+    }, {credentials: true, emulateJSON: true});
+    this.productInfos = res.data;
+  }
+  }
   };
 </script>
 <style>

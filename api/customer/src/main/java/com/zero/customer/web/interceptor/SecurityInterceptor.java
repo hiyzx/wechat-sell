@@ -13,6 +13,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -28,6 +29,8 @@ public class SecurityInterceptor {
 
     @Resource
     private RedisHelper<String, String> redisHelper;
+    @Resource
+    private HttpServletRequest request;
 
     @Pointcut(value = "@annotation(com.zero.customer.annotation.SecurityTag) ")
     private void webController() {
@@ -36,13 +39,14 @@ public class SecurityInterceptor {
     @Before(value = "webController()")
     public void preHandle(JoinPoint joinPoint) throws Throwable {
         Map<String, Object> argMap = this.getArgsMap(joinPoint);
+        String uri = request.getRequestURI();
         Long expireTime = 1000 * 60 * 2L;
         Long timestamp = (Long) argMap.get("timestamp");
         String authorization = (String) argMap.get("authorization");
         if ((System.currentTimeMillis() - timestamp) < expireTime) {// 判断请求的时间戳和现在对比(2分钟有效)
             String timeMd5 = MD5Helper.MD5Encode(String.valueOf(timestamp));
             if (timeMd5.equals(authorization)) {// 判断请求参数是否被修改
-                if (!redisHelper.setNx(authorization, "1", expireTime)) {// 判断是否重复请求
+                if (!redisHelper.setNx(String.format("%s-%s", uri, authorization), "1", expireTime)) {// 判断是否重复请求
                     throw new BaseException(CodeEnum.REQUEST_REPEAT, "request repeat");
                 }
             } else {

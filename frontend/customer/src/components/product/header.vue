@@ -26,6 +26,8 @@
   </div>
 </template>
 <script>
+  import md5 from 'js-md5';
+
   export default {
     name: 'page-header',
     mounted() {
@@ -38,7 +40,12 @@
     },
     methods: {
       async getStoreInfo() {
-        const res = await this.$httpGet("/store/info.json", {}, {credentials: true, emulateJSON: true});
+        const timestamp = Date.parse(new Date());
+        const authorization = md5(timestamp + "");
+        const res = await this.$httpGet("/store/info.json", {
+          timestamp : timestamp,
+          authorization : authorization
+        }, {credentials: true, emulateJSON: true});
         this.store = res.data;
       }
     }
