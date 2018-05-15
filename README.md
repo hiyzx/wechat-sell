@@ -5,7 +5,9 @@
 takeaway
 ├── api
 |    ├── parent -- 父类pom.xml及各版本对应的sql语句。
-|    ├── common -- 集成Mybatis框架公共模块，包括公共配置、MybatisGenerator扩展插件、工具类等。
+|    ├── common-conf -- 公共配置、工具类等。
+|    ├── user-service -- 集成Mybatis框架公共模块,提供用户相关服务。
+|    ├── product-service -- 集成Mybatis框架公共模块，提供产品相关服务。
 |    ├── customer -- 用户相关controller和service,使用json web token+注解做权限校验,swagger在线文档等
 |    └── admin -- 后台管理相关controller和service
 ├── frontend
