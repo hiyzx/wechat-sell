@@ -24,6 +24,7 @@
   import pageBottom from './../common/bottom'
   import {Toast} from 'mint-ui';
   import {Loadmore} from 'mint-ui';
+  import md5 from 'js-md5';
 
   export default {
     components: {pageBottom},
@@ -43,10 +44,13 @@
     methods: {
       async getOrder() {
         const self = this;
-        const res = await
-          this.$httpGet('/order/get.json', {
+        const timestamp = Date.parse(new Date());
+        const authorization = md5(timestamp + "");
+        const res = await this.$httpGet('/order/get.json', {
             sessionId: this.sessionId,
             orderId: this.orderId,
+            timestamp : timestamp,
+            authorization : authorization
           }, {emulateJSON: true});
         if (res.resCode === '000000') {
           self.orderVo = res.data;
@@ -65,6 +69,8 @@
       async order() {
         const self = this;
         const details = this.orderVo.orderDetailVos;
+        const timestamp = Date.parse(new Date());
+        const authorization = md5(timestamp + "");
         let detailDtos = [];
         for (let i = 0; i < details.length; i++) {
           let detail = details[i];
@@ -78,6 +84,8 @@
           buyerName: this.orderVo.buyerName,
           buyerPhone: this.orderVo.buyerPhone,
           buyerAddress: this.orderVo.buyerAddress,
+          timestamp : timestamp,
+          authorization : authorization,
           orderDetailDtos: detailDtos
         }, {credentials: true});
         if (res.resCode === '000000') {

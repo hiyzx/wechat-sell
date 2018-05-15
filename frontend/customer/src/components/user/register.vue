@@ -16,6 +16,7 @@
 <script>
   import {Toast} from 'mint-ui';
   import {Field} from 'mint-ui';
+  import md5 from 'js-md5';
 
   export default {
     name: 'register',
@@ -53,11 +54,15 @@
           });
           return;
         }
+        const timestamp = Date.parse(new Date());
+        const authorization = md5(timestamp + "");
         const res = await this.$httpPost('/auth/register.json', {
           age: this.age,
           phone: this.phone,
           name: this.username,
-          password: this.password
+          password: this.password,
+          timestamp : timestamp,
+          authorization : authorization
         }, {credentials: true});
         if (resp.resCode === '000000') {
           Toast({

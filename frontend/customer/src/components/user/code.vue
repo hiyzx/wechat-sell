@@ -22,7 +22,7 @@
     import {Toast} from 'mint-ui';
     import {Field} from 'mint-ui';
     import {Header} from 'mint-ui';
-
+    import md5 from 'js-md5';
     export default {
         name: 'code',
         data() {
@@ -58,11 +58,14 @@
                     });
                     return;
                 }
-
+                const timestamp = Date.parse(new Date());
+                const authorization = md5(timestamp + "");
                 const res = await this.$httpPost("/auth/sendMsg.json", {
                     userInputCaptcha: this.captcha,
                     phone: this.phone,
-                    type: this.type
+                    type: this.type,
+                    timestamp : timestamp,
+                    authorization : authorization
                 }, {credentials: true, emulateJSON: true});
                 if (res.resCode === '000000') {
                     Toast({
@@ -92,11 +95,15 @@
                     });
                     return;
                 }
+                const timestamp = Date.parse(new Date());
+                const authorization = md5(timestamp + "");
                 const res = await self.$httpPost("/auth/verify.json",
                     {
                         phone: self.phone,
                         code: self.code,
-                        type: self.type
+                        type: self.type,
+                        timestamp : timestamp,
+                        authorization : authorization
                     }, {emulateJSON: true, credentials: true});
                 if (res.resCode === '000000') {
                     if (self.type === '1') {

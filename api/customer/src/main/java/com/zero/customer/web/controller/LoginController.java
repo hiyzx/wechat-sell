@@ -4,6 +4,7 @@ import com.zero.common.constants.SystemConstants;
 import com.zero.common.exception.BaseException;
 import com.zero.common.vo.BaseReturnVo;
 import com.zero.common.vo.ReturnVo;
+import com.zero.customer.annotation.Authorize;
 import com.zero.customer.annotation.SecurityTag;
 import com.zero.customer.enums.CustomerCodeEnum;
 import com.zero.customer.service.LoginService;
@@ -116,5 +117,13 @@ public class LoginController {
             @RequestParam String authorization) throws Exception {
         JwtTokenUtil.validateToken(sessionId);
         return ReturnVo.success(JwtTokenUtil.refreshToken(sessionId));
+    }
+
+    @Authorize
+    @PostMapping(value = "/heartBeat.json")
+    @ApiOperation("心跳")
+    public BaseReturnVo heartBeat(@RequestParam String sessionId, @RequestParam Long timestamp,
+            @RequestParam String authorization) throws Exception {
+        return BaseReturnVo.success();
     }
 }

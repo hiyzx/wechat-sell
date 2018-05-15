@@ -18,16 +18,16 @@
                         userId="root" password="yzx362311">
         </jdbcConnection>
         <!-- 生成模型的包名和位置 -->
-        <javaModelGenerator targetPackage="com.zero.common.po" targetProject="src/main/java">
+        <javaModelGenerator targetPackage="com.zero.product.po" targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
         <!-- 生成映射文件的包名和位置 -->
-        <sqlMapGenerator targetPackage="com.zero.common.dao" targetProject="src/main/resources">
+        <sqlMapGenerator targetPackage="com.zero.product.dao" targetProject="src/main/resources">
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
         <!-- 生成DAO的包名和位置 -->
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.zero.common.dao" targetProject="src/main/java">
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.zero.product.dao" targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
@@ -40,10 +40,8 @@
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
             <columnOverride property="isDelete" column="is_delete" javaType="java.lang.Boolean"/>
         </table>-->
-        <table tableName="product_info" domainObjectName="ProductInfo">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-            <columnOverride property="isDelete" column="is_delete" javaType="java.lang.Boolean"/>
-        </table>
+        <table tableName="BI_MONITOR_RECORD" domainObjectName="MonitorRecord"/>
+        <table tableName="BI_MONITOR_HISTORY_RECORD" domainObjectName="MonitorHistoryRecord"/>
         <!--
         <table tableName="product_category" domainObjectName="ProductCategory">
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>

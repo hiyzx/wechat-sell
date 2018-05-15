@@ -6,9 +6,10 @@ import com.zero.customer.util.IpUtil;
 import com.zero.customer.util.JwtTokenUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.*;
-import org.aspectj.lang.reflect.MethodSignature;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.AfterThrowing;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -31,7 +32,7 @@ public class LoggerInterceptor {
     private void logController() {
     }
 
-    @Around(value = "logController()")
+    /*@Around(value = "logController()")
     public Object timeLog(ProceedingJoinPoint joinPoint) {
         Object obj = null;
         Object[] args = joinPoint.getArgs();
@@ -48,7 +49,7 @@ public class LoggerInterceptor {
         // 打印耗时的信息
         log.info("request {} cost time {}", methodName, (endTime - startTime));
         return obj;
-    }
+    }*/
 
     @AfterReturning(value = "logController()", returning = "returnValue")
     public void afterReturning(JoinPoint joinPoint, Object returnValue) {

@@ -30,7 +30,7 @@ public class UserPointService {
 
     public void increasePoint(Integer userId, Integer type, Integer score) {
         // 减少并发问题
-        userPointExtMapper.increasePoint(userId, score);
+        // userPointExtMapper.increasePoint(userId, score);
         UserPointRecord userPointRecord = new UserPointRecord();
         userPointRecord.setUserId(userId);
         userPointRecord.setType(type);

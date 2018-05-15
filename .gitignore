@@ -6,3 +6,8 @@ api/common/common.iml
 api/common/target/
 api/customer/customer.iml
 api/parent/parent.iml
+api/customer/api/
+api/customer/data/
+api/customer/log/
+api/customer/target/
+data/

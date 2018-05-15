@@ -9,6 +9,7 @@
 <script>
 
   import {Toast} from 'mint-ui';
+  import md5 from 'js-md5';
 
   export default {
     data() {
@@ -24,10 +25,14 @@
     methods: {
       async payOrder() {
         const self = this;
+        const timestamp = Date.parse(new Date());
+        const authorization = md5(timestamp + "");
         const res = await
           this.$httpPost('/order/pay.json', {
             sessionId: this.sessionId,
-            orderId: this.orderId
+            orderId: this.orderId,
+            timestamp : timestamp,
+            authorization : authorization
           }, {emulateJSON: true});
         if (res.resCode === '000000') {
           Toast({

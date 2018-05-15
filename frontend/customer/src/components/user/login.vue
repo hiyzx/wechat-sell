@@ -19,6 +19,7 @@
   import {Toast} from 'mint-ui';
   import {Field} from 'mint-ui';
   import {Header} from 'mint-ui';
+  import md5 from 'js-md5';
 
   export default {
     name: 'login',
@@ -53,9 +54,13 @@
           });
           return;
         }
+        const timestamp = Date.parse(new Date());
+        const authorization = md5(timestamp + "");
         const res = await this.$httpPost('/auth/login.json', {
           phone: this.phone,
-          password: this.password
+          password: this.password,
+          timestamp : timestamp,
+          authorization : authorization
         }, {emulateJSON: true});
         if (res.resCode === '000000') {
           localStorage.setItem("sessionId", res.data.cookieValue);

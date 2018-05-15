@@ -19,6 +19,7 @@
   import {Field} from 'mint-ui';
   import {Header} from 'mint-ui';
   import pageBottom from './../common/bottom'
+  import md5 from 'js-md5';
 
 
   export default {
@@ -43,13 +44,17 @@
       },
     methods: {
       async heartBeat() {
+        const timestamp = Date.parse(new Date());
+        const authorization = md5(timestamp + "");
         const self = this;
         let notLogin = false;
         if (self.sessionId === '' || self.sessionId === undefined) {
           notLogin = true;
         } else {
           const res = await this.$httpPost("/auth/heartBeat.json", {
-            sessionId: self.sessionId
+            sessionId: self.sessionId,
+            timestamp : timestamp,
+            authorization : authorization
           }, {credentials: true, emulateJSON: true});
           if (res.resCode === '403') {
             notLogin = true;
@@ -69,8 +74,12 @@
 
       async check() {
         const self = this;
+        const timestamp = Date.parse(new Date());
+        const authorization = md5(timestamp + "");
         const res = await this.$httpPost("/user/check.json", {
-          sessionId: localStorage.getItem('sessionId')
+          sessionId: localStorage.getItem('sessionId'),
+          timestamp : timestamp,
+          authorization : authorization
         }, {credentials: true, emulateJSON: true});
         if (res.resCode === '000000') {
           Toast({
@@ -98,25 +107,7 @@
         }
       },
       async logout() {
-        const self = this;
-        const res = await this.$httpPost("/auth/logout.json", {
-          sessionId: localStorage.getItem('sessionId')
-        }, {credentials: true, emulateJSON: true});
         localStorage.clear();
-        if (res.resCode === '000000') {
-
-          Toast({
-            message: '退出成功',
-            position: 'middle',
-            duration: 2000
-          });
-        } else {
-          Toast({
-            message: res.resDes,
-            position: 'middle',
-            duration: 2000
-          });
-        }
       }
     },
     watch: {

@@ -16,6 +16,7 @@
   import {Toast} from 'mint-ui';
   import {Field} from 'mint-ui';
   import {MessageBox} from 'mint-ui';
+  import md5 from 'js-md5';
 
   export default {
     name: 'code',
@@ -52,10 +53,14 @@
           });
           return;
         }
+        const timestamp = Date.parse(new Date());
+        const authorization = md5(timestamp + "");
         const res = await this.$httpPost('/auth/restPassword.json', {
           phone: this.phone,
           password1: this.password1,
-          password2: this.password2
+          password2: this.password2,
+          timestamp : timestamp,
+          authorization : authorization
         }, {emulateJSON: true});
         if (res.resCode === '000000') {
           Toast({

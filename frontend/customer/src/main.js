@@ -6,10 +6,10 @@ import MintUI from 'mint-ui'
 import Http from './js/Http'
 import 'mint-ui/lib/style.css'
 
-Vue.config.productionTip = false
-Vue.use(VueResource)
-Vue.use(Http)
-Vue.use(MintUI)
+Vue.config.productionTip = false;
+Vue.use(VueResource);
+Vue.use(Http);
+Vue.use(MintUI);
 
 /* eslint-disable no-new */
 new Vue({
@@ -17,4 +17,4 @@ new Vue({
     router,
     template: '<App/>',
     components: { App }
-})
+});

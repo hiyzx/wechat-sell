@@ -12,6 +12,7 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -34,6 +35,9 @@ public class AuthorityInterceptor {
     public void auth(JoinPoint joinPoint) throws BaseException {
         Map<String, Object> argMap = this.getArgsMap(joinPoint);
         String sessionId = (String) argMap.get("sessionId");
+        if(StringUtils.isEmpty(sessionId)){
+            throw new BaseException(CodeEnum.NOT_LOGIN, "user not login");
+        }
         Date expiration = JwtTokenUtil.validateToken(sessionId);
         if (DateHelper.secondsBetween(new Date(), expiration) < SystemConstants.TOKEN_EXPIRE_AFTER) {
             throw new BaseException(CodeEnum.TOKEN_SOON_EXPIRE, "token expire < 10 minutes");

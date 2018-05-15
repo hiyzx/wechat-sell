@@ -51,6 +51,8 @@
   import pageBottom from './../common/bottom'
   import {Toast} from 'mint-ui';
   import {Loadmore} from 'mint-ui';
+  import md5 from 'js-md5';
+
 
   export default {
     components: {pageBottom},
@@ -81,12 +83,16 @@
       },
       async listMyOrders() {
         const self = this;
+        const timestamp = Date.parse(new Date());
+        const authorization = md5(timestamp + "");
         const res = await
-          this.$httpPost('/order/list.json', {
+          this.$httpGet('/order/list.json', {
             sessionId: this.sessionId,
+            timestamp : timestamp,
+            authorization : authorization,
             page: this.page,
             pageSize: this.pageSize
-          }, {emulateJSON: true});
+          }, {credentials: true,emulateJSON: true});
         if (res.resCode === '000000') {
           self.pageInfo = res.data;
           self.orderList = res.data.list;
