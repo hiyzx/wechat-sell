@@ -37,8 +37,6 @@ public class HealthCheckService {
     private String redisPort;
     @Resource(name = "feiGeHttpClient")
     private HttpClient feiGeHttpClient;
-    @Resource(name = "weChatHttpClient")
-    private HttpClient weChatHttpClient;
 
     /**
      * 健康检查
@@ -48,7 +46,6 @@ public class HealthCheckService {
         healthCheckVos.add(checkDBConnection());
         healthCheckVos.add(checkRedisConnection());
         healthCheckVos.add(feiGeHttpClient.healthCheck());
-        healthCheckVos.add(weChatHttpClient.healthCheck());
         return healthCheckVos;
     }
 

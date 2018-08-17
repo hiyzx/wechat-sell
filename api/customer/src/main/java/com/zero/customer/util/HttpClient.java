@@ -2,14 +2,14 @@ package com.zero.customer.util;
 
 import java.io.*;
 import java.net.*;
-import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import javax.net.ssl.*;
+import javax.net.ssl.SSLException;
+import javax.net.ssl.SSLHandshakeException;
 
 import org.apache.http.*;
 import org.apache.http.client.HttpRequestRetryHandler;
@@ -241,7 +241,11 @@ public class HttpClient {
         return rtn;
     }
 
-    public String get(String path, Map<String, String> params) {
+    public String get(String path, Map<String, String> headers) {
+        return get(path, Collections.emptyMap(), headers);
+    }
+
+    public String get(String path, Map<String, String> params, Map<String, String> headers) {
         System.setProperty("jsse.enableSNIExtension", "false");
         CloseableHttpResponse response = null;
         String rtn = null;
@@ -249,6 +253,11 @@ public class HttpClient {
             URI uri = createURIBuilder(path, params);
             HttpGet httpget = new HttpGet(uri);
             httpget.setConfig(requestConfig);
+            if (headers != null && !headers.isEmpty()) {
+                for (Entry<String, String> headerEntry : headers.entrySet()) {
+                    httpget.addHeader(headerEntry.getKey(), headerEntry.getValue());
+                }
+            }
             response = httpClient.execute(httpget, HttpClientContext.create());
             HttpEntity entity = response.getEntity();
             String result = EntityUtils.toString(entity, UTF_8);

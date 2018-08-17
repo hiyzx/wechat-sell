@@ -1,11 +1,8 @@
 package com.zero.customer.schedule;
 
-import com.zero.customer.service.WeChatService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.Resource;
 
 /**
  * @author yezhaoxing
@@ -15,12 +12,8 @@ import javax.annotation.Resource;
 @Slf4j
 public class ScheduleTask {
 
-    @Resource
-    private WeChatService weChatService;
-
     @Scheduled(cron = "0 0 0 * * ?")
     public void refreshAccessToken() {
-        weChatService.refreshAccessToken();
-        log.info("refresh access token success");
+        log.info("refresh success");
     }
 }

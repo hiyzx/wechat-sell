@@ -51,19 +51,10 @@ http:
     scheme: http
     hostname: u.ifeige.cn
     port: 80
-  wechat:
-    scheme: http
-    hostname: sz.api.weixin.qq.com
-    port: 443
   juhe:
     scheme: http
     hostname: apis.juhe.cn
     port: 80
-
-App:
-  grant_type: client_credential
-  ID: wx7b599c0943fb598f
-  Secret: 40cb7de2d1fcafca438600d6768d462c
 
 jasypt:
   encryptor:

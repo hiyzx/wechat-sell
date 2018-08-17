@@ -48,8 +48,9 @@ public enum CodeEnum implements StringEnum {
 
     REQUEST_REPEAT("100013"),
 
-    SUCCESS("000000");
+    SUCCESS("000000"),
 
+    QUARTZ_EXCEPTION("100014");
     private String codeEnum;
 
     private CodeEnum(String value) {

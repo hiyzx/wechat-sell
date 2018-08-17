@@ -13,8 +13,10 @@ import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/***
- * 敏感词过滤
+/**
+ * @author yezhaoxing
+ * @since 2018/8/17
+ * @description 敏感词过滤
  */
 @Component
 @Slf4j

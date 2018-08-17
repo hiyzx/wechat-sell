@@ -112,7 +112,7 @@ public class LoginController {
 
     @PostMapping(value = "/refreshToken.json")
     @SecurityTag
-    @ApiOperation("心跳")
+    @ApiOperation("刷新token")
     public ReturnVo<String> refreshToken(@RequestParam String sessionId, @RequestParam Long timestamp,
             @RequestParam String authorization) throws Exception {
         JwtTokenUtil.validateToken(sessionId);

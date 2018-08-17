@@ -18,6 +18,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author yezhaoxing
+ * @since 2018/8/17
+ */
 public class JwtTokenUtil implements Serializable {
 
     private static final String JWT_ID = "customer";

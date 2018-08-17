@@ -33,7 +33,7 @@ public class MessageConsumer {
     private FeiGeiService feiGeiService;
 
     @JmsListener(destination = MessageConstant.USER_PAY_QUEUE)
-    public void userPayMessageConsume(UserPayMessage userPayMessage) throws JMSException, IOException {
+    public void userPayMessageConsume(UserPayMessage userPayMessage) throws IOException {
         feiGeiService.sendMsgAlone(284, "notice", "新的订单", "有用户下单了!", "");
         int userId = userPayMessage.getUserId();
         List<OrderDetailDto> orderDetailDtos = userPayMessage.getOrderDetailDtos();
