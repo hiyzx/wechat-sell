@@ -8,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
-import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -21,7 +20,7 @@ import java.util.Map;
  * @author yezhaoxing
  * @date : 2017/4/17
  */
-@Aspect
+//@Aspect
 @Component
 @Slf4j
 public class LoggerInterceptor {

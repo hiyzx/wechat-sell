@@ -1,7 +1,7 @@
 package com.zero.admin.web.controller;
 
 import com.zero.admin.annotation.Authorize;
-import com.zero.admin.service.ProductInfoService;
+import com.zero.admin.service.ProductInfoServerFacade;
 import com.zero.common.vo.ReturnVo;
 import com.zero.common.vo.product.ProductInfoVo;
 import io.swagger.annotations.Api;
@@ -25,7 +25,7 @@ import java.util.List;
 public class ProductInfoController {
 
     @Resource
-    private ProductInfoService productInfoService;
+    private ProductInfoServerFacade productInfoService;
 
     @Authorize
     @GetMapping("/listByCategory.json")

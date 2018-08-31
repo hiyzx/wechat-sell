@@ -1,3 +1,4 @@
+/*
 package com.zero.customer.web.interceptor;
 
 import com.zero.common.constants.SystemConstants;
@@ -7,7 +8,6 @@ import com.zero.common.util.DateHelper;
 import com.zero.customer.util.JwtTokenUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
@@ -18,11 +18,13 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+*/
 /**
  * @author yezhaoxing
  * @date 2017/4/29
- */
-@Aspect
+ *//*
+
+//@Aspect
 @Component
 @Slf4j
 public class AuthorityInterceptor {
@@ -53,4 +55,4 @@ public class AuthorityInterceptor {
             }
         return args;
     }
-}
+}*/

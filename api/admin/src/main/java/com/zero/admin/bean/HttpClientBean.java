@@ -1,7 +1,6 @@
 package com.zero.admin.bean;
 
 import com.zero.admin.util.HttpClient;
-import com.zero.admin.vo.http.properties.HttpFeiGeProperties;
 import com.zero.admin.vo.http.properties.HttpJuHeProperties;
 import lombok.Data;
 import org.springframework.context.annotation.Bean;
@@ -18,15 +17,7 @@ import javax.annotation.Resource;
 public class HttpClientBean {
 
     @Resource
-    private HttpFeiGeProperties httpFeiGeProperties;
-    @Resource
     private HttpJuHeProperties httpJuHeProperties;
-
-    @Bean("feiGeHttpClient")
-    public HttpClient feiGeHttpClient() {
-        return new HttpClient(httpFeiGeProperties.getScheme(), httpFeiGeProperties.getHostname(),
-                Integer.valueOf(httpFeiGeProperties.getPort()));
-    }
 
     @Bean("juHeHttpClient")
     public HttpClient juHeHttpClient() {

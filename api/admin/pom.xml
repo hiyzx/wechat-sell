@@ -54,13 +54,19 @@
         <!-- common -->
         <dependency>
             <groupId>com.zero</groupId>
-            <artifactId>user-service</artifactId>
+            <artifactId>common-conf</artifactId>
             <version>DEVELOP-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>com.zero</groupId>
-            <artifactId>product-service</artifactId>
+            <artifactId>user-api</artifactId>
+            <version>DEVELOP-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.zero</groupId>
+            <artifactId>product-api</artifactId>
             <version>DEVELOP-SNAPSHOT</version>
         </dependency>
 
@@ -77,24 +83,16 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jdbc</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.mybatis.spring.boot</groupId>
-            <artifactId>mybatis-spring-boot-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -117,10 +115,10 @@
             <artifactId>jjwt</artifactId>
         </dependency>
 
-        <!--数据库加密配置-->
         <dependency>
-            <groupId>com.github.ulisesbocchio</groupId>
-            <artifactId>jasypt-spring-boot-starter</artifactId>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+            <version>2.2.1</version>
         </dependency>
 
         <dependency>
@@ -156,11 +154,6 @@
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
         </dependency>
-        <!--数据库连接池-->
-        <dependency>
-            <groupId>com.zaxxer</groupId>
-            <artifactId>HikariCP</artifactId>
-        </dependency>
 
         <!-- 日志start -->
         <dependency>
@@ -191,19 +184,33 @@
         <dependency>
             <groupId>com.github.binarywang</groupId>
             <artifactId>java-emoji-converter</artifactId>
-            <version>0.0.1</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.alibaba.spring.boot</groupId>
+            <artifactId>dubbo-spring-boot-starter</artifactId>
+            <version>2.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.zookeeper</groupId>
+            <artifactId>zookeeper</artifactId>
+            <version>3.3.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.101tec</groupId>
+            <artifactId>zkclient</artifactId>
+            <version>0.10</version>
+        </dependency>
     </dependencies>
 
     <build>
-        <finalName>customer</finalName>
+        <finalName>admin</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.zero.customer.CustomerApplication</mainClass>
+                    <mainClass>com.zero.admin.AdminApplication</mainClass>
                 </configuration>
                 <executions>
                     <execution>

@@ -2,7 +2,7 @@ package com.zero.customer.web.controller;
 
 import com.zero.common.vo.ReturnVo;
 import com.zero.customer.annotation.SecurityTag;
-import com.zero.customer.service.StoreService;
+import com.zero.customer.service.ProductServerFacade;
 import com.zero.customer.vo.StoreInfoVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -23,12 +23,12 @@ import javax.annotation.Resource;
 public class StoreController {
 
     @Resource
-    private StoreService storeService;
+    private ProductServerFacade productServerFacade;
 
     @GetMapping("/info.json")
     @SecurityTag
     @ApiOperation("查询商家列表")
     public ReturnVo<StoreInfoVo> getStoreInfo(@RequestParam Long timestamp, @RequestParam String authorization) {
-        return ReturnVo.success(storeService.getStoreInfo());
+        return ReturnVo.success(productServerFacade.getStoreInfo());
     }
 }

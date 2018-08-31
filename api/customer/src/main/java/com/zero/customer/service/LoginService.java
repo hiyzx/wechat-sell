@@ -1,20 +1,20 @@
 package com.zero.customer.service;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.zero.common.constants.PointConstant;
 import com.zero.common.enums.CodeEnum;
 import com.zero.common.exception.BaseException;
 import com.zero.common.util.DateHelper;
 import com.zero.customer.vo.dto.UserDto;
-import com.zero.user.dao.UserMapper;
 import com.zero.user.po.User;
+import com.zero.user.service.UserPointRecordService;
+import com.zero.user.service.UserPointService;
+import com.zero.user.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import tk.mybatis.mapper.entity.Condition;
 
-import javax.annotation.Resource;
 import java.util.Date;
-import java.util.List;
 
 /**
  * @author yezhaoxing
@@ -25,14 +25,14 @@ import java.util.List;
 @Transactional(rollbackFor = Exception.class)
 public class LoginService {
 
-    @Resource
-    private UserMapper userMapper;
-    @Resource
-    private UserPointService userPointService;
-    @Resource
+    @Reference
     private UserService userService;
+    @Reference
+    private UserPointService userPointService;
+    @Reference
+    private UserPointRecordService userPointRecordService;
 
-    public User register(UserDto userDto) throws BaseException {
+    public User register(UserDto userDto) {
         String phone = userDto.getPhone();
         User tmp = new User();
         tmp.setAge(userDto.getAge());
@@ -42,7 +42,7 @@ public class LoginService {
         tmp.setPassword(userDto.getPassword());
         tmp.setLastLoginTime(DateHelper.getCurrentDateTime());
         tmp.setIsDelete(false);
-        userMapper.insertSelective(tmp);
+        userService.save(tmp);
         int userId = tmp.getId();// 只能用这种方式获取id
         log.info("userId={} name={} phone={} register success", userId, name, phone);
         userPointService.add(userId);
@@ -50,38 +50,35 @@ public class LoginService {
     }
 
     public User login(String phone, String password) throws BaseException {
-        Condition condition = new Condition(User.class);
-        condition.createCriteria().andEqualTo("phone", phone).andEqualTo("password", password);
-        List<User> users = userMapper.selectByExample(condition);
-        if (users.isEmpty()) {
+        User user = userService.queryByPhoneAndPassword(phone, password);
+        if (user == null) {
             throw new BaseException(CodeEnum.LOGIN_FALL, "帐号或者密码错误!");
         } else {
-            User user = users.get(0);
             Date lastLoginTime = user.getLastLoginTime();
             Integer userId = user.getId();
             Date now = DateHelper.getCurrentDateTime();
             if (lastLoginTime == null || !DateHelper.isSameDate(now, lastLoginTime)) {
-                userPointService.increasePoint(userId, PointConstant.POINT_TYPE_LOGIN, PointConstant.POINT_LOGIN);
+                userPointRecordService.increasePoint(userId, PointConstant.POINT_TYPE_LOGIN, PointConstant.POINT_LOGIN);
             }
             User tmp = new User();
             tmp.setId(userId);
             tmp.setLastLoginTime(now);
-            userMapper.updateByPrimaryKeySelective(tmp);
+            userService.update(tmp);
             log.info("userId={} login success", userId);
             return user;
         }
     }
 
-    public void restPassword(String phone, String password1, String password2) throws BaseException {
+    public void restPassword(String phone, String password1, String password2) throws Exception {
         if (password1 == null || !password1.equals(password2)) {
             throw new BaseException(CodeEnum.PASSWORD_NOT_CONSISTENT, "密码不一致!");
         }
-        User user = userService.getUserByPhone(phone);
+        User user = userService.findBy("phone", phone);
         User tmp = new User();
         int userId = user.getId();
         tmp.setId(userId);
         tmp.setPassword(password1);
-        userMapper.updateByPrimaryKeySelective(tmp);
+        userService.update(tmp);
         log.info("userId={} rest password", userId);
     }
 }

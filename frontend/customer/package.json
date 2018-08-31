@@ -10,6 +10,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "js-md5": "^0.7.3",
     "mint-ui": "^2.2.9",
     "v-verify": "^1.0.3",
     "vee-validate": "^2.0.0-rc.19",

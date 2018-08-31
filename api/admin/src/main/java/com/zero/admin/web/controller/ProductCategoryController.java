@@ -1,7 +1,7 @@
 package com.zero.admin.web.controller;
 
 import com.zero.admin.annotation.Authorize;
-import com.zero.admin.service.ProductCategoryService;
+import com.zero.admin.service.ProductCategoryServerFacade;
 import com.zero.admin.util.JwtTokenUtil;
 import com.zero.common.vo.BaseReturnVo;
 import com.zero.common.vo.ReturnVo;
@@ -24,7 +24,7 @@ import java.util.List;
 public class ProductCategoryController {
 
     @Resource
-    private ProductCategoryService productCategoryService;
+    private ProductCategoryServerFacade productCategoryService;
 
     @Authorize
     @GetMapping("/list.json")

@@ -4,7 +4,7 @@ import com.zero.common.vo.ReturnVo;
 import com.zero.common.vo.product.ProductCategoryVo;
 import com.zero.common.vo.product.ProductInfoVo;
 import com.zero.customer.annotation.SecurityTag;
-import com.zero.customer.service.ProductInfoService;
+import com.zero.customer.service.ProductServerFacade;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -26,14 +26,14 @@ import java.util.List;
 public class ProductInfoController {
 
     @Resource
-    private ProductInfoService productInfoService;
+    private ProductServerFacade productServerFacade;
 
     @GetMapping("/listCategory.json")
     @SecurityTag
     @ApiOperation("查询所有的商品类目名称")
     public ReturnVo<List<ProductCategoryVo>> listCategory(@RequestParam Long timestamp,
             @RequestParam String authorization) {
-        return ReturnVo.success(productInfoService.listCategory());
+        return ReturnVo.success(productServerFacade.listCategory());
     }
 
     @GetMapping("/listByCategory.json")
@@ -41,6 +41,6 @@ public class ProductInfoController {
     @ApiOperation("查询某一类目下的所有商品")
     public ReturnVo<List<ProductInfoVo>> listByCategory(@ApiParam("类目Id") @RequestParam Integer categoryId,
             @RequestParam Long timestamp, @RequestParam String authorization) {
-        return ReturnVo.success(productInfoService.listByCategory(categoryId));
+        return ReturnVo.success(productServerFacade.listByCategory(categoryId));
     }
 }

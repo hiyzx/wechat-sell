@@ -1,9 +1,11 @@
 package com.zero.customer.service;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.zero.common.enums.CodeEnum;
 import com.zero.common.exception.BaseException;
 import com.zero.common.util.StringHelper;
 import com.zero.common.util.RedisHelper;
+import com.zero.user.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -26,10 +28,10 @@ public class MessageService {
     private static final int MSG_OFTEN_EXPIRED_SECONDS = ((Long) TimeUnit.MINUTES.toSeconds(1)).intValue();
     @Resource
     private RedisHelper<String, String> redisHelper;
-    @Resource
+    @Reference
     private UserService userService;
     @Resource
-    private FeiGeiService feiGeiService;
+    private FeiGeService feiGeiService;
 
     public void sendMsg(String phone, Integer type) throws BaseException, IOException {
         String wrapperOftenKey = wrapperOftenKey(phone, type);

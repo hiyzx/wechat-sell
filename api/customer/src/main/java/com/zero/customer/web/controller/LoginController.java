@@ -81,7 +81,7 @@ public class LoginController {
     public BaseReturnVo restPassword(@RequestParam Long timestamp, @RequestParam String authorization,
             @ApiParam(value = "手机号", required = true) @RequestParam String phone,
             @ApiParam(value = "密码1", required = true) @RequestParam String password1,
-            @ApiParam(value = "密码2", required = true) @RequestParam String password2) throws BaseException {
+            @ApiParam(value = "密码2", required = true) @RequestParam String password2) throws Exception {
         loginService.restPassword(phone, password1, password2);
         return BaseReturnVo.success();
     }
@@ -90,8 +90,7 @@ public class LoginController {
     @SecurityTag
     @ApiOperation("注册")
     public ReturnVo<User> register(HttpServletRequest request, HttpServletResponse response,
-            @RequestParam Long timestamp, @RequestParam String authorization, @RequestBody @Valid UserDto userDto)
-            throws Exception {
+            @RequestParam Long timestamp, @RequestParam String authorization, @RequestBody @Valid UserDto userDto) {
         User user = loginService.register(userDto);
         return ReturnVo.success(user);
     }

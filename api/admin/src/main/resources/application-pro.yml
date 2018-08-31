@@ -42,15 +42,7 @@ logging:
   level:
     com.zero: debug
 
-feige:
-  secret:
-    key: 7d55aa74dbae1c1c0bc68453e3e7742a
-
 http:
-  feige:
-    scheme: http
-    hostname: u.ifeige.cn
-    port: 80
   juhe:
     scheme: http
     hostname: apis.juhe.cn

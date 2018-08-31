@@ -4,7 +4,7 @@ import com.zero.common.vo.BaseReturnVo;
 import com.zero.common.vo.ReturnVo;
 import com.zero.customer.annotation.Authorize;
 import com.zero.customer.annotation.SecurityTag;
-import com.zero.customer.service.UserService;
+import com.zero.customer.service.UserServerFacade;
 import com.zero.customer.util.JwtTokenUtil;
 import com.zero.customer.vo.CheckRecordVo;
 import io.swagger.annotations.Api;
@@ -23,7 +23,7 @@ import javax.annotation.Resource;
 public class UserController {
 
     @Resource
-    private UserService userService;
+    private UserServerFacade userService;
 
     @Authorize
     @PostMapping(value = "/check.json")

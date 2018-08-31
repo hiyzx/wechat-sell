@@ -6,5 +6,5 @@ package com.zero.common.constants;
  */
 public interface RedisPrefix {
 
-    public static final String ORDER_SELL_COUNT = "order_sell_count_";
+    String ORDER_SELL_COUNT = "order_sell_count_";
 }

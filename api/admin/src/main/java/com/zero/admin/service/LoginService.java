@@ -1,15 +1,14 @@
 package com.zero.admin.service;
 
+import org.springframework.stereotype.Service;
+
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.zero.common.enums.CodeEnum;
 import com.zero.common.exception.BaseException;
-import com.zero.product.dao.StoreMapper;
 import com.zero.product.po.Store;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
-import tk.mybatis.mapper.entity.Condition;
+import com.zero.product.service.StoreService;
 
-import javax.annotation.Resource;
-import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author yezhaoxing
@@ -19,17 +18,14 @@ import java.util.List;
 @Slf4j
 public class LoginService {
 
-    @Resource
-    private StoreMapper storeMapper;
+    @Reference
+    private StoreService storeService;
 
-    public Store login(String name) throws BaseException {
-        Condition condition = new Condition(Store.class);
-        condition.createCriteria().andEqualTo("name", name);
-        List<Store> users = storeMapper.selectByExample(condition);
-        if (users.isEmpty()) {
+    public Store login(String storeName) throws BaseException {
+        Store store = storeService.findByName(storeName);
+        if (store == null) {
             throw new BaseException(CodeEnum.LOGIN_FALL, "登录失败!");
-        } else {
-            return users.get(0);
         }
+        return store;
     }
 }

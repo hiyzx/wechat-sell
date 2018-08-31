@@ -6,8 +6,8 @@ import com.zero.common.vo.BaseReturnVo;
 import com.zero.common.vo.ReturnVo;
 import com.zero.customer.annotation.Authorize;
 import com.zero.customer.annotation.SecurityTag;
-import com.zero.customer.service.OrderService;
-import com.zero.customer.service.ProductInfoService;
+import com.zero.customer.service.OrderServerFacade;
+import com.zero.customer.service.ProductServerFacade;
 import com.zero.customer.util.JwtTokenUtil;
 import com.zero.customer.vo.MyOrderVo;
 import com.zero.customer.vo.OrderVo;
@@ -30,9 +30,9 @@ import javax.annotation.Resource;
 public class OrderController {
 
     @Resource
-    private OrderService orderService;
+    private OrderServerFacade orderService;
     @Resource
-    private ProductInfoService productInfoService;
+    private ProductServerFacade productServerFacade;
 
     @Authorize
     @GetMapping("/list.json")
@@ -88,7 +88,7 @@ public class OrderController {
     @ApiOperation("评论商品")
     public BaseReturnVo comment(@RequestParam String sessionId, @RequestParam Long timestamp,
             @RequestParam String authorization, @RequestBody ProductCommentDto productCommentDto) throws Exception {
-        productInfoService.comment(JwtTokenUtil.parseUserId(sessionId), productCommentDto);
+        productServerFacade.comment(JwtTokenUtil.parseUserId(sessionId), productCommentDto);
         return BaseReturnVo.success();
     }
 }

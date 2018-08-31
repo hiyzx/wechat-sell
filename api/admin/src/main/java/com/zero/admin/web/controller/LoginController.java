@@ -31,8 +31,8 @@ public class LoginController {
     @PostMapping(value = "/login.json")
     @ApiOperation("登陆")
     public ReturnVo<String> login(HttpServletRequest request,
-            @ApiParam(value = "店家名", required = true) @RequestParam String name) throws Exception {
-        Store store = loginService.login(name);
+            @ApiParam(value = "店家名", required = true) @RequestParam String storeName) throws Exception {
+        Store store = loginService.login(storeName);
         return ReturnVo.success(JwtTokenUtil.generateJwt(store, SystemConstants.JWT_TTL_MILLIS));
     }
 }

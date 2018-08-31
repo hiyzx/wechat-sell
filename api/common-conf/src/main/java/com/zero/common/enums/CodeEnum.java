@@ -50,7 +50,7 @@ public enum CodeEnum implements StringEnum {
 
     SUCCESS("000000"),
 
-    QUARTZ_EXCEPTION("100014");
+    SQL_EXCEPTION("100014");
     private String codeEnum;
 
     private CodeEnum(String value) {

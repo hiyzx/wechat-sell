@@ -1,7 +1,7 @@
 function Http(Vue) {
     if (!Http.installed) {
-      const Host = 'http://api.hiyzx.cn/customer'
-      //const Host = 'http://localhost:8080/customer'
+      //const Host = 'http://api.hiyzx.cn/customer'
+      const Host = 'http://localhost:8085/customer'
 
         function serialize(query) {
             let urlText = '';

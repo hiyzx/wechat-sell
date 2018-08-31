@@ -1,16 +1,18 @@
 package com.zero.admin.util;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.zero.admin.vo.http.response.*;
 import com.zero.common.util.JsonHelper;
 import com.zero.common.util.StringHelper;
-import com.zero.product.dao.ProductCategoryMapper;
 import com.zero.product.po.ProductCategory;
 import com.zero.product.po.ProductInfo;
+import com.zero.product.service.ProductCategoryService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -25,8 +27,8 @@ public class JuHeUtil {
 
     @Resource
     private HttpClient juHeHttpClient;
-    @Resource
-    private ProductCategoryMapper productCategoryMapper;
+    @Reference
+    private ProductCategoryService productCategoryService;
 
     public List<ProductCategory> getCategories() {
         TypeReference<JuHeReturnVo<List<JuHeParentCategoryResponseVo>>> TYPE_REFERENCE = new TypeReference<JuHeReturnVo<List<JuHeParentCategoryResponseVo>>>() {
@@ -59,7 +61,7 @@ public class JuHeUtil {
     public List<ProductInfo> getProducts(Integer categoryId) {
         TypeReference<JuHeReturnVo<JuHeProductDateResponseVo>> TYPE_REFERENCE = new TypeReference<JuHeReturnVo<JuHeProductDateResponseVo>>() {
         };
-        ProductCategory productCategory = productCategoryMapper.selectByPrimaryKey(categoryId);
+        ProductCategory productCategory = productCategoryService.findById(categoryId);
         Map<String, String> params = new HashMap<>(5);
         params.put("key", KEY);
         params.put("menu", productCategory.getName());
@@ -90,5 +92,16 @@ public class JuHeUtil {
             rtn.add(tmp);
         }
         return rtn;
+    }
+
+    public void generateQrCode(String text) throws IOException {
+        Map<String, String> params = new HashMap<>(5);
+        params.put("key", "db3904d0afbf6224b90940248dd083f1");
+        params.put("text", text);
+        String response = juHeHttpClient.get("/qrcode/api", params);
+        TypeReference<JuHeReturnVo<QrCodeVo>> TYPE_REFERENCE = new TypeReference<JuHeReturnVo<QrCodeVo>>() {
+        };
+        JuHeReturnVo<QrCodeVo> returnVo = JsonHelper.readValue(response, TYPE_REFERENCE);
+        ImageBase64Utils.base64ToImageFile(returnVo.getResult().getBase64_image(), "E:\\hello.png");
     }
 }
