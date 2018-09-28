@@ -22,16 +22,9 @@ public class ApplicationContextHolder implements ApplicationContextAware {
         applicationContext = ctx;
     }
 
-    /**
-     * Get bean by class
-     */
     public static <T> T getBean(Class<T> clazz) {
         return applicationContext.getBean(clazz);
     }
-
-    /**
-     * Get bean by class name
-     */
 
     public static <T> T getBean(String name) {
         return (T) applicationContext.getBean(name);
