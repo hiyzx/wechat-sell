@@ -40,6 +40,8 @@ import org.slf4j.LoggerFactory;
 
 import com.zero.common.vo.HealthCheckVo;
 
+import cn.hutool.core.io.IoUtil;
+
 /**
  * HTTP连接池
  *
@@ -124,14 +126,17 @@ public class HttpClient {
     /**
      * 检查http连接的服务是否正常
      */
-    private static long checkHttpConnection(final String hostname, final int port) throws IOException {
+    private static Long checkHttpConnection(final String hostname, final int port) {
+        Long cost = null;
         long startTimeMillis = System.currentTimeMillis();
-        Socket server = null;
-        server = new Socket();
-        InetSocketAddress address = new InetSocketAddress(hostname, port);
-        server.connect(address, 300000);// 5分钟
-        server.close();
-        return System.currentTimeMillis() - startTimeMillis;
+        try (Socket server = new Socket()) {
+            InetSocketAddress address = new InetSocketAddress(hostname, port);
+            server.connect(address, 300000);// 5分钟
+            cost = System.currentTimeMillis() - startTimeMillis;
+        } catch (Exception ex) {
+            LOG.error(ex.getMessage(), ex);
+        }
+        return cost;
     }
 
     public String post(String path, Map<String, String> params, Map<String, String> headers) throws IOException {
@@ -316,6 +321,7 @@ public class HttpClient {
     public void writeFile(String path, String filePath) {
         CloseableHttpResponse response = null;
         File file = new File(filePath);
+        FileOutputStream os = null;
         try {
             URI uri = createURIBuilder(path);
             HttpGet httpget = new HttpGet(uri);
@@ -326,24 +332,18 @@ public class HttpClient {
             HttpEntity entity = response.getEntity();
             if (entity != null) {
                 InputStream instream = entity.getContent();
-                FileOutputStream os = new FileOutputStream(file);
+                os = new FileOutputStream(file);
                 int temp = 0;
                 while ((temp = instream.read()) != -1) {
                     os.write(temp);
                 }
                 os.flush();
-                os.close();
             }
         } catch (Exception e) {
             LOG.error(e.getMessage());
         } finally {
-            try {
-                if (response != null) {
-                    response.close();
-                }
-            } catch (IOException e) {
-                LOG.error(e.getMessage(), e);
-            }
+            IoUtil.close(os);
+            IoUtil.close(response);
         }
     }
 
@@ -371,12 +371,13 @@ public class HttpClient {
     public HealthCheckVo healthCheck() {
         HealthCheckVo healthCheckVo = new HealthCheckVo();
         healthCheckVo.setServiceName(String.format("%s:%s", hostname, port));
-        try {
+        Long cost = checkHttpConnection(hostname, port);
+        if (cost != null) {
             healthCheckVo.setNormal(true);
-            healthCheckVo.setCostTime(String.format("%sms", checkHttpConnection(hostname, port)));
-        } catch (IOException e) {
+            healthCheckVo.setCostTime(String.format("%sms", cost));
+        } else {
             healthCheckVo.setNormal(false);
-            LOG.error("hostname={} port={}", hostname, port, e);
+            LOG.error("hostname={} port={} 连接异常", hostname, port);
         }
         return healthCheckVo;
     }
@@ -418,23 +419,10 @@ public class HttpClient {
 
             out.flush();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.info(e.getMessage(), e);
         } finally {
-            try {
-                if (in != null) {
-                    in.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            try {
-                if (out != null) {
-                    out.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            IoUtil.close(in);
+            IoUtil.close(out);
         }
     }
 }
