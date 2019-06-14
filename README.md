@@ -1,20 +1,25 @@
 # takeaway
-基于spring-boot开发的系统，分为用户端和管理端。 
+spring-boot + spring-cloud 开发的系统。
+
 ### 模块介绍:
 ``` lua
 takeaway
 ├── api
 |    ├── parent -- 父类pom.xml及各版本对应的sql语句。
 |    ├── common-conf -- 公共配置、工具类等。
-|    ├── user-service -- 集成Mybatis框架公共模块,提供用户相关服务。
-|    ├── product-service -- 集成Mybatis框架公共模块，提供产品相关服务。
-|    ├── customer -- 用户相关controller和service,使用json web token+注解做权限校验,swagger在线文档等
-|    └── admin -- 后台管理相关controller和service
+|    ├── config-server -- 配置服务。
+|    ├── eureka-server -- 注册中心服务。
+|    ├── zuul-server -- 网关服务
+|    └── micro-server-provider -- 各个服务提供者
+|           ├── message-server -- 短信服务。
+|           ├── order-server -- 订单服务。
+|           ├── product-server -- 商品服务
+|           └── user-server -- 用户服务
 ├── frontend
     ├── customer -- 前端h5页面(使用vue)
     └── admin -- 后端pc页面(未开发)
 ```
-
+![image](https://raw.githubusercontent.com/hiyzx/takeaway/spring-cloud-branch/api/parent/doc/%E6%9E%B6%E6%9E%84%E5%9B%BE.jpg)
 #### 开发环境
 - Jdk1.8
 - Mysql5.7
@@ -27,8 +32,7 @@ takeaway
    1. 新建数据库takeaway,执行parent下sql语句
    2. 修改application-dev.yml下各个开发工具的用户名和密码
    3. maven编译安装parent下各模块
-   4. 分别执行CustomerApplication.java和AdminApplication.java下的main方法
-   5. 使用HealthCheckController下的接口校验版本及第三方服务正常与否
+   4. 依次启动上图的所有服务
 2. 前端
     1. 修改http.js中接口地址
     2. 使用命令行,进入customer目录
@@ -42,10 +46,3 @@ takeaway
 
 - [json在线解析](http://www.json.cn/) 
     
-
-#### spring-boot生成war包
-1. 设置pom的属性为war 
-2. 移除spring-boot-starter-web中的内置tomcat
-3. 添加实现了SpringBootServletInitializer的类ServletInitializer并且
-override方法configure;
-4. 使用maven的打包命令
