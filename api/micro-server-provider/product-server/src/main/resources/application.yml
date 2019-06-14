@@ -1,0 +1,71 @@
+server:
+  port: 8030
+  servlet:
+    context-path: /product-server
+spring:
+  profiles:
+    active: dev
+  application:
+        # 指定注册到eureka server上的服务名称，对于电影微服务，本系列将名称设为microservice-consumer-movie
+      name: product-server
+  resources:
+    add-mappings: false
+  mvc:
+    throw-exception-if-no-handler-found: true
+  #数据库连接
+  datasource:
+      url: jdbc:mysql://www.hiyzx.cn:3306/takeaway?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false
+      username: root
+      password: yzx362311
+      driver-class-name: com.mysql.jdbc.Driver
+      type: com.zaxxer.hikari.HikariDataSource
+      hikari:
+            connection-test-query: select 1 from dual
+            connection-timeout: 30000
+            idle-timeout: 60000
+            max-lifetime: 1800000
+            maximum-pool-size: 20
+            minimum-idle: 20
+
+#mybatis plus
+mybatis-plus:
+  mapper-locations: classpath:/com/zero/product/dao/*.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: com.zero.common.po
+  global-config:
+    #刷新mapper 调试神器
+    db-config:
+      #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
+      id-type: AUTO
+      #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
+      field-strategy: not_empty
+      #驼峰下划线转换
+      column-underline: true
+      #数据库大写下划线转换
+      #capital-mode: true
+      #逻辑删除配置
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+      db-type: mysql
+    refresh: true
+      #自定义填充策略接口实现
+      #meta-object-handler: com.baomidou.springboot.xxx
+      #自定义SQL注入器
+  #sql-injector: com.baomidou.mybatisplus.extension.injector.LogicSqlInjector
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+
+# eureka配置
+eureka:
+  client:
+    service-url:
+      # 指定eureka server通信地址，注意/eureka/小尾巴不能少
+      defaultZone: http://user:123@localhost:8761/eureka/
+  instance:
+    # 是否注册IP到eureka server，如不指定或设为false，那就会注册主机名到eureka server
+    prefer-ip-address: true
+
+
+
+

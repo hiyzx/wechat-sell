@@ -1,0 +1,58 @@
+package com.zero.order.web.inteceptor;
+
+import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
+
+import com.zero.common.constants.SystemConstants;
+import com.zero.common.enums.CodeEnum;
+import com.zero.common.exception.BaseException;
+import com.zero.common.util.DateHelper;
+import com.zero.order.util.JwtTokenUtil;
+
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * @author yezhaoxing
+ * @date 2017/4/29
+ */
+
+// @Aspect
+@Component
+@Slf4j
+public class AuthorityInterceptor {
+
+    @Pointcut(value = "@annotation(com.zero.order.annotation.Authorize) ")
+    private void pointCut() {
+    }
+
+    @Before(value = "pointCut()")
+    public void auth(JoinPoint joinPoint) throws BaseException {
+        Map<String, Object> argMap = this.getArgsMap(joinPoint);
+        String sessionId = (String) argMap.get("sessionId");
+        if (StringUtils.isEmpty(sessionId)) {
+            throw new BaseException(CodeEnum.NOT_LOGIN, "user not login");
+        }
+        Date expiration = JwtTokenUtil.validateToken(sessionId);
+        if (DateHelper.secondsBetween(new Date(), expiration) < SystemConstants.TOKEN_EXPIRE_AFTER) {
+            throw new BaseException(CodeEnum.TOKEN_SOON_EXPIRE, "token expire < 10 minutes");
+        }
+    }
+
+    private Map<String, Object> getArgsMap(JoinPoint pjp) {
+        MethodSignature signature = (MethodSignature) pjp.getSignature();
+        Map<String, Object> args = new LinkedHashMap<>();
+        String[] names = signature.getParameterNames();
+        for (int i = 0, len = names.length; i < len; i++) {
+            args.put(names[i], pjp.getArgs()[i]);
+        }
+        return args;
+    }
+}
