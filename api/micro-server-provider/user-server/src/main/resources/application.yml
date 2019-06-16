@@ -1,7 +1,5 @@
 server:
   port: 8050
-  servlet:
-    context-path: /user-server
 spring:
   profiles:
     active: dev

@@ -1,6 +1,7 @@
 package com.zero.product.facade;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.codingapi.txlcn.tc.annotation.LcnTransaction;
 import com.zero.common.po.ProductCategory;
 import com.zero.common.po.ProductComment;
 import com.zero.common.po.ProductInfo;
@@ -8,6 +9,7 @@ import com.zero.common.po.Store;
 import com.zero.common.util.DateHelper;
 import com.zero.common.util.NumberUtil;
 import com.zero.product.dto.ProductCommentDto;
+import com.zero.product.dto.ProductDecreaseStockCountDto;
 import com.zero.product.dto.ProductIncreaseSellCountDto;
 import com.zero.product.service.ProductCategoryService;
 import com.zero.product.service.ProductCommentService;
@@ -20,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,6 +80,7 @@ public class ProductServerFacade {
     }
 
     // 评论
+    @Transactional
     public void comment(ProductCommentDto productCommentDto) {
         // 保存一条评论记录
         Integer userId = productCommentDto.getUserId();
@@ -86,7 +90,7 @@ public class ProductServerFacade {
         productComment.setProductId(productCommentDto.getProductId());
         productComment.setContent(productCommentDto.getContent());
         productComment.setCreateTime(DateHelper.getCurrentDateTime());
-        productComment.setIsDelete(false);
+        productComment.setIsDelete(0);
         productCommentService.insert(productComment);
         // 更新商品平均数,评论数等
         commentProductMessageConsume(productComment.getProductId(), productComment.getScore());
@@ -108,5 +112,15 @@ public class ProductServerFacade {
         tmp.setAverageScore(NumberUtil.div(tmp.getTotalScore(), tmp.getCommentCount()));
         productInfoService.updateById(tmp);
         log.info("consume comment productId={}'s message", productId);
+    }
+
+    // 批量减库存
+    @Transactional
+    @LcnTransaction //分布式事务注解
+    public void decreaseStockCount(List<ProductDecreaseStockCountDto> productDecreaseStockCountDtos) {
+        for (ProductDecreaseStockCountDto productDecreaseStockCountDto : productDecreaseStockCountDtos) {
+            productInfoService.decreaseStockCount(productDecreaseStockCountDto.getProductId(),
+                    productDecreaseStockCountDto.getCount());
+        }
     }
 }

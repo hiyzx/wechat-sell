@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zero.common.po.ProductInfo;
 import com.zero.product.dao.ProductInfoMapper;
-import com.zero.product.dao.ext.ProductInfoExtMapper;
+import com.zero.product.dao.ProductInfoExtMapper;
 import com.zero.product.service.ProductInfoService;
 import org.springframework.stereotype.Service;
 
@@ -30,5 +30,10 @@ public class ProductInfoServiceImpl extends ServiceImpl<ProductInfoMapper, Produ
         QueryWrapper<ProductInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("category_id", categoryId).eq("is_delete", false);
         return this.selectList(queryWrapper);
+    }
+
+    @Override
+    public void decreaseStockCount(Integer productInfoId, Integer count) {
+        productInfoExtMapper.decreaseStockCount(productInfoId, count);
     }
 }

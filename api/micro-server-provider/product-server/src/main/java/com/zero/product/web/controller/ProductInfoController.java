@@ -4,6 +4,7 @@ import com.zero.common.po.ProductInfo;
 import com.zero.common.vo.BaseReturnVo;
 import com.zero.common.vo.ReturnVo;
 import com.zero.product.dto.ProductCommentDto;
+import com.zero.product.dto.ProductDecreaseStockCountDto;
 import com.zero.product.dto.ProductIncreaseSellCountDto;
 import com.zero.product.facade.ProductServerFacade;
 import com.zero.product.vo.ProductCategoryVo;
@@ -59,6 +60,13 @@ public class ProductInfoController {
 	@ApiOperation("增加销量")
 	public BaseReturnVo increaseSellCount(@RequestBody ProductIncreaseSellCountDto productIncreaseSellCountDto) {
 		productServerFacade.increaseSellCount(productIncreaseSellCountDto);
+		return BaseReturnVo.success();
+	}
+
+	@PostMapping("/decreaseStockCount")
+	@ApiOperation("较少库存")
+	public BaseReturnVo decreaseStockCount(@RequestBody List<ProductDecreaseStockCountDto> productDecreaseStockCountDtos) {
+		productServerFacade.decreaseStockCount(productDecreaseStockCountDtos);
 		return BaseReturnVo.success();
 	}
 }

@@ -78,7 +78,7 @@ public class RedisHelper<K, V> {
             RedisSerializer<V> valueSerializer = (RedisSerializer<V>) redisTemplate.getValueSerializer();
             boolean flag = redisConnection.setNX(keySerializer.serialize(key), valueSerializer.serialize(value));
             if (expireTime > 0 && flag) {
-                redisTemplate.expire(key, expireTime, TimeUnit.SECONDS);
+                redisTemplate.expire(key, expireTime, TimeUnit.MILLISECONDS);
             }
             return flag;
         });

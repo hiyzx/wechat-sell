@@ -6,7 +6,7 @@ import com.zero.common.vo.BaseReturnVo;
 import com.zero.common.vo.ReturnVo;
 import com.zero.order.annotation.Authorize;
 import com.zero.order.annotation.SecurityTag;
-import com.zero.order.facade.OrderServerFacade;
+import com.zero.order.facade.impl.OrderServerFacadeImpl;
 import com.zero.order.util.JwtTokenUtil;
 import com.zero.order.vo.MyOrderVo;
 import com.zero.order.vo.OrderVo;
@@ -30,7 +30,7 @@ import javax.annotation.Resource;
 public class OrderController {
 
     @Resource
-    private OrderServerFacade orderService;
+    private OrderServerFacadeImpl orderService;
     @Resource
     private ProductServerClient productServerClient;
 

@@ -1,27 +1,14 @@
-/*
-Navicat MySQL Data Transfer
-
-Source Server         : aliyun
-Source Server Version : 50720
-Source Host           : 120.78.210.235:3306
-Source Database       : takeaway
-
-Target Server Type    : MYSQL
-Target Server Version : 50720
-File Encoding         : 65001
-
-Date: 2018-01-04 17:11:47
-*/
-
-SET FOREIGN_KEY_CHECKS=0;
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
 -- Table structure for order_detail
 -- ----------------------------
 DROP TABLE IF EXISTS `order_detail`;
 CREATE TABLE `order_detail` (
-  `id` varchar(32) NOT NULL,
-  `order_id` varchar(32) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uid` varchar(32) NOT NULL,
+  `order_uid` varchar(32) NOT NULL,
   `product_id` varchar(32) NOT NULL,
   `product_name` varchar(64) NOT NULL COMMENT '商品名称',
   `product_price` double(8,2) NOT NULL COMMENT '商品价格',
@@ -30,29 +17,50 @@ CREATE TABLE `order_detail` (
   `create_time` datetime NOT NULL,
   `update_time` datetime NOT NULL,
   `is_delete` tinyint(4) NOT NULL COMMENT '是否删除',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `idx_order_id` (`order_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单详情';
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8 COMMENT='订单详情';
+
+-- ----------------------------
+-- Records of order_detail
+-- ----------------------------
+BEGIN;
+INSERT INTO `order_detail` VALUES (1, 'detail79fd239d88bb481dbddb', 'master3bb603b416974834aa4a', '1', '炸酱面', 16.00, 1, '无', '2019-06-15 16:05:32', '2019-06-15 16:05:32', 0);
+INSERT INTO `order_detail` VALUES (2, 'detailfdb3f17b37e345738323', 'master3bb603b416974834aa4a', '1', '炸酱面', 16.00, 2, '无', '2019-06-15 16:05:32', '2019-06-15 16:05:32', 0);
+INSERT INTO `order_detail` VALUES (25, 'detail94041f42a4614f639d89', 'master72a88e5615394814861e', '2', '蛋炒饭', 16.00, 4, '无', '2019-06-16 13:21:18', '2019-06-16 13:21:18', 0);
+INSERT INTO `order_detail` VALUES (26, 'detailf960256a3f3747e2ae34', 'master72a88e5615394814861e', '1', '炸酱面', 16.00, 3, '无', '2019-06-16 13:21:18', '2019-06-16 13:21:18', 0);
+INSERT INTO `order_detail` VALUES (27, 'detailaa81794e32a54734af07', 'master0eb9c83e8e674c72bd31', '2', '蛋炒饭', 16.00, 4, '无', '2019-06-16 13:26:48', '2019-06-16 13:26:48', 0);
+INSERT INTO `order_detail` VALUES (28, 'detail770b4b7ed4ba403d8dd0', 'master0eb9c83e8e674c72bd31', '1', '炸酱面', 16.00, 3, '无', '2019-06-16 13:26:48', '2019-06-16 13:26:48', 0);
+COMMIT;
 
 -- ----------------------------
 -- Table structure for order_master
 -- ----------------------------
 DROP TABLE IF EXISTS `order_master`;
 CREATE TABLE `order_master` (
-  `id` varchar(32) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uid` varchar(32) NOT NULL,
   `buyer_name` varchar(32) NOT NULL COMMENT '买家名字',
   `buyer_phone` varchar(32) NOT NULL COMMENT '买家电话',
   `buyer_address` varchar(128) NOT NULL COMMENT '买家地址',
   `buyer_id` varchar(64) NOT NULL COMMENT '买家唯一id',
-  `order_amount` double(8,2) NOT NULL COMMENT '订单总金额',
+  `total_count` int(11) NOT NULL COMMENT '订单数量',
+  `total_amount` double(8,2) NOT NULL COMMENT '订单总金额',
   `order_status` int(3) NOT NULL DEFAULT '0' COMMENT '订单状态 0新下单',
   `pay_status` int(3) NOT NULL DEFAULT '0' COMMENT '支付状态,0未支付',
   `create_time` datetime NOT NULL,
   `update_time` datetime NOT NULL,
   `is_delete` tinyint(4) NOT NULL COMMENT '是否删除',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `idx_buyer_openid` (`buyer_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单主表';
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COMMENT='订单主表';
+
+-- ----------------------------
+-- Records of order_master
+-- ----------------------------
+BEGIN;
+INSERT INTO `order_master` VALUES (1, 'master3bb603b416974834aa4a', '叶先生', '18850341357', '宝安区固戍永泰', '2', 3, 48.00, 0, 1, '2019-06-15 16:05:32', '2019-06-15 16:05:32', 0);
+INSERT INTO `order_master` VALUES (13, 'master72a88e5615394814861e', 'zero', '175204', '龙华区', '2', 7, 112.00, 0, 0, '2019-06-16 13:21:18', '2019-06-16 13:21:18', 0);
+INSERT INTO `order_master` VALUES (14, 'master0eb9c83e8e674c72bd31', 'zero', '175204', '龙华区', '2', 7, 112.00, 0, 0, '2019-06-16 13:26:48', '2019-06-16 13:26:48', 0);
+COMMIT;
 
 -- ----------------------------
 -- Table structure for product_category
@@ -67,7 +75,16 @@ CREATE TABLE `product_category` (
   `is_delete` tinyint(4) DEFAULT NULL COMMENT '是否删除',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uqe_category_type` (`show_index`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=326 DEFAULT CHARSET=utf8 COMMENT='商品类目表';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='商品类目表';
+
+-- ----------------------------
+-- Records of product_category
+-- ----------------------------
+BEGIN;
+INSERT INTO `product_category` VALUES (1, '面食粥点', 1, '2019-06-15 14:54:16', '2019-06-15 14:54:18', 0);
+INSERT INTO `product_category` VALUES (2, '小吃夜宵', 2, '2019-06-15 14:54:52', '2019-06-15 14:54:57', 0);
+INSERT INTO `product_category` VALUES (3, '快餐便当', 3, '2019-06-15 14:55:07', '2019-06-15 14:55:09', 0);
+COMMIT;
 
 -- ----------------------------
 -- Table structure for product_comment
@@ -78,9 +95,9 @@ CREATE TABLE `product_comment` (
   `user_id` int(11) NOT NULL COMMENT '评论人id',
   `score` int(11) NOT NULL COMMENT '分数',
   `content` varchar(128) DEFAULT NULL COMMENT '内容',
-  `type` int(11) NOT NULL COMMENT '评论类型-1,推荐,2吐槽',
+  `product_id` int(11) NOT NULL,
   `create_time` datetime NOT NULL,
-  `update_time` datetime NOT NULL,
+  `update_time` datetime DEFAULT NULL,
   `is_delete` tinyint(4) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -100,6 +117,7 @@ CREATE TABLE `product_info` (
   `icon` varchar(128) DEFAULT NULL COMMENT '小图',
   `image` varchar(128) DEFAULT NULL COMMENT '图片',
   `category_id` int(11) NOT NULL COMMENT '类目编号',
+  `stock_count` int(11) NOT NULL DEFAULT '0' COMMENT '每日库存',
   `total_score` int(11) DEFAULT '0',
   `average_score` double(11,2) DEFAULT NULL,
   `comment_count` int(11) DEFAULT NULL COMMENT '评论数',
@@ -108,6 +126,14 @@ CREATE TABLE `product_info` (
   `is_delete` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否删除',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商品信息表';
+
+-- ----------------------------
+-- Records of product_info
+-- ----------------------------
+BEGIN;
+INSERT INTO `product_info` VALUES ('1', '1', '炸酱面', 16.00, 1, '无', '无', '无', '无', 1, 0, 10, 10.00, 0, '2019-06-15 14:56:51', '2019-06-15 14:57:00', 0);
+INSERT INTO `product_info` VALUES ('2', '2', '蛋炒饭', 16.00, 1, '无', '无', '无', '无', 2, 0, 10, 10.00, 0, '2019-06-15 14:56:51', '2019-06-15 14:57:00', 0);
+COMMIT;
 
 -- ----------------------------
 -- Table structure for store
@@ -130,6 +156,13 @@ CREATE TABLE `store` (
   `is_delete` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否删除',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of store
+-- ----------------------------
+BEGIN;
+INSERT INTO `store` VALUES (1, 'http://upload1.95171.cn/albumpicimages/20161203/F14B18V42110/18dec399-703f-48b8-9a86-dae0cf220f04.jpg', '川湘小厨', '川湘小厨，上海最火爆的人气餐厅之一，主要以为主，深受广大食客喜爱。同时还不定期的举行团购优惠活动，是您吃饭聚会宴请的好选择。', 1, 10, 10, 10, 100, 100, 'http://upload1.95171.cn/albumpicimages/20161203/F14B18V42110/18dec399-703f-48b8-9a86-dae0cf220f04.jpg', '上海普陀区 大渡河路845号(近长风集贸市场)', '2019-06-14 16:49:29', 0);
+COMMIT;
 
 -- ----------------------------
 -- Table structure for store_notice
@@ -157,7 +190,14 @@ CREATE TABLE `user` (
   `last_login_time` datetime DEFAULT NULL COMMENT '最后登陆时间',
   `is_delete` tinyint(4) NOT NULL COMMENT '是否删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of user
+-- ----------------------------
+BEGIN;
+INSERT INTO `user` VALUES (2, 20, 'hiyzx', '188', '123456', '2019-06-16 11:34:27', 0);
+COMMIT;
 
 -- ----------------------------
 -- Table structure for user_check_count
@@ -172,7 +212,14 @@ CREATE TABLE `user_check_count` (
   `history` bigint(11) NOT NULL COMMENT '签到历史记录',
   `sum` int(11) NOT NULL COMMENT '总的签到天数',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of user_check_count
+-- ----------------------------
+BEGIN;
+INSERT INTO `user_check_count` VALUES (2, 2, '2019-06-14 18:48:39', 1, 1, 1, 1);
+COMMIT;
 
 -- ----------------------------
 -- Table structure for user_point
@@ -183,7 +230,14 @@ CREATE TABLE `user_point` (
   `user_id` int(11) DEFAULT NULL COMMENT '用户id',
   `point` int(11) DEFAULT NULL COMMENT '积分',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of user_point
+-- ----------------------------
+BEGIN;
+INSERT INTO `user_point` VALUES (2, 2, 0);
+COMMIT;
 
 -- ----------------------------
 -- Table structure for user_point_record
@@ -196,4 +250,15 @@ CREATE TABLE `user_point_record` (
   `gain_point` int(11) DEFAULT NULL COMMENT '获得的积分',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of user_point_record
+-- ----------------------------
+BEGIN;
+INSERT INTO `user_point_record` VALUES (4, 2, 2, 2, '2019-06-14 18:48:40');
+INSERT INTO `user_point_record` VALUES (5, 2, 1, 2, '2019-06-15 14:36:58');
+INSERT INTO `user_point_record` VALUES (6, 2, 1, 2, '2019-06-16 11:34:08');
+COMMIT;
+
+SET FOREIGN_KEY_CHECKS = 1;

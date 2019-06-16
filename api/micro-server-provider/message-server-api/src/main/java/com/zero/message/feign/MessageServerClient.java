@@ -9,12 +9,14 @@ import com.zero.common.vo.BaseReturnVo;
 import com.zero.common.vo.ReturnVo;
 import com.zero.message.dto.req.SendMsgRequest;
 import com.zero.message.dto.resp.FeiGeListResponseVo;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * @author yezhaoxing
  * @date 2019/6/14
  */
 @FeignClient(name = "message-server")
+@RequestMapping(value = "/feige")
 public interface MessageServerClient {
 
     @GetMapping(value = "/list")

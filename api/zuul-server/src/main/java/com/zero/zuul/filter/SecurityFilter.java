@@ -9,7 +9,6 @@ import com.zero.common.util.MD5Helper;
 import com.zero.zuul.util.RedisHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.ReflectionUtils;
@@ -30,8 +29,6 @@ public class SecurityFilter extends ZuulFilter {
 
     @Autowired
     private RedisHelper<String, String> redisHelper;
-    @Value("${Spring.redis.host}")
-    private String host;
 
     @Override
     public String filterType() {
@@ -45,7 +42,7 @@ public class SecurityFilter extends ZuulFilter {
 
     @Override
     public boolean shouldFilter() {
-        return true;
+        return false;
     }
 
     @Override

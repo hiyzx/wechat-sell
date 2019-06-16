@@ -1,7 +1,5 @@
 server:
   port: 8040
-  servlet:
-    context-path: /order-server
 spring:
   profiles:
     active: dev
@@ -15,9 +13,9 @@ spring:
   #数据库连接
   datasource:
       url: jdbc:mysql://www.hiyzx.cn:3306/takeaway?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false
+      driver-class-name: com.mysql.jdbc.Driver
       username: root
       password: yzx362311
-      driver-class-name: com.mysql.jdbc.Driver
       type: com.zaxxer.hikari.HikariDataSource
       hikari:
             connection-test-query: select 1 from dual
@@ -38,6 +36,15 @@ spring:
             max-idle: 200
             #最小空闲
             min-idle: 10
+  activemq:
+    user: admin
+    password: admin
+    broker-url: tcp://localhost:61616?jms.prefetchPolicy.all=10&jms.optimizeAcknowledge=true
+    in-memory: true
+    pool:
+      enabled: false
+    packages:
+      trust-all: true
 #mybatis plus
 mybatis-plus:
   mapper-locations: classpath:/com/zero/order/dao/*.xml
@@ -75,7 +82,16 @@ eureka:
   instance:
     # 是否注册IP到eureka server，如不指定或设为false，那就会注册主机名到eureka server
     prefer-ip-address: true
-
-
+feign:
+  client:
+    config:
+      product-server:
+        loggerLevel: full
+logging:
+  level:
+    com.zero.product.feign.ProductServerClient: debug
+tx-lcn:
+  client:
+    manager-address: 127.0.0.1:8070
 
 

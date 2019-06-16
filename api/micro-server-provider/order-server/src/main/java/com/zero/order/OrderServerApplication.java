@@ -3,6 +3,9 @@ package com.zero.order;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import com.codingapi.txlcn.tc.config.EnableDistributedTransaction;
 
 /**
  * @author yezhaoxing
@@ -10,6 +13,8 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  */
 @SpringBootApplication
 @EnableFeignClients(basePackages = "com.zero.*.feign")
+@EnableTransactionManagement
+@EnableDistributedTransaction
 public class OrderServerApplication {
 
     public static void main(String[] args) {

@@ -7,7 +7,7 @@ eureka:
     # 是否要从其他Eureka Server实例获取数据
     fetch-registry: false
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://user:123@localhost:8761/eureka/
 spring:
   security:
     user:

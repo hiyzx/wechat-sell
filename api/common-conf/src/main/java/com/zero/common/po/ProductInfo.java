@@ -45,6 +45,9 @@ public class ProductInfo implements Serializable {
     @ApiModelProperty(value = "类目编号")
     private Integer categoryId;
 
+    @ApiModelProperty(value = "库存")
+    private Integer stockCount;
+
     @ApiModelProperty(value = "总的评分")
     private Integer totalScore;
 

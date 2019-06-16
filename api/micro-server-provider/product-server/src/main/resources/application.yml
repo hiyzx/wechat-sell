@@ -1,7 +1,5 @@
 server:
   port: 8030
-  servlet:
-    context-path: /product-server
 spring:
   profiles:
     active: dev
@@ -29,7 +27,7 @@ spring:
 
 #mybatis plus
 mybatis-plus:
-  mapper-locations: classpath:/com/zero/product/dao/*.xml
+  mapper-locations: classpath*:/com/zero/product/dao/*.xml
   #实体扫描，多个package用逗号或者分号分隔
   typeAliasesPackage: com.zero.common.po
   global-config:
@@ -65,7 +63,9 @@ eureka:
   instance:
     # 是否注册IP到eureka server，如不指定或设为false，那就会注册主机名到eureka server
     prefer-ip-address: true
-
+tx-lcn:
+  client:
+    manager-address: 127.0.0.1:8070
 
 
 

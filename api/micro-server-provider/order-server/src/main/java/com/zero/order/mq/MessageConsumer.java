@@ -11,6 +11,7 @@ import com.zero.product.dto.ProductIncreaseSellCountDto;
 import com.zero.product.feign.ProductServerClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jms.annotation.JmsListener;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -20,7 +21,7 @@ import java.util.Objects;
  * @author yezhaoxing
  * @date 2017/10/30
  */
-// @Component
+@Component
 @Slf4j
 public class MessageConsumer {
 

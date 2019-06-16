@@ -50,7 +50,11 @@ public enum CodeEnum implements StringEnum {
 
     SUCCESS("000000"),
 
-    SQL_EXCEPTION("100014");
+    SQL_EXCEPTION("100014"),
+
+    REMOTE_EXCEPTION("100015");
+
+
     private String codeEnum;
 
     private CodeEnum(String value) {
