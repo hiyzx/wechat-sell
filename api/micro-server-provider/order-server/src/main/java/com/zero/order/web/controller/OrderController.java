@@ -6,7 +6,7 @@ import com.zero.common.vo.BaseReturnVo;
 import com.zero.common.vo.ReturnVo;
 import com.zero.order.annotation.Authorize;
 import com.zero.order.annotation.SecurityTag;
-import com.zero.order.facade.impl.OrderServerFacadeImpl;
+import com.zero.order.facade.OrderServerFacade;
 import com.zero.order.util.JwtTokenUtil;
 import com.zero.order.vo.MyOrderVo;
 import com.zero.order.vo.OrderVo;
@@ -30,7 +30,7 @@ import javax.annotation.Resource;
 public class OrderController {
 
     @Resource
-    private OrderServerFacadeImpl orderService;
+    private OrderServerFacade orderServerFacade;
     @Resource
     private ProductServerClient productServerClient;
 
@@ -41,7 +41,7 @@ public class OrderController {
     public ReturnVo<IPage<MyOrderVo>> list(@RequestParam String sessionId, @RequestParam Long timestamp,
             @RequestParam String authorization, @ApiParam(value = "当前页", required = true) @RequestParam Integer page,
             @ApiParam(value = "每页大小", required = true) @RequestParam Integer pageSize) throws Exception {
-        return ReturnVo.success(orderService.list(JwtTokenUtil.parseUserId(sessionId), page, pageSize));
+        return ReturnVo.success(orderServerFacade.list(JwtTokenUtil.parseUserId(sessionId), page, pageSize));
     }
 
     @Authorize
@@ -50,7 +50,7 @@ public class OrderController {
     @ApiOperation("下单")
     public ReturnVo<String> add(@RequestParam String sessionId, @RequestParam Long timestamp,
             @RequestParam String authorization, @RequestBody OrderDto orderDto) throws Exception {
-        return ReturnVo.success(orderService.add(JwtTokenUtil.parseUserId(sessionId), orderDto));
+        return ReturnVo.success(orderServerFacade.add(JwtTokenUtil.parseUserId(sessionId), orderDto));
     }
 
     @Authorize
@@ -59,7 +59,7 @@ public class OrderController {
     @ApiOperation("查询单个订单")
     public ReturnVo<OrderVo> get(@RequestParam String sessionId, @RequestParam Long timestamp,
             @RequestParam String authorization, @ApiParam("订单id") @RequestParam String orderId) throws BaseException {
-        return ReturnVo.success(orderService.getByOrderId(orderId));
+        return ReturnVo.success(orderServerFacade.getByOrderId(orderId));
     }
 
     @Authorize
@@ -68,7 +68,7 @@ public class OrderController {
     @ApiOperation("取消某个订单")
     public BaseReturnVo cancel(@RequestParam String sessionId, @RequestParam Long timestamp,
             @RequestParam String authorization, @ApiParam("订单id") @RequestParam String orderId) throws Exception {
-        orderService.cancel(JwtTokenUtil.parseUserId(sessionId), orderId);
+        orderServerFacade.cancel(JwtTokenUtil.parseUserId(sessionId), orderId);
         return BaseReturnVo.success();
     }
 
@@ -78,7 +78,7 @@ public class OrderController {
     @ApiOperation("支付")
     public BaseReturnVo pay(@RequestParam String sessionId, @RequestParam Long timestamp,
             @RequestParam String authorization, @ApiParam("订单id") @RequestParam String orderId) throws Exception {
-        orderService.pay(JwtTokenUtil.parseUserId(sessionId), orderId);
+        orderServerFacade.pay(JwtTokenUtil.parseUserId(sessionId), orderId);
         return BaseReturnVo.success();
     }
 
@@ -88,7 +88,7 @@ public class OrderController {
     @ApiOperation("评论商品")
     public BaseReturnVo comment(@RequestParam String sessionId, @RequestParam Long timestamp,
             @RequestParam String authorization, @RequestBody ProductCommentDto productCommentDto) throws Exception {
-        productServerClient.comment(productCommentDto);
+        orderServerFacade.comment(productCommentDto);
         return BaseReturnVo.success();
     }
 }

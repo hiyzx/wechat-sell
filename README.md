@@ -7,6 +7,8 @@ takeaway
 ├── api
 |    ├── parent -- 父类pom.xml及各版本对应的sql语句。
 |    ├── common-conf -- 公共配置、工具类等。
+|    ├── admin-server -- 可视化监控服务。
+|    ├── tx-manager-server -- 分布式事务处理服务。
 |    ├── config-server -- 配置服务。
 |    ├── eureka-server -- 注册中心服务。
 |    ├── zuul-server -- 网关服务

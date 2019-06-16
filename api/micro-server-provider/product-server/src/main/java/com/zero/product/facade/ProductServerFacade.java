@@ -81,6 +81,7 @@ public class ProductServerFacade {
 
     // 评论
     @Transactional
+    @LcnTransaction
     public void comment(ProductCommentDto productCommentDto) {
         // 保存一条评论记录
         Integer userId = productCommentDto.getUserId();

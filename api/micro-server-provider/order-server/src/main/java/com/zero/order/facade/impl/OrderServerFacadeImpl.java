@@ -7,7 +7,9 @@ import java.util.Objects;
 
 import javax.annotation.Resource;
 
+import com.codingapi.txlcn.tc.annotation.TccTransaction;
 import com.zero.common.vo.BaseReturnVo;
+import com.zero.product.dto.ProductCommentDto;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -220,6 +222,13 @@ public class OrderServerFacadeImpl implements OrderServerFacade {
         messageProducer.sendUserPayMessage(new UserPayMessage(userId, orderDetailDtos));
         // 支付成功,将缓存移除
         redisHelper.delete(wrapperRedisKey(orderId));
+    }
+
+    @Override
+    @Transactional
+    @LcnTransaction // 分布式事务注解
+    public void comment(ProductCommentDto productCommentDto) throws BaseException {
+        productServerClient.comment(productCommentDto);
     }
 
     private OrderMaster getByUid(String orderId) {

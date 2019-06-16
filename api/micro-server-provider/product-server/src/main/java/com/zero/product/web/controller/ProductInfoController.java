@@ -64,7 +64,7 @@ public class ProductInfoController {
 	}
 
 	@PostMapping("/decreaseStockCount")
-	@ApiOperation("较少库存")
+	@ApiOperation("减少库存")
 	public BaseReturnVo decreaseStockCount(@RequestBody List<ProductDecreaseStockCountDto> productDecreaseStockCountDtos) {
 		productServerFacade.decreaseStockCount(productDecreaseStockCountDtos);
 		return BaseReturnVo.success();

@@ -5,6 +5,7 @@ import com.zero.common.exception.BaseException;
 import com.zero.order.vo.MyOrderVo;
 import com.zero.order.vo.OrderVo;
 import com.zero.order.vo.dto.OrderDto;
+import com.zero.product.dto.ProductCommentDto;
 
 /**
  * @author yezhaoxing
@@ -46,4 +47,11 @@ public interface OrderServerFacade {
 	 * @description 支付
 	 */
     void pay(Integer userId, String orderId) throws BaseException;
+
+	/**
+	 * @author yezhaoxing
+	 * @date 2019/6/15
+	 * @description 评论
+	 */
+	void comment(ProductCommentDto productCommentDto) throws BaseException;
 }

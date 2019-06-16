@@ -24,6 +24,10 @@ spring:
             max-lifetime: 1800000
             maximum-pool-size: 20
             minimum-idle: 20
+  boot:
+    admin:
+      client:
+        url: http://localhost:8769
 
 #mybatis plus
 mybatis-plus:
@@ -66,6 +70,15 @@ eureka:
 tx-lcn:
   client:
     manager-address: 127.0.0.1:8070
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS
+
 
 
 

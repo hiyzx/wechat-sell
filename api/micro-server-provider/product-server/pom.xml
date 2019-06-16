@@ -115,6 +115,13 @@
             <artifactId>txlcn-txmsg-netty</artifactId>
             <version>5.0.2.RELEASE</version>
         </dependency>
+
+        <!-- 可视化监控 -->
+        <dependency>
+            <groupId>de.codecentric</groupId>
+            <artifactId>spring-boot-admin-starter-client</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>

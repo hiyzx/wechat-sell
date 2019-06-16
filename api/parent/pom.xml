@@ -96,6 +96,16 @@
                 <artifactId>hutool-all</artifactId>
                 <version>4.1.17</version>
             </dependency>
+
+
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-dependencies</artifactId>
+                <version>2.0.4</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -137,6 +147,7 @@
         <module>../micro-server-provider/product-server-api</module>
         <module>../micro-server-provider/user-server</module>
         <module>../tx-manager-server</module>
+        <module>../admin-server</module>
 
     </modules>
 </project>
