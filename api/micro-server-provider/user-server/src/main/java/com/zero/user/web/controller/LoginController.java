@@ -52,11 +52,11 @@ public class LoginController {
     @PostMapping(value = "/sendMsg")
     @SecurityTag
     @ApiOperation("发送短信")
-    public BaseReturnVo sendMsg(HttpServletRequest request, @RequestParam Long timestamp,
-            @RequestParam String authorization, @ApiParam(value = "手机号", required = true) @RequestParam String phone,
-            @ApiParam(value = "短信类型-1:注册,2:忘记密码", required = true) @RequestParam Integer type,
-            @ApiParam(value = "图形验证码", required = true) @RequestParam String userInputCaptcha)
-            throws BaseException, IOException {
+    public BaseReturnVo sendMsg(HttpServletRequest request,
+        @ApiParam(value = "手机号", required = true) @RequestParam String phone,
+        @ApiParam(value = "短信类型-1:注册,2:忘记密码", required = true) @RequestParam Integer type,
+        @ApiParam(value = "图形验证码", required = true) @RequestParam String userInputCaptcha)
+        throws BaseException, IOException {
         if (!captchaUtil.validate(request, userInputCaptcha)) {
             throw new BaseException(CustomerCodeEnum.CAPTCHA_WRONG, "验证码错误");
         }
@@ -67,10 +67,9 @@ public class LoginController {
     @PostMapping(value = "/verify")
     @SecurityTag
     @ApiOperation("校验短信验证码")
-    public BaseReturnVo verify(@RequestParam Long timestamp, @RequestParam String authorization,
-            @ApiParam(value = "手机号", required = true) @RequestParam String phone,
-            @ApiParam(value = "短信类型-1:注册,2:忘记密码", required = true) @RequestParam Integer type,
-            @ApiParam(value = "图形验证码", required = true) @RequestParam String code) throws BaseException {
+    public BaseReturnVo verify(@ApiParam(value = "手机号", required = true) @RequestParam String phone,
+        @ApiParam(value = "短信类型-1:注册,2:忘记密码", required = true) @RequestParam Integer type,
+        @ApiParam(value = "图形验证码", required = true) @RequestParam String code) throws BaseException {
         messageService.validMsg(phone, type, code);
         return BaseReturnVo.success();
     }
@@ -78,10 +77,9 @@ public class LoginController {
     @PostMapping(value = "/restPassword")
     @SecurityTag
     @ApiOperation("重置密码")
-    public BaseReturnVo restPassword(@RequestParam Long timestamp, @RequestParam String authorization,
-            @ApiParam(value = "手机号", required = true) @RequestParam String phone,
-            @ApiParam(value = "密码1", required = true) @RequestParam String password1,
-            @ApiParam(value = "密码2", required = true) @RequestParam String password2) throws Exception {
+    public BaseReturnVo restPassword(@ApiParam(value = "手机号", required = true) @RequestParam String phone,
+        @ApiParam(value = "密码1", required = true) @RequestParam String password1,
+        @ApiParam(value = "密码2", required = true) @RequestParam String password2) throws Exception {
         loginService.restPassword(phone, password1, password2);
         return BaseReturnVo.success();
     }
@@ -90,7 +88,7 @@ public class LoginController {
     @SecurityTag
     @ApiOperation("注册")
     public ReturnVo<User> register(HttpServletRequest request, HttpServletResponse response,
-            @RequestParam Long timestamp, @RequestParam String authorization, @RequestBody @Valid UserDto userDto) {
+        @RequestBody @Valid UserDto userDto) {
         User user = loginService.register(userDto);
         return ReturnVo.success(user);
     }
@@ -98,22 +96,21 @@ public class LoginController {
     @PostMapping(value = "/login")
     @SecurityTag
     @ApiOperation("登陆")
-    public ReturnVo<UserLoginResponseVo> login(HttpServletRequest request, @RequestParam Long timestamp,
-            @RequestParam String authorization, @ApiParam(value = "手机号", required = true) @RequestParam String phone,
-            @ApiParam(value = "密码", required = true) @RequestParam String password) throws Exception {
+    public ReturnVo<UserLoginResponseVo> login(HttpServletRequest request,
+        @ApiParam(value = "手机号", required = true) @RequestParam String phone,
+        @ApiParam(value = "密码", required = true) @RequestParam String password) throws Exception {
         User user = loginService.login(phone, password);
         UserResponseVo userResponseVo = new UserResponseVo();
         BeanUtils.copyProperties(user, userResponseVo);
-        UserLoginResponseVo loginResponseVo = new UserLoginResponseVo(
-                JwtTokenUtil.generateJwt(user, SystemConstants.JWT_TTL_MILLIS), userResponseVo);
+        UserLoginResponseVo loginResponseVo =
+            new UserLoginResponseVo(JwtTokenUtil.generateJwt(user, SystemConstants.JWT_TTL_MILLIS), userResponseVo);
         return ReturnVo.success(loginResponseVo);
     }
 
     @PostMapping(value = "/refreshToken")
     @SecurityTag
     @ApiOperation("刷新token")
-    public ReturnVo<String> refreshToken(@RequestParam String sessionId, @RequestParam Long timestamp,
-            @RequestParam String authorization) throws Exception {
+    public ReturnVo<String> refreshToken(@RequestParam String sessionId) throws Exception {
         JwtTokenUtil.validateToken(sessionId);
         return ReturnVo.success(JwtTokenUtil.refreshToken(sessionId));
     }
@@ -121,8 +118,7 @@ public class LoginController {
     @Authorize
     @PostMapping(value = "/heartBeat")
     @ApiOperation("心跳")
-    public BaseReturnVo heartBeat(@RequestParam String sessionId, @RequestParam Long timestamp,
-            @RequestParam String authorization) throws Exception {
+    public BaseReturnVo heartBeat(@RequestParam String sessionId) throws Exception {
         return BaseReturnVo.success();
     }
 }

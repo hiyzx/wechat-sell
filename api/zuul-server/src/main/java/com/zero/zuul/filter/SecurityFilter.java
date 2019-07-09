@@ -46,30 +46,27 @@ public class SecurityFilter extends ZuulFilter {
     }
 
     @Override
-    public Object run() throws ZuulException {
+    public Object run() {
         try {
 
             RequestContext ctx = RequestContext.getCurrentContext();
             HttpServletRequest request = ctx.getRequest();
-            String sessionId = request.getParameter("sessionId");
-            String timestampStr = request.getParameter("timestamp");
+            String timestampStr = request.getHeader("timestamp");
             Long timestamp = StringUtils.hasText(timestampStr) ? Long.valueOf(timestampStr) : 0L;
-            String authorization = request.getParameter("authorization");
+            String authorization = request.getHeader("authorization");
             String uri = request.getRequestURI();
-            if (StringUtils.hasText(sessionId)) {// 需要session的话才做校验
-                Long expireTime = 1000 * 60 * 2L;
-                if ((System.currentTimeMillis() - timestamp) < expireTime) {// 判断请求的时间戳和现在对比(2分钟有效)
-                    String timeMd5 = MD5Helper.MD5Encode(String.valueOf(timestamp));
-                    if (timeMd5.equals(authorization)) {// 判断请求参数是否被修改
-                        if (!redisHelper.setNx(String.format("%s-%s", uri, authorization), "1", expireTime)) {// 判断是否重复请求
-                            handlerResponse(ctx, CodeEnum.REQUEST_REPEAT.getCodeEnum(), "request repeat");
-                        }
-                    } else {
-                        handlerResponse(ctx, CodeEnum.AUTHORIZATION_FAIL.getCodeEnum(), "authorization fail");
+            Long expireTime = 1000 * 60 * 2L;
+            if ((System.currentTimeMillis() - timestamp) < expireTime) {// 判断请求的时间戳和现在对比(2分钟有效)
+                String timeMd5 = MD5Helper.MD5Encode(String.valueOf(timestamp));
+                if (timeMd5.equals(authorization)) {// 判断请求参数是否被修改
+                    if (!redisHelper.setNx(String.format("%s-%s", uri, authorization), "1", expireTime)) {// 判断是否重复请求
+                        handlerResponse(ctx, CodeEnum.REQUEST_REPEAT.getCodeEnum(), "request repeat");
                     }
                 } else {
-                    handlerResponse(ctx, CodeEnum.REQUEST_TIME_OUT.getCodeEnum(), "request time out");
+                    handlerResponse(ctx, CodeEnum.AUTHORIZATION_FAIL.getCodeEnum(), "authorization fail");
                 }
+            } else {
+                handlerResponse(ctx, CodeEnum.REQUEST_TIME_OUT.getCodeEnum(), "request time out");
             }
         } catch (Exception ex) {
             ReflectionUtils.rethrowRuntimeException(ex);

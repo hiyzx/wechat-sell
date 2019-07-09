@@ -29,8 +29,7 @@ public class UserController {
     @PostMapping(value = "/check")
     @SecurityTag
     @ApiOperation("签到")
-    public BaseReturnVo check(@RequestParam String sessionId, @RequestParam Long timestamp,
-            @RequestParam String authorization) throws Exception {
+    public BaseReturnVo check(@RequestParam String sessionId) throws Exception {
         userService.check(JwtTokenUtil.parseUserId(sessionId));
         return BaseReturnVo.success();
     }
@@ -39,8 +38,7 @@ public class UserController {
     @GetMapping(value = "/queryCheckRecord")
     @SecurityTag
     @ApiOperation("查看签到记录")
-    public ReturnVo<CheckRecordVo> queryCheckRecord(@RequestParam String sessionId, @RequestParam Long timestamp,
-            @RequestParam String authorization) throws Exception {
+    public ReturnVo<CheckRecordVo> queryCheckRecord(@RequestParam String sessionId) throws Exception {
         return ReturnVo.success(userService.queryCheckRecord(JwtTokenUtil.parseUserId(sessionId)));
     }
 

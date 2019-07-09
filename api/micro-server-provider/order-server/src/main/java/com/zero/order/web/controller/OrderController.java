@@ -38,9 +38,9 @@ public class OrderController {
     @GetMapping("/list")
     @SecurityTag
     @ApiOperation("我的订单列表")
-    public ReturnVo<IPage<MyOrderVo>> list(@RequestParam String sessionId, @RequestParam Long timestamp,
-            @RequestParam String authorization, @ApiParam(value = "当前页", required = true) @RequestParam Integer page,
-            @ApiParam(value = "每页大小", required = true) @RequestParam Integer pageSize) throws Exception {
+    public ReturnVo<IPage<MyOrderVo>> list(@RequestParam String sessionId,
+        @ApiParam(value = "当前页", required = true) @RequestParam Integer page,
+        @ApiParam(value = "每页大小", required = true) @RequestParam Integer pageSize) throws Exception {
         return ReturnVo.success(orderServerFacade.list(JwtTokenUtil.parseUserId(sessionId), page, pageSize));
     }
 
@@ -48,8 +48,7 @@ public class OrderController {
     @PostMapping("/add")
     @SecurityTag
     @ApiOperation("下单")
-    public ReturnVo<String> add(@RequestParam String sessionId, @RequestParam Long timestamp,
-            @RequestParam String authorization, @RequestBody OrderDto orderDto) throws Exception {
+    public ReturnVo<String> add(@RequestParam String sessionId, @RequestBody OrderDto orderDto) throws Exception {
         return ReturnVo.success(orderServerFacade.add(JwtTokenUtil.parseUserId(sessionId), orderDto));
     }
 
@@ -57,8 +56,8 @@ public class OrderController {
     @GetMapping("/get")
     @SecurityTag
     @ApiOperation("查询单个订单")
-    public ReturnVo<OrderVo> get(@RequestParam String sessionId, @RequestParam Long timestamp,
-            @RequestParam String authorization, @ApiParam("订单id") @RequestParam String orderId) throws BaseException {
+    public ReturnVo<OrderVo> get(@RequestParam String sessionId, @ApiParam("订单id") @RequestParam String orderId)
+        throws BaseException {
         return ReturnVo.success(orderServerFacade.getByOrderId(orderId));
     }
 
@@ -66,8 +65,8 @@ public class OrderController {
     @PostMapping("/cancel")
     @SecurityTag
     @ApiOperation("取消某个订单")
-    public BaseReturnVo cancel(@RequestParam String sessionId, @RequestParam Long timestamp,
-            @RequestParam String authorization, @ApiParam("订单id") @RequestParam String orderId) throws Exception {
+    public BaseReturnVo cancel(@RequestParam String sessionId, @ApiParam("订单id") @RequestParam String orderId)
+        throws Exception {
         orderServerFacade.cancel(JwtTokenUtil.parseUserId(sessionId), orderId);
         return BaseReturnVo.success();
     }
@@ -76,8 +75,8 @@ public class OrderController {
     @PostMapping("/pay")
     @SecurityTag
     @ApiOperation("支付")
-    public BaseReturnVo pay(@RequestParam String sessionId, @RequestParam Long timestamp,
-            @RequestParam String authorization, @ApiParam("订单id") @RequestParam String orderId) throws Exception {
+    public BaseReturnVo pay(@RequestParam String sessionId, @ApiParam("订单id") @RequestParam String orderId)
+        throws Exception {
         orderServerFacade.pay(JwtTokenUtil.parseUserId(sessionId), orderId);
         return BaseReturnVo.success();
     }
@@ -86,8 +85,8 @@ public class OrderController {
     @PostMapping("/comment")
     @SecurityTag
     @ApiOperation("评论商品")
-    public BaseReturnVo comment(@RequestParam String sessionId, @RequestParam Long timestamp,
-            @RequestParam String authorization, @RequestBody ProductCommentDto productCommentDto) throws Exception {
+    public BaseReturnVo comment(@RequestParam String sessionId, @RequestBody ProductCommentDto productCommentDto)
+        throws Exception {
         orderServerFacade.comment(productCommentDto);
         return BaseReturnVo.success();
     }

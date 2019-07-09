@@ -31,15 +31,13 @@ public class ProductInfoController {
 
     @GetMapping("/listCategory")
     @ApiOperation("查询所有的商品类目名称")
-    public ReturnVo<List<ProductCategoryVo>> listCategory(@RequestParam Long timestamp,
-            @RequestParam String authorization) {
+    public ReturnVo<List<ProductCategoryVo>> listCategory() {
         return ReturnVo.success(productServerFacade.listCategory());
     }
 
     @GetMapping("/listByCategory")
     @ApiOperation("查询某一类目下的所有商品")
-    public ReturnVo<List<ProductInfoVo>> listByCategory(@ApiParam("类目Id") @RequestParam Integer categoryId,
-            @RequestParam Long timestamp, @RequestParam String authorization) {
+    public ReturnVo<List<ProductInfoVo>> listByCategory(@ApiParam("类目Id") @RequestParam Integer categoryId) {
         return ReturnVo.success(productServerFacade.listByCategory(categoryId));
     }
 

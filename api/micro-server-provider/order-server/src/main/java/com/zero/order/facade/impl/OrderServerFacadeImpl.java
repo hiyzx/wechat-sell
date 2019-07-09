@@ -1,24 +1,8 @@
 package com.zero.order.facade.impl;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-
-import javax.annotation.Resource;
-
-import com.codingapi.txlcn.tc.annotation.TccTransaction;
-import com.zero.common.vo.BaseReturnVo;
-import com.zero.product.dto.ProductCommentDto;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.codingapi.txlcn.tc.annotation.LcnTransaction;
-import com.codingapi.txlcn.tc.annotation.TxTransaction;
 import com.zero.common.constants.RedisPrefix;
 import com.zero.common.enums.CodeEnum;
 import com.zero.common.exception.BaseException;
@@ -28,6 +12,7 @@ import com.zero.common.po.ProductInfo;
 import com.zero.common.util.DateHelper;
 import com.zero.common.util.NumberUtil;
 import com.zero.common.util.StringHelper;
+import com.zero.common.vo.BaseReturnVo;
 import com.zero.common.vo.ReturnVo;
 import com.zero.order.enums.CustomerCodeEnum;
 import com.zero.order.facade.OrderServerFacade;
@@ -41,10 +26,20 @@ import com.zero.order.vo.OrderVo;
 import com.zero.order.vo.dto.OrderDetailDto;
 import com.zero.order.vo.dto.OrderDto;
 import com.zero.order.vo.message.UserPayMessage;
+import com.zero.product.dto.ProductCommentDto;
 import com.zero.product.dto.ProductDecreaseStockCountDto;
 import com.zero.product.feign.ProductServerClient;
-
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * @author yezhaoxing
@@ -225,7 +220,7 @@ public class OrderServerFacadeImpl implements OrderServerFacade {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @LcnTransaction // 分布式事务注解
     public void comment(ProductCommentDto productCommentDto) throws BaseException {
         productServerClient.comment(productCommentDto);

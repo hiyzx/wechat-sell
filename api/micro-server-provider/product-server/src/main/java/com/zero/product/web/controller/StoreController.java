@@ -7,7 +7,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -26,7 +25,7 @@ public class StoreController {
 
     @GetMapping("/info")
     @ApiOperation("查询商家列表")
-    public ReturnVo<StoreInfoVo> getStoreInfo(@RequestParam Long timestamp, @RequestParam String authorization) {
+    public ReturnVo<StoreInfoVo> getStoreInfo() {
         return ReturnVo.success(productServerFacade.getStoreInfo());
     }
 }
