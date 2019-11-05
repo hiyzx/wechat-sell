@@ -9,7 +9,7 @@ spring:
        git:
          uri: https://gitee.com/cr17/server-config
          username: 452002276@qq.com
-         password: y362311
+         password: y123456
 eureka:
   client:
     service-url:

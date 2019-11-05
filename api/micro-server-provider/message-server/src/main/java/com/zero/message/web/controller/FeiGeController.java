@@ -4,6 +4,7 @@ import com.zero.common.vo.BaseReturnVo;
 import com.zero.common.vo.ReturnVo;
 import com.zero.message.dto.req.SendMsgRequest;
 import com.zero.message.dto.resp.FeiGeListResponseVo;
+import com.zero.message.feign.MessageServerClient;
 import com.zero.message.service.FeiGeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -19,7 +20,7 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/feige")
 @Api(description = "飞鸽服务controller")
-public class FeiGeController {
+public class FeiGeController implements MessageServerClient {
 
     @Autowired
     private FeiGeService feiGeService;

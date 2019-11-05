@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class UserPointServiceImpl extends ServiceImpl<UserPointMapper, UserPoint> implements UserPointService {
 
+    @Override
     public void add(Integer userId) {
         UserPoint userPoint = new UserPoint();
         userPoint.setUserId(userId);

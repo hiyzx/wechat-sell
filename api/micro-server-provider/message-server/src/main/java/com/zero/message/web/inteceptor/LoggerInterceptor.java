@@ -55,7 +55,7 @@ public class LoggerInterceptor {
         }
     }
 
-    private StringBuilder parseRequest() throws Exception {
+    private StringBuilder parseRequest() {
         StringBuilder sb = new StringBuilder();
         sb.append(request.getRequestURI()).append(", ");
         sb.append("IP->").append(IpUtil.getIpAddress(request));

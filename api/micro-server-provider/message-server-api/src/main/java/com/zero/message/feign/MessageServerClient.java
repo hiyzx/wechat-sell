@@ -11,6 +11,8 @@ import com.zero.message.dto.req.SendMsgRequest;
 import com.zero.message.dto.resp.FeiGeListResponseVo;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.io.IOException;
+
 /**
  * @author yezhaoxing
  * @date 2019/6/14
@@ -23,5 +25,5 @@ public interface MessageServerClient {
     ReturnVo<FeiGeListResponseVo> list();
 
     @PostMapping(value = "/sendMsg")
-    BaseReturnVo sendMsgAlone(@RequestBody SendMsgRequest sendMsgRequest);
+    BaseReturnVo sendMsgAlone(@RequestBody SendMsgRequest sendMsgRequest) throws IOException;
 }

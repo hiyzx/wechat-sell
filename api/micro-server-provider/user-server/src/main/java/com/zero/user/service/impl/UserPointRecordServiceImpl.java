@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 public class UserPointRecordServiceImpl extends ServiceImpl<UserPointRecordMapper, UserPointRecord>
         implements UserPointRecordService {
 
+    @Override
     public void increasePoint(Integer userId, Integer type, Integer score) {
         // 减少并发问题
         // userPointExtMapper.increasePoint(userId, score);
