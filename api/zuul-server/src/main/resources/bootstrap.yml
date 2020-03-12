@@ -3,13 +3,26 @@ spring:
     name: zuul-server    # 对应config server所获取的配置文件的{application}(配置文件名称)
   cloud:
     config:
-      uri: http://localhost:8020/  #直接从单个节点配置中心读取
+      uri: http://www.hiyzx.cn:8020/  #直接从单个节点配置中心读取
       profile: dev            # profile对应config server所获取的配置文件中的{profile}
-      label: master           # 指定Git仓库的分支，对应c  onfig server所获取的配置文件的{label}
+      label: master           # 指定Git仓库的分支，对应c  onfig server所获取的配置文件的{label}ls
       #discovery:
        # enabled: true
         #service-id: config-server  # 从eureka注册的配置中心读取
+  boot:
+    admin:
+      client:
+        url: http://localhost:8769
 eureka:
   client:
     service-url:
-      defaultZone: http://user:123@localhost:8761/eureka/
+      defaultZone: http://user:123@www.hiyzx.cn:8761/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS
