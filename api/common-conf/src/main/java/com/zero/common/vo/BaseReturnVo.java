@@ -17,6 +17,7 @@ import lombok.Data;
 public class BaseReturnVo {
 
     final static String SUCCESS_DEFAULT_DESC = "success";
+    final static String FAIL_DEFAULT_DESC = "fail";
     @ApiModelProperty("返回码")
     private String resCode;
     @ApiModelProperty("返回说明")
@@ -32,5 +33,9 @@ public class BaseReturnVo {
 
     public static BaseReturnVo success() {
         return new BaseReturnVo(CodeEnum.SUCCESS, SUCCESS_DEFAULT_DESC);
+    }
+
+    public static BaseReturnVo fail() {
+        return new BaseReturnVo(CodeEnum.INTERNAL_SERVER_ERROR, FAIL_DEFAULT_DESC);
     }
 }

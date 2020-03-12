@@ -103,6 +103,13 @@
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
 
+        <!-- 调用链监控 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-sleuth</artifactId>
+        </dependency>
+
+
         <!-- 分布式事务处理 tx-lcn -->
         <dependency>
             <groupId>com.codingapi.txlcn</groupId>

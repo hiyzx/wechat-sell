@@ -45,6 +45,12 @@ spring:
       enabled: false
     packages:
       trust-all: true
+  zipkin:
+      base-url: http://localhost:9411
+  sleuth:
+      sampler:
+        # 采样率，模式0.1，也就是10%，为了便于观察效果，改为1.0，也就是100%。生产环境建议保持默认。
+        probability: 1.0
 #mybatis plus
 mybatis-plus:
   mapper-locations: classpath:/com/zero/order/dao/*.xml
@@ -87,11 +93,25 @@ feign:
     config:
       product-server:
         loggerLevel: full
+  hystrix:
+      enabled: true
+
 logging:
   level:
     com.zero.product.feign.ProductServerClient: debug
+    root: INFO
+    org.springframework.cloud.sleuth: DEBUG
+
 tx-lcn:
   client:
-    manager-address: 127.0.0.1:8070
+    manager-address: 127.0.0.1:8070 #事务管理服务
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: 'hystrix.stream' # hystrix可视化监控
+
+
 
 

@@ -78,6 +78,10 @@ management:
   endpoint:
     health:
       show-details: ALWAYS
+logging:
+  level:
+    root: INFO
+    org.springframework.cloud.sleuth: DEBUG
 
 
 

@@ -1,6 +1,5 @@
 package com.zero.common.vo;
 
-
 import com.zero.common.enums.CodeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -26,6 +25,12 @@ public class ReturnVo<T> extends BaseReturnVo {
 
     public static <T> ReturnVo<T> success(T data) {
         ReturnVo<T> returnVo = new ReturnVo<>(CodeEnum.SUCCESS, SUCCESS_DEFAULT_DESC);
+        returnVo.setData(data);
+        return returnVo;
+    }
+
+    public static <T> ReturnVo<T> fail(T data) {
+        ReturnVo<T> returnVo = new ReturnVo<>(CodeEnum.INTERNAL_SERVER_ERROR, FAIL_DEFAULT_DESC);
         returnVo.setData(data);
         return returnVo;
     }

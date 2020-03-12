@@ -223,7 +223,10 @@ public class OrderServerFacadeImpl implements OrderServerFacade {
     @Transactional(rollbackFor = Exception.class)
     @LcnTransaction // 分布式事务注解
     public void comment(ProductCommentDto productCommentDto) throws BaseException {
-        productServerClient.comment(productCommentDto);
+        BaseReturnVo baseReturnVo = productServerClient.comment(productCommentDto);
+        if (!CodeEnum.SUCCESS.getCodeEnum().equals(baseReturnVo.getResCode())) {
+            throw new BaseException(CodeEnum.REMOTE_EXCEPTION, baseReturnVo.getResDes());
+        }
     }
 
     private OrderMaster getByUid(String orderId) {
