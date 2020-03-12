@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,8 +31,7 @@ public class FeiGeService {
         return JsonHelper.readValue(jsonStr, FeiGeListResponseVo.class);
     }
 
-    public void sendMsgAlone(SendMsgRequest sendMsgRequest)
-            throws IOException {
+    public void sendMsgAlone(SendMsgRequest sendMsgRequest) {
         Map<String, String> params = new HashMap<>(5);
         params.put("secret", secretKey);
         params.put("uid", String.valueOf(sendMsgRequest.getUid()));

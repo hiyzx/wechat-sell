@@ -11,8 +11,6 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-
 /**
  * @author yezhaoxing
  * @date 2019/6/14
@@ -27,13 +25,15 @@ public class FeiGeController implements MessageServerClient {
 
     @GetMapping(value = "/list")
     @ApiOperation("查询列表")
+    @Override
     public ReturnVo<FeiGeListResponseVo> list() {
         return ReturnVo.success(feiGeService.list());
     }
 
     @PostMapping(value = "/sendMsg")
     @ApiOperation("发送消息")
-    public BaseReturnVo sendMsgAlone(@RequestBody SendMsgRequest sendMsgRequest) throws IOException {
+    @Override
+    public BaseReturnVo sendMsgAlone(@RequestBody SendMsgRequest sendMsgRequest) {
         feiGeService.sendMsgAlone(sendMsgRequest);
         return BaseReturnVo.success();
     }

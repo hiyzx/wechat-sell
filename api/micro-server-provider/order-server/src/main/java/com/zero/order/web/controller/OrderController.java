@@ -12,7 +12,6 @@ import com.zero.order.vo.MyOrderVo;
 import com.zero.order.vo.OrderVo;
 import com.zero.order.vo.dto.OrderDto;
 import com.zero.product.dto.ProductCommentDto;
-import com.zero.product.feign.ProductServerClient;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -31,8 +30,6 @@ public class OrderController {
 
     @Resource
     private OrderServerFacade orderServerFacade;
-    @Resource
-    private ProductServerClient productServerClient;
 
     @Authorize
     @GetMapping("/list")

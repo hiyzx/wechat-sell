@@ -45,7 +45,7 @@ public class JwtTokenUtil implements Serializable {
         return builder.compact();
     }
 
-    public static String generateJwt(String subject, int ttlMillis) {
+    private static String generateJwt(String subject, int ttlMillis) {
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
         Date now = new Date();
         JwtBuilder builder = Jwts.builder().setId(JWT_ID).setSubject(subject).setIssuedAt(now)
@@ -56,21 +56,21 @@ public class JwtTokenUtil implements Serializable {
         return builder.compact();
     }
 
-    public static Claims parseJWT(String token) throws Exception {
+    private static Claims parseJWT(String token) throws Exception {
         return Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody();
     }
 
     /**
      * 还原属性
      */
-    public static Map<String, Object> parseMaps(String token) throws Exception {
+    private static Map<String, Object> parseMaps(String token) throws Exception {
         return JsonHelper.readValue(parseJWT(token).getSubject(), TYPE_REFERENCE);
     }
 
     /**
      * 获得属性
      */
-    public static Object parseProperty(String token, String filed) throws Exception {
+    private static Object parseProperty(String token, String filed) throws Exception {
         return parseMaps(token).get(filed);
     }
 

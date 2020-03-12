@@ -1,16 +1,7 @@
 package com.zero.common.util;
 
-import java.io.*;
-import java.net.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
-import javax.net.ssl.SSLException;
-import javax.net.ssl.SSLHandshakeException;
-
+import cn.hutool.core.io.IoUtil;
+import com.zero.common.vo.HealthCheckVo;
 import org.apache.http.*;
 import org.apache.http.client.HttpRequestRetryHandler;
 import org.apache.http.client.config.RequestConfig;
@@ -38,9 +29,15 @@ import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.zero.common.vo.HealthCheckVo;
-
-import cn.hutool.core.io.IoUtil;
+import javax.net.ssl.SSLException;
+import javax.net.ssl.SSLHandshakeException;
+import java.io.*;
+import java.net.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * HTTP连接池
@@ -139,7 +136,7 @@ public class HttpClient {
         return cost;
     }
 
-    public String post(String path, Map<String, String> params, Map<String, String> headers) throws IOException {
+    public String post(String path, Map<String, String> params, Map<String, String> headers){
         CloseableHttpResponse response = null;
         String rtn = null;
         try {
@@ -162,9 +159,7 @@ public class HttpClient {
             String result = EntityUtils.toString(entity, UTF_8);
             EntityUtils.consume(entity);
             rtn = result;
-        } catch (IOException e) {
-            throw e;
-        } catch (URISyntaxException e) {
+        } catch (Exception e) {
             LOG.error(e.getMessage(), e);
         } finally {
             try {
@@ -178,7 +173,7 @@ public class HttpClient {
         return rtn;
     }
 
-    public String post(String path, Map<String, String> params) throws IOException {
+    public String post(String path, Map<String, String> params) {
         System.setProperty("jsse.enableSNIExtension", "false");
         Map<String, String> headers = Collections.emptyMap();
         return post(path, params, headers);

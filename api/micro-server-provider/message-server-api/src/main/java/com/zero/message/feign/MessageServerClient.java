@@ -1,17 +1,14 @@
 package com.zero.message.feign;
 
-import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-
 import com.zero.common.vo.BaseReturnVo;
 import com.zero.common.vo.ReturnVo;
 import com.zero.message.dto.req.SendMsgRequest;
 import com.zero.message.dto.resp.FeiGeListResponseVo;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.io.IOException;
 
 /**
  * @author yezhaoxing
@@ -25,5 +22,5 @@ public interface MessageServerClient {
     ReturnVo<FeiGeListResponseVo> list();
 
     @PostMapping(value = "/sendMsg")
-    BaseReturnVo sendMsgAlone(@RequestBody SendMsgRequest sendMsgRequest) throws IOException;
+    BaseReturnVo sendMsgAlone(@RequestBody SendMsgRequest sendMsgRequest);
 }

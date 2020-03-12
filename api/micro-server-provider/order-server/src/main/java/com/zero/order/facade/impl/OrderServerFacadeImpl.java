@@ -91,7 +91,7 @@ public class OrderServerFacadeImpl implements OrderServerFacade {
         // 将订单表和订单详情表写入redis中
         List<OrderDetailDto> orderDetailDtos = orderDto.getOrderDetailDtos();
         String orderUid = StringHelper.generateMasterKey();
-        Double amount = 0D;
+        double amount = 0D;
         Integer totalCount = 0;
         Date now = DateHelper.getCurrentDateTime();
         List<OrderDetail> orderDetailList = new ArrayList<>(orderDetailDtos.size());
