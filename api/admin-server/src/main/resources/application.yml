@@ -1,5 +1,29 @@
+server:
+  port: 8769
 spring:
   application:
     name: admin-server
-server:
-  port: 8769
+  security:
+    user:
+      name: "admin"
+      password: "admin"
+  # mail:
+    #host: smtp.qq.com
+    #username: 452002276@qq.com
+    #password: bgnrbgqmvadubi
+    #port: 465
+  boot:
+    admin:
+      notify:
+        mail:
+          to: yezhaoxing@gvt861.com
+# 配置注册到eureka
+eureka:
+  instance:
+    metadata-map:
+      user.name: ${spring.security.user.name}
+      user.password: ${spring.security.user.password}
+  client:
+    service-url:
+      defaultZone: http://user:123@www.hiyzx.cn:8761/eureka/
+

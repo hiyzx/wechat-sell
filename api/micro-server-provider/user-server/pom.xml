@@ -83,6 +83,12 @@
             <artifactId>springfox-swagger-ui</artifactId>
         </dependency>
 
+        <!-- 可视化监控 -->
+        <dependency>
+            <groupId>de.codecentric</groupId>
+            <artifactId>spring-boot-admin-starter-client</artifactId>
+        </dependency>
+
         <!-- Spring-cloud -->
         <!-- eureka客户端-->
         <dependency>

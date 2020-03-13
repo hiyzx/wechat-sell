@@ -9,7 +9,6 @@ import com.zero.common.util.MD5Helper;
 import com.zero.zuul.util.RedisHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.util.StringUtils;
@@ -23,7 +22,7 @@ import java.io.PrintWriter;
  * @author yezhaoxing
  * @date 2019/6/14
  */
-@Component
+// @Component
 @Slf4j
 public class SecurityFilter extends ZuulFilter {
 
@@ -48,7 +47,6 @@ public class SecurityFilter extends ZuulFilter {
     @Override
     public Object run() {
         try {
-
             RequestContext ctx = RequestContext.getCurrentContext();
             HttpServletRequest request = ctx.getRequest();
             String timestampStr = request.getHeader("timestamp");

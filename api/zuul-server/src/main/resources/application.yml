@@ -1,2 +1,32 @@
 server:
   port: 8000
+spring:
+  application:
+    name: zuul-server    # 对应config server所获取的配置文件的{application}(配置文件名称)
+  redis:
+    host: www.hiyzx.cn
+    port: 6379
+    password: yzx123456
+    jedis:
+      pool:
+        #最大连接数
+        max-active: 1024
+        #最大空闲
+        max-idle: 200
+        #最小空闲
+        min-idle: 10
+
+# eureka配置
+eureka:
+  client:
+    service-url:
+      defaultZone: http://user:123@www.hiyzx.cn:8761/eureka/
+# 监控配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS

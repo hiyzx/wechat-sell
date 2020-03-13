@@ -12,4 +12,4 @@ spring:
   security:
     user:
       name: user                # 配置登录的账号是user
-      password: 123     # 配置登录的密码是password123
+      password: 123     # 配置登录的密码是123
